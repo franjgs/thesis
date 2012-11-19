@@ -1,0 +1,3 @@
+Code for http://www.sec.in.tum.de/utilizing-crowd-intelligence-for-online-detection-of-emotional-distress/
+
+Data comes from the libsvm website (www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/), except for the n-gram data, which comes from a custom text classification dataset
