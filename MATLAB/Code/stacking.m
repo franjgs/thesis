@@ -1,5 +1,7 @@
 clear; close all;
 
+load('seeds.mat'); rng(s);
+
 [labels, instances] = libsvmread('Data/a1a.data');
 
 n_global = size(instances, 1);
