@@ -1,28 +1,36 @@
-clear all;
+clear; close all;
 
 [labels, instances] = libsvmread('Data/a1a.data');
 
-cv = 5;
-n_global = size(labels, 1);
-cv_accuracy = zeros(1, cv);
+M = 99;
+cv = cvpartition(labels, 'HoldOut', 0.5);
+cv_accuracy = zeros(1, cv.NumTestSets);
 
-for i = 1 : cv
+for i = 1 : cv.NumTestSets
     fprintf('Iteration #%d\n', i);
     
     % initialize training/testing dataset
-    testing = randsample(n_global, round(n_global/cv));
-    training = setdiff((1:n_global), testing)';
+    training = cv.training(i);
+    testing = cv.test(i);
     x_training = instances(training, :); y_training = labels(training, :);
     x_testing = instances(testing, :); y_testing = labels(testing, :);
     
     % build the weak learners
-    learners = cell(3, 1);
-    learners{1} = weak_learner_train('bagging', x_training, y_training, 'tree');
-    learners{2} = weak_learner_train('bagging', x_training, y_training, 'tree');
-    learners{3} = weak_learner_train('bagging', x_training, y_training, 'tree');
+    n = size(x_training, 1);
+    learners = cell(M, 1);
+    for m = 1 : M
+        indices = randsample(n, randi([round(n/2), n]));
+        w = ones(size(indices, 1), 1);
+        learners{m} = svmtrain(w, y_training(indices, :), x_training(indices, :), '-t 0 -c 1 -h 0');
+    end
 
     % predict on the testing data
-    predictions = bagging_predict(x_testing, learners);
+    n = size(x_testing, 1);
+    predictions = zeros(n, M);
+    for m = 1 : M
+        [predictions(:, m), ~, ~] = svmpredict(y_testing, x_testing, learners{m});
+    end
+    predictions = sign(sum(predictions, 2));
     
     cv_accuracy(i) = sum(y_testing == predictions) / size(y_testing, 1);
 end

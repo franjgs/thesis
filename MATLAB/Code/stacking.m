@@ -1,43 +1,33 @@
+clear; close all;
+
 [labels, instances] = libsvmread('Data/a1a.data');
 
 n_global = size(instances, 1);
 
-cv = 5;
-cv_accuracy = zeros(1, cv);
+cv = cvpartition(labels, 'HoldOut', 0.5);
+cv_accuracy = zeros(1, cv.NumTestSets);
 
-type = 'svm';
+M = 10;
 
-for idx = 1 : cv
+for idx = 1 : cv.NumTestSets
     fprintf('Iteration #%d\n', idx);
     
-    testing = randsample(n_global, round(n_global/cv));
-    training = setdiff((1:n_global), testing)';
+    training = cv.training(idx);
+    testing = cv.test(idx);
     
     % input data for the first level learners
     x_training = instances(training, :); y_training = labels(training, :);
     
     % train individual learners on the training data (first level)
-    if strcmp(type, 'svm') == 1
-        n_c = 3; n_gamma = 3;
-        c_all = linspace(1, 100, n_c);
-        gamma_all = linspace(0, 1, n_gamma);
-        learners = cell(n_c * n_gamma, 1);
-        idx_learner = 1;
-        for j = 1 : n_c
-            for k = 1 : n_gamma
-                param = sprintf('-t 2 -c %s -g %.3f -h 0 ', num2str(c_all(j)), gamma_all(k));
-                learners{idx_learner} = weak_learner_train('stacking', x_training, y_training, 'svm', param);
-                idx_learner = idx_learner + 1;
-            end
-        end
-    elseif strcmp(type, 'tree') == 1
-        n_l = 10;
-        idx_learner = 1;
-        learners = cell(n_l, 1);
-        for j = 1 : n_l
-            learners{idx_learner} = weak_learner_train('stacking', x_training, y_training, 'tree');
-            idx_learner = idx_learner + 1;
-        end
+    learners = cell(M, 1);
+    idx_learner = 1;
+    w = ones(size(x_training, 1), 1);
+    positive = size(y_training, 1) / sum(y_training == 1);
+    negative = size(y_training, 1) / sum(y_training == -1);
+    for i = 1 : M
+        param = sprintf('-t 0 -c %s -w1 %.3f -w-1 %.3f', num2str(i * 10), positive, negative);
+        learners{idx_learner} = svmtrain(w, y_training, x_training, param);
+        idx_learner = idx_learner + 1;
     end
     
     m = size(learners, 1);
@@ -47,14 +37,14 @@ for idx = 1 : cv
     x = zeros(n_global, m);
     y = labels;
     for i = 1 : m
-        x(:, i) = weak_learner_predict(instances, labels, learners{i}{1}, learners{i}{2});
+        x(:, i) = svmpredict(labels, instances, learners{i});
     end
     
     % train the second level learner
-    learner = weak_learner_train('stacking', x(training, :), y(training, :), 'tree');
+    learner = svmtrain(w, y(training, :), x(training, :), '-t 0 -c 1');
     
     % test performance over the testing dataset
-    predictions = weak_learner_predict(x(testing, :), y(testing, :), learner{1}, learner{2});
+    predictions = svmpredict(y(testing, :), x(testing, :), learner);
     cv_accuracy(idx) = sum(predictions == y(testing, :)) / size(y(testing, :), 1);
 end
 
