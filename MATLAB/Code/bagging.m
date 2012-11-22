@@ -4,7 +4,7 @@ load('seeds.mat'); rng(s);
 
 [labels, instances] = libsvmread('Data/a1a.data');
 
-M = 99;
+M = 9;
 cv = cvpartition(labels, 'HoldOut', 0.5);
 cv_accuracy = zeros(1, cv.NumTestSets);
 
