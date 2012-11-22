@@ -24,7 +24,7 @@ sv_labels = cell(M, 1);
 % find two training instances with labels 1 and -1
 i = find(y_training == 1, 1);
 j = find(y_training == -1, 1);
-predictions = zeros(size(y_testing, 1), 1);
+predictions = zeros(size(y_testing, 1), M);
 for m = 1 : M
     % train the model
     learners{m} = svmtrain(ones(2, 1), [y_training(i, :); y_training(j, :);], [x_training(i, :); x_training(j, :);], param);
