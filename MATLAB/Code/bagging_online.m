@@ -29,25 +29,30 @@ for m = 1 : M
     learners{m} = svmtrain(ones(2, 1), [y_training(i, :); y_training(j, :);], [x_training(i, :); x_training(j, :);], param);
     % store the support vectors
     sv_instances{m} = learners{m}.SVs;
-    [sv_labels{m}, a, ~] = svmpredict(ones(2, 1), sv_instances{m}, learners{m});
+    sv_labels{m} = svmpredict(ones(2, 1), sv_instances{m}, learners{m});
+    % predict accuracy on the testing data
+    [~, a, ~] = svmpredict(y_testing, x_testing, learners{m});
     accuracy(1) = a(1) / 100;
 end
 x_training(i, :) = []; y_training(i, :) = [];
+x_training(j, :) = []; y_training(j, :) = [];
 
 % continue for the rest of the samples
 n = size(x_training, 1);
 for i = 1 : n
-    % train all the models
+    % retrain all the models
     for m = 1 : M
-        w = ones(size(sv_instances{m}, 1) + 1, 1);
-        learners{m} = svmtrain(w, [sv_labels{m}; y_training(i, :);], [sv_instances{m}; x_training(i, :);], param);
+        x = [sv_instances{m}; x_training(i, :);];
+        y = [sv_labels{m}; y_training(i, :);];
+        w = ones(size(x, 1), 1);
+        learners{m} = svmtrain(w, y, x, param);
         sv_instances{m} = learners{m}.SVs;
-        [sv_labels{m}, ~, ~] = svmpredict(ones(size(sv_instances{m}, 1), 1), sv_instances{m}, learners{m});
+        sv_labels{m} = svmpredict(ones(size(sv_instances{m}, 1), 1), sv_instances{m}, learners{m});
     end
     % store the accuracy resulting after this sample
     predictions = zeros(size(y_testing, 1), M);
     for m = 1 : M
-        [predictions(:, m), ~, ~] = svmpredict(y_testing, x_testing, learners{m});
+        predictions(:, m) = svmpredict(y_testing, x_testing, learners{m});
     end
     predictions = sign(sum(predictions, 2));
     accuracy(i + 1) = sum(predictions == y_testing) / size(y_testing, 1);
