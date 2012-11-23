@@ -9,7 +9,7 @@ instances = instances(1: 100, :);
 % parameters
 cv = cvpartition(labels, 'HoldOut', 0.5);
 M = 8;
-param = '-t 0 -c 1';
+param = '-t 0 -c %d -w1 %.3f -w-1 %.3f';
 
 % define training/testing data
 training = cv.training(1);
@@ -31,7 +31,8 @@ j = find(y_training == -1, 1);
 predictions = zeros(size(y_testing, 1), M);
 for m = 1 : M
     % train the model
-    learners{m} = svmtrain(ones(2, 1), [y_training(i, :); y_training(j, :);], [x_training(i, :); x_training(j, :);], param);
+    positive = 0.5; negative = 0.5;
+    learners{m} = svmtrain(ones(2, 1), [y_training(i, :); y_training(j, :);], [x_training(i, :); x_training(j, :);], sprintf(param, m, positive, negative));
     % store the support vectors
     sv_instances{m} = learners{m}.SVs;
     sv_labels{m} = svmpredict(ones(2, 1), sv_instances{m}, learners{m});
@@ -56,7 +57,9 @@ for i = 1 : N
         % results in a zero epsilon and infinite alpha
         x = [sv_instances{m}; x_training(i, :);];
         y = [sv_labels{m}; y_training(i, :);];
-        learners{m} = svmtrain(w(:, m) ./ min(w(:, m)), y, x, param);
+        positive = size(y, 1) / sum(y == 1);
+        negative = size(y, 1) / sum(y == -1);
+        learners{m} = svmtrain(w(:, m) ./ min(w(:, m)), y, x, sprintf(param, m, positive, negative));
         predictions = svmpredict(y, x, learners{m});
         I = (predictions ~= y);
         eps(m) = (w(:, m)' * I) / sum(w(:, m));
