@@ -3,8 +3,6 @@ clear; close all;
 load('seeds.mat'); rng(s);
 
 [labels, instances] = libsvmread('Data/a1a.data');
-labels = labels(1: 100, :);
-instances = instances(1: 100, :);
 
 % parameters
 cv = cvpartition(labels, 'HoldOut', 0.5);
@@ -53,8 +51,6 @@ for i = 1 : N
     alpha = zeros(M, 1);
     eps = zeros(M, 1);
     for m = 1 : M
-        % TODO: Handle the case where I is an all-zero matrix, which
-        % results in a zero epsilon and infinite alpha
         x = [sv_instances{m}; x_training(i, :);];
         y = [sv_labels{m}; y_training(i, :);];
         positive = size(y, 1) / sum(y == 1);
@@ -62,17 +58,22 @@ for i = 1 : N
         learners{m} = svmtrain(w(:, m) ./ min(w(:, m)), y, x, sprintf(param, m, positive, negative));
         predictions = svmpredict(y, x, learners{m});
         I = (predictions ~= y);
+        sv_instances{m} = learners{m}.SVs;
+        sv_labels{m} = svmpredict(ones(size(sv_instances{m}, 1), 1), sv_instances{m}, learners{m});
+        if all(I == 0)
+            alpha(m) = 1;
+            break;
+        end
         eps(m) = (w(:, m)' * I) / sum(w(:, m));
         alpha(m) = log ( (1 - eps(m)) / eps(m) );
         if m < M
             w(:, m + 1) = w(:, m) .* exp(alpha(m) * I);
         end
-        sv_instances{m} = learners{m}.SVs;
-        sv_labels{m} = svmpredict(ones(size(sv_instances{m}, 1), 1), sv_instances{m}, learners{m});
     end
     % measure the accuracy resulting from this model
     predictions = zeros(size(y_testing, 1), M);
-    for m = 1 : M
+    maxEffectiveNum=find(alpha > 1e-6, 1);
+    for m = 1 : maxEffectiveNum
         predictions(:, m) = svmpredict(y_testing, x_testing, learners{m});
     end
     predictions = sign(predictions * alpha);

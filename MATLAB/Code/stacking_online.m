@@ -63,6 +63,8 @@ for n = 1 : N
         % prepare data for higher dimensional space
         x(:, m) = svmpredict(y_testing, x_testing, learners{m});
     end
+    % TODO - testing/training for the second level learner is being done on
+    % the same data - doesn't make any sense at all - FIX
     positive = size(y, 1) / sum(y == 1);
     negative = size(y, 1) / sum(y == -1);
     learner = svmtrain(ones(n_testing, 1), y, x, sprintf(param, 1, positive, negative));
