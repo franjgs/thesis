@@ -6,7 +6,7 @@ load('seeds.mat'); rng(s);
 
 cv = cvpartition(labels, 'HoldOut', 0.5);
 M = 8;
-param = '-t 0 -c 1 -w1 %.3f -w-1 %.3f';
+param = '-t 0 -c %d -w1 %.3f -w-1 %.3f';
 
 % define training/testing data
 training = cv.training(1);
@@ -24,12 +24,12 @@ sv_labels = cell(M, 1);
 i = find(y_training == 1, 1);
 j = find(y_training == -1, 1);
 n_testing = size(y_testing, 1);
-x = zeros(n_testing, M);
-y = y_testing;
+% data in the new dimensional feature space
+x = zeros(n_testing, M); y = y_testing;
 for m = 1 : M
     % train the learners
     positive = 0.5; negative = 0.5;
-    learners{m} = svmtrain(ones(2, 1), [y_training(i, :); y_training(j, :);], [x_training(i, :); x_training(j, :);], sprintf(param, positive, negative));
+    learners{m} = svmtrain(ones(2, 1), [y_training(i, :); y_training(j, :);], [x_training(i, :); x_training(j, :);], sprintf(param, m, positive, negative));
     % update support vectors
     sv_instances{m} = learners{m}.SVs;
     sv_labels{m} = svmpredict(ones(size(sv_instances{m}, 1), 1), sv_instances{m}, learners{m});
@@ -38,7 +38,7 @@ for m = 1 : M
 end
 positive = size(y, 1) / sum(y == 1);
 negative = size(y, 1) / sum(y == -1);
-learner = svmtrain(ones(n_testing, 1), y, x, sprintf(param, positive, negative));
+learner = svmtrain(ones(n_testing, 1), y, x, sprintf(param, 1, positive, negative));
 predictions = svmpredict(y, x, learner);
 accuracy(1) = sum(predictions == y) / size(y, 1);
 x_training(i, :) = []; y_training(i, :) = [];
@@ -47,15 +47,16 @@ x_training(j, :) = []; y_training(j, :) = [];
 % continue with the rest of the samples
 N = size(x_training, 1);
 for n = 1 : N
+    % second level data
     x = zeros(n_testing, M); y = y_testing;
     for m = 1 : M
         % train the models
-        w = ones(size(sv_instances{m}, 1) + 1, 1);
         x_now = [sv_instances{m}; x_training(i, :);];
         y_now = [sv_labels{m}; y_training(i, :);];
+        w = ones(size(x_now, 1), 1);
         positive = size(y_now, 1) / sum(y_now == 1);
         negative = size(y_now, 1) / sum(y_now == -1);
-        learners{m} = svmtrain(w, y_now, x_now, sprintf(param, positive, negative));
+        learners{m} = svmtrain(w, y_now, x_now, sprintf(param, m, positive, negative));
         % pick new support vectors
         sv_instances{m} = learners{m}.SVs;
         sv_labels{m} = svmpredict(ones(size(sv_instances{m}, 1), 1), sv_instances{m}, learners{m});
@@ -64,7 +65,7 @@ for n = 1 : N
     end
     positive = size(y, 1) / sum(y == 1);
     negative = size(y, 1) / sum(y == -1);
-    learner = svmtrain(ones(n_testing, 1), y, x, sprintf(param, positive, negative));
+    learner = svmtrain(ones(n_testing, 1), y, x, sprintf(param, 1, positive, negative));
     predictions = svmpredict(y, x, learner);
     accuracy(i + 1) = sum(predictions == y) / size(y, 1);
 end
