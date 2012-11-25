@@ -2,11 +2,12 @@ clear; close all;
 
 load('seeds.mat'); rng(s);
 
-[labels, instances] = libsvmread('Data/a1a.data');
+[labels, instances] = libsvmread('Data/n-gram.data');
 
 M = 9;
 cv = cvpartition(labels, 'HoldOut', 0.5);
 cv_accuracy = zeros(1, cv.NumTestSets);
+param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 
 for i = 1 : cv.NumTestSets
     fprintf('Iteration #%d\n', i);
@@ -23,7 +24,9 @@ for i = 1 : cv.NumTestSets
     for m = 1 : M
         indices = randsample(n, randi([round(n/2), n]));
         w = ones(size(indices, 1), 1);
-        learners{m} = svmtrain(w, y_training(indices, :), x_training(indices, :), '-t 0 -c 1 -h 0');
+        positive = numel(indices) / sum(y_training(indices, :) == 1);
+        negative = numel(indices) / sum(y_training(indices, :) == -1);
+        learners{m} = svmtrain(w, y_training(indices, :), x_training(indices, :), sprintf(param, positive, negative));
     end
 
     % predict on the testing data
