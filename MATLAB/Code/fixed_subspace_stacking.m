@@ -12,6 +12,7 @@ cv_accuracy = zeros(1, cv);
 features_per_learner = 10;
 num_features = size(instances, 2);
 num_learners = round(num_features / features_per_learner);
+param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 
 for idx = 1 : cv
     fprintf('Iteration %d\n', idx);
@@ -31,7 +32,9 @@ for idx = 1 : cv
         if finish > num_features
             finish = num_features;
         end
-        learners{i} = weak_learner_train('dimension_split', x_training(:, start: finish), y_training(:), 'tree');
+        positive = size(y_training, 1) / sum(y_training == 1);
+        negative = size(y_training, 1) / sum(y_training == -1);
+        learners{i} = svmtrain(ones(size(y_training, 1), 1), y_training, x_training(:, start: finish), sprintf(param, positive, negative));
     end
     fprintf('Done\n');
     
@@ -45,13 +48,15 @@ for idx = 1 : cv
         if finish > num_features
             finish = num_features;
         end
-        x(:, i) = weak_learner_predict(instances(:, start: finish), labels, learners{i}{1}, learners{i}{2});
+        x(:, i) = svmpredict(labels, instances(:, start: finish), learners{i});
     end
     fprintf('Done\n');
     
-    learner = weak_learner_train('boosting', x(training, :), y(training, :), 'tree');
+    positive = numel(y(training, :)) / sum(y(training, :) == 1);
+    negative = numel(y(training, :)) / sum(y(training, :) == -1);
+    learner = svmtrain(ones(size(training, 1), 1), y(training, :), x(training, :), sprintf(param, positive, negative));
     
-    predictions = weak_learner_predict(x(testing, :), y(testing, :), learner{1}, learner{2});
+    predictions = svmpredict(y(testing, :), x(testing, :), learner);
     
     cv_accuracy(idx) = sum(predictions == y(testing, :)) / size(y(testing, :), 1);
 end
