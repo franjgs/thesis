@@ -7,6 +7,7 @@ load('seeds.mat'); rng(s);
 n_global = size(instances, 1);
 cv = 5;
 cv_accuracy = zeros(1, cv);
+param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 
 features_per_learner = 10;
 num_features = size(instances, 2);
@@ -33,7 +34,9 @@ for idx = 1 : cv
         end
         features{i} = feature_indices;
         % train the learners on these features
-        learners{i} = weak_learner_train('random_subspace', x_training(:, features{i}), y_training, 'tree');
+        positive = numel(y_training) / sum(y_training == 1);
+        negative = numel(y_training) / sum(y_training == -1);
+        learners{i} = svmtrain(ones(numel(y_training), 1), y_training, x_training(:, features{i}), sprintf(param, positive, negative));
         % remove the features from the training data
         x_training(:, feature_indices) = [];
     end
@@ -43,14 +46,16 @@ for idx = 1 : cv
     x = zeros(n_global, num_learners);
     y = labels;
     for i = 1 : num_learners
-        x(:, i) = weak_learner_predict(instances(:, features{i}), labels, learners{i}{1}, learners{i}{2});
+        x(:, i) = svmpredict(labels, instances(:, features{i}), learners{i});
     end
     
     % train a new learner on this new dimensional space
-    learner = weak_learner_train('random_subspace_stacking', x(training, :), y(training, :), 'tree');
+    positive = numel(y(training, :)) / sum(y(training, :) == 1);
+    negative = numel(y(training, :)) / sum(y(training, :) == -1);
+    learner = svmtrain(ones(numel(y(training, :)), 1), y(training, :), x(training, :), sprintf(param, positive, negative));
     
     % compare the predictions on this new dimensional space
-    predictions = weak_learner_predict(x(testing, :), y(testing, :), learner{1}, learner{2});
+    predictions = svmpredict(y(testing, :), x(testing, :), learner);
     cv_accuracy(idx) = sum(predictions == y(testing, :)) / size(y(testing, :), 1);
 end
 
