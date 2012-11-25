@@ -11,6 +11,7 @@ cv_accuracy = zeros(1, cv);
 features_total = size(instances, 2);
 features_per_learner = 2;
 num_learners = round(features_total / features_per_learner);
+param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 
 for idx = 1 : cv
     fprintf('Iteration #%d\n', idx);
@@ -35,15 +36,24 @@ for idx = 1 : cv
         % store these feature indices corresponding to this learner
         features{i} = feature_indices;
         % train a weak learner on this set of features
-        learners{i} = weak_learner_train('boosting', x_training(:, feature_indices), y_training, 'tree');
+        positive = numel(y_training) / sum(y_training == 1);
+        negative = numel(y_training) / sum(y_training == -1);
+        learners{i} = svmtrain(ones(numel(y_training), 1), y_training, x_training(:, feature_indices), sprintf(param, positive, negative));
         % calculate the classifier accuracy on the training data
-        clf_accuracy(i, :) = sum(weak_learner_predict(x_training(:, feature_indices), y_training, learners{i}{1}, learners{i}{2}) == y_training) / size(y_training, 1);
+        clf_accuracy(i, :) = sum(svmpredict(y_training, x_training(:, feature_indices), learners{i}) == y_training) / size(y_training, 1);
         % remove the features from the original training data
         x_training(:, feature_indices) = [];
     end
     fprintf('Done\n');
     
-    predictions = random_subspace_predict(x_testing, learners, features, clf_accuracy);
+    % given the learners, and the feature indices these learners work on
+    % obtain predictions from all the learners, and take a weighted vote
+    n = size(x_testing, 1);
+    predictions = zeros(n, num_learners);
+    for i = 1 : num_learners
+        predictions(:, i) = svmpredict(zeros(n, 1), x_testing(:, features{i}), learners{i});
+    end
+    predictions = sign(predictions * clf_accuracy);
     
     cv_accuracy(idx) = sum(predictions == y_testing) / size(y_testing, 1);
 end
