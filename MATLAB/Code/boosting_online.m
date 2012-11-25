@@ -2,7 +2,7 @@ clear; close all;
 
 load('seeds.mat'); rng(s);
 
-[labels, instances] = libsvmread('Data/a1a.data');
+[labels, instances] = libsvmread('Data/n-gram.data');
 
 cv = cvpartition(labels, 'HoldOut', 0.5);
 M = 10;
