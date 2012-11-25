@@ -2,12 +2,12 @@ clear; close all;
 
 load('seeds.mat'); rng(s);
 
-[labels, instances] = libsvmread('Data/a1a.data');
+[labels, instances] = libsvmread('Data/n-gram.data');
 
 M = 10;
-
 cv = cvpartition(labels, 'HoldOut', 0.5);
 cv_accuracy = zeros(1, cv.NumTestSets);
+param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 
 for i = 1 : cv.NumTestSets
     training = cv.training(i);
@@ -23,7 +23,9 @@ for i = 1 : cv.NumTestSets
     eps = zeros(M, 1);
     
     for m = 1 : M
-        models{m} = svmtrain(w(:, m) ./ min(w(:, m)), y_training, x_training, '-t 0 -c 1 -h 0');
+        positive = size(y_training, 1) / sum(y_training == 1);
+        negative = size(y_training, 1) / sum(y_training == -1);
+        models{m} = svmtrain(w(:, m) ./ min(w(:, m)), y_training, x_training, sprintf(param, positive, negative));
 
         predictions = svmpredict(y_training, x_training, models{m});
 
