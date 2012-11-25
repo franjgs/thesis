@@ -17,7 +17,7 @@ testing = cv.test(1);
 x_training = instances(training, :); y_training = labels(training, :);
 x_testing = instances(testing, :); y_testing = labels(testing, :);
 
-accuracy = zeros(1, size(x_training, 1));
+accuracy = zeros(1, size(x_training, 1) - 1);
 n_testing = size(x_testing, 1);
 
 % find two samples with labels 1 and -1, as a starting point to the process
