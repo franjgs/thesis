@@ -2,14 +2,14 @@ clear; close all;
 
 load('seeds.mat'); rng(s);
 
-[labels, instances] = libsvmread('Data/a1a.data');
+[labels, instances] = libsvmread('Data/n-gram.data');
 
 n_global = size(labels, 1);
 cv = cvpartition(labels, 'HoldOut', 0.5);
 cv_accuracy = zeros(1, cv.NumTestSets);
 
 features_total = size(instances, 2);
-features_per_learner = 2;
+features_per_learner = 1000;
 num_learners = round(features_total / features_per_learner);
 param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 
