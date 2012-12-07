@@ -13,5 +13,6 @@ def get_comments_data(filename):
         timestamps.append(contents[1])
         comments.append(" ".join(contents[2:]))
     f.close()
+    comments = map(lambda x: x.strip('\n').strip('"""'), comments)
     return (labels, timestamps, comments)
 
