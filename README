@@ -2,6 +2,6 @@ Code for http://www.sec.in.tum.de/utilizing-crowd-intelligence-for-online-detect
 
 Data Sources:
 
-* libsvm website - www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
+* libsvm website - http://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
 * comments.csv - https://www.kaggle.com/c/detecting-insults-in-social-commentary
 * n-gram data - custom text classification dataset
