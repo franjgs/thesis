@@ -1,3 +1,7 @@
 Code for http://www.sec.in.tum.de/utilizing-crowd-intelligence-for-online-detection-of-emotional-distress/
 
-Data comes from the libsvm website (www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/), except for the n-gram data, which comes from a custom text classification dataset
+Data Sources:
+
+* libsvm website - www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/
+* comments.csv - https://www.kaggle.com/c/detecting-insults-in-social-commentary
+* n-gram data - custom text classification dataset
