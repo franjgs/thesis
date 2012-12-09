@@ -4,7 +4,7 @@ import praw
 from pprint import pprint
 from time import sleep
 
-limit = 50
+limit = 500
 filename = 'stories.txt'
 
 def get_content(name, agent):
