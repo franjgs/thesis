@@ -5,10 +5,10 @@ random.seed(0)
 
 from lib import util
 
+import sys, numpy, scipy
 from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
-import numpy, scipy
 
 class BaggingSVM:
     def __init__(self, num_models):
@@ -39,10 +39,10 @@ class BaggingSVM:
         predictions = numpy.sign(predictions.transpose().sum(1))
         return numpy.mean(predictions == y)
 
-def main():
+def main(filename):
     # initialize global data
     vec = TfidfVectorizer(ngram_range = (1, 2), stop_words = 'english')
-    labels, _, comments = util.get_comments_data('Dataset/comments.csv')
+    labels, _, comments = util.get_comments_data(filename)
     instances = vec.fit_transform(comments)
 
     # cross validate
@@ -68,5 +68,8 @@ def main():
     print "Mean   => " + str(numpy.mean(cv_accuracy))
 
 if __name__ == "__main__":
-    main()
+    try:
+        main(sys.argv[1])
+    except IndexError:
+        print "Usage: python %s <training_file>" % sys.argv[0]
 

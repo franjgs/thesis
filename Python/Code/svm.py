@@ -5,6 +5,7 @@ random.seed(0)
 
 from lib import util
 
+import sys
 import numpy
 from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -19,9 +20,9 @@ class SVM:
     def score(self, x, y):
         return numpy.mean(self.model.predict(x) == y)
 
-def main():
+def main(filename):
     # initialize the data
-    labels, _, comments = util.get_comments_data("Dataset/comments.csv")
+    labels, _, comments = util.get_comments_data(filename)
     vec = TfidfVectorizer(ngram_range = (1, 2), stop_words = 'english')
     instances = vec.fit_transform(comments)
 
@@ -48,5 +49,8 @@ def main():
     print "Mean   => " + str(numpy.mean(cv_accuracy))
 
 if __name__ == "__main__":
-    main()
+    try:
+        main(sys.argv[1])
+    except IndexError:
+        print "Usage: python %s <training_file>" % sys.argv[0]
 
