@@ -18,8 +18,8 @@ class BoostingSVM:
         n_samples, n_features = x.get_shape()
         self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
         for i in xrange(0, self.num_models):
-            model = SVC(C = 1)
-            model.fit(x, y, sample_weight = numpy.array(self.w)[0], class_weight = class_weight)
+            model = SVC(C = 1, kernel = 'linear', class_weight = 'auto')
+            model.fit(x, y, sample_weight = numpy.array(self.w)[0])
             I = numpy.matrix(map(lambda f: int(f), model.predict(x) != y))
             self.eps[i] = (self.w * I.transpose()) / self.w.sum(1)
             self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])

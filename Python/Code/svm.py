@@ -1,16 +1,19 @@
 #! /usr/bin/env python
 
+import random
+random.seed(0)
+
 from lib import util
 
 import numpy
-from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
 from pprint import pprint
 
 class SVM:
     def __init__(self):
-        self.model = LinearSVC(C = 1)
+        self.model = SVC(C = 1, kernel = 'linear', class_weight = 'auto')
     def fit(self, x, y):
         self.model.fit(x, y)
     def score(self, x, y):
@@ -24,6 +27,8 @@ instances = vec.fit_transform(comments)
 # cross validate
 cv = 5; cv_accuracy = list();
 for i in xrange(0, cv):
+    print "Iteration #" + str(i) + "..."
+
     # initialize training/testing data
     cv_data = cross_validation.train_test_split(instances, labels, test_size = 0.5, random_state = i)
     x_training = cv_data[0]

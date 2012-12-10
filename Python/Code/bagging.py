@@ -1,11 +1,14 @@
 #! /usr/bin/env python
 
+import random
+random.seed(0)
+
 from lib import util
 
-from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
-import numpy, random, scipy
+import numpy, scipy
 
 class BaggingSVM:
     def __init__(self, num_models):
@@ -13,9 +16,9 @@ class BaggingSVM:
         self.models = list()
         self.features = list()
         for i in xrange(0, self.num_models):
-            self.models.append(LinearSVC(C = i + 1))
+            self.models.append(SVC(C = 1, kernel = 'linear', class_weight = 'auto'))
             self.features.append(None)
-    def fit(self, x, y, class_weight = None):
+    def fit(self, x, y):
         n_samples, n_features = x.get_shape()
         for i in xrange(self.num_models):
             # pick random features for each classifier
@@ -23,7 +26,7 @@ class BaggingSVM:
             feature_indices.sort()
             self.features[i] = feature_indices
             # train
-            self.models[i].fit(x[:, feature_indices], y, class_weight)
+            self.models[i].fit(x[:, feature_indices], y)
     def score(self, x, y):
         predictions = None
         for i in xrange(0, self.num_models):
@@ -44,6 +47,8 @@ instances = vec.fit_transform(comments)
 # cross validate
 num_models = 5; cv = 5; cv_accuracy = list();
 for i in xrange(0, cv):
+    print "Iteration #" + str(i) + "..."
+
     # initialize training/testing data
     cv_data = cross_validation.train_test_split(instances, labels, test_size = 0.5, random_state = i)
     x_training = cv_data[0]

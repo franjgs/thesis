@@ -1,11 +1,14 @@
 #! /usr/bin/env python
 
+import random
+random.seed(0)
+
 from lib import util
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
 from sklearn.svm import SVC
-import math, numpy, scipy, random
+import math, numpy, scipy
 
 class StackingSVM:
     def __init__(self, num_models):
@@ -13,13 +16,13 @@ class StackingSVM:
         # first level classifiers
         self.models = list()
         for i in xrange(0, self.num_models):
-            self.models.append(SVC(C = i + 1))
+            self.models.append(SVC(C = i + 1, kernel = 'linear', class_weight = 'auto'))
         # second level classifiers
         self.model = None
-    def fit(self, x, y, class_weight = None):
+    def fit(self, x, y):
         # train all the first level classifiers
         for i in xrange(0, self.num_models):
-            self.models[i].fit(x, y, class_weight = class_weight)
+            self.models[i].fit(x, y)
         # transform the training dataset to second level
         training = None
         for i in xrange(0, self.num_models):
@@ -29,7 +32,7 @@ class StackingSVM:
                 training = scipy.vstack((training, self.models[i].predict(x)))
         training = training.transpose()
         # train the second level model
-        self.model = SVC(C = 1)
+        self.model = SVC(C = 1, kernel = 'linear', class_weight = 'auto')
         self.model.fit(training, y)
     def score(self, x, y):
         # convert the testing dataset to second level
