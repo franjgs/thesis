@@ -1,5 +1,13 @@
-{% if error_message %}
-    <p><strong> {{ error_message }} </strong></p>
-{% else %}
-    {{ story }}
-{% endif %}
+{% extends "base.html" %}
+
+{% block title %}
+Rate
+{% endblock %}
+
+{% block content %}
+    {% if error_message %}
+        <p><strong> {{ error_message }} </strong></p>
+    {% else %}
+        {{ story }}
+    {% endif %}
+{% endblock %}
