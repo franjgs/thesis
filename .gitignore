@@ -1,3 +1,6 @@
 .DS_Store
 stories.txt
 *.pyc
+
+config.py
+*.sqlite3
