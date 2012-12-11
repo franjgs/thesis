@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'ratings',
+    'monitor',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
