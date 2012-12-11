@@ -5,20 +5,21 @@ Label some content
 {% endblock %}
 
 {% block content %}
-{% if error_message %}
-<strong> {{ error_message }} </strong>
-{% else %}
 <div class="container-narrow">
     <div class="main">
-        <h1> {{ story.content }} </h1>
+        {% if error_message %}
+            <h1 class="text-error">{{ error_message }}</h1>
+        {% else %}
+            <h1> {{ story.content }} </h1>
+            <hr/>
+            <form action="/ratings/{{ story.id }}/rate/" method="post">
+                {% csrf_token %}
+                <button name="label" type="submit" class="btn btn-warning" value="depressed">This sounds depressed</button>
+                <button name="label" type="submit" class="btn btn-success" value="happy">This sounds happy</button>
+            </form>
+        {% endif %}
         <hr/>
-        <form action="/ratings/{{ story.id }}/label/" method="post">
-            <button name="label" type="submit" class="btn btn-warning" value="depressed">This sounds depressed</button>
-            <button name="label" type="submit" class="btn btn-success" value="happy">This sounds happy</button>
-        </form>
-        <hr/>
-        <a href="/" class="btn btn-link">Go Home</a>
+        <a href="/" class="btn btn-link">Go Home</a> | <a href="/ratings/fetch" class="btn btn-link">Fetch more stories</a>
     </div>
 </div>
-{% endif %}
 {% endblock %}
