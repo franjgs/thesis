@@ -48,7 +48,7 @@ class StackingSVM:
 
 def main(filename):
     # initialize global data
-    vec = TfidfVectorizer(ngram_range = (1, 2), stop_words = 'english')
+    vec = TfidfVectorizer(ngram_range = (1, 2))
     labels, _, comments = util.get_comments_data(filename)
     instances = vec.fit_transform(comments)
 

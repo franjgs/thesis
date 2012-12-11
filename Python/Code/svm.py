@@ -23,7 +23,7 @@ class SVM:
 def main(filename):
     # initialize the data
     labels, _, comments = util.get_comments_data(filename)
-    vec = TfidfVectorizer(ngram_range = (1, 2), stop_words = 'english')
+    vec = TfidfVectorizer(ngram_range = (1, 2))
     instances = vec.fit_transform(comments)
 
     # cross validate
