@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 
 {% block title %}
-Rate
+Label some content
 {% endblock %}
 
 {% block content %}
-    {% if error_message %}
-        <p><strong> {{ error_message }} </strong></p>
-    {% else %}
-        {{ story }}
-    {% endif %}
+{% if error_message %}
+<strong> {{ error_message }} </strong>
+{% else %}
+<div class="container-narrow">
+    <div class="main">
+        <h1> {{ story.content }} </h1>
+        <hr/>
+        <form action="/ratings/{{ story.id }}/label/" method="post">
+            <button name="label" type="submit" class="btn btn-warning" value="depressed">This sounds depressed</button>
+            <button name="label" type="submit" class="btn btn-success" value="happy">This sounds happy</button>
+        </form>
+        <hr/>
+        <a href="/" class="btn btn-link">Go Home</a>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

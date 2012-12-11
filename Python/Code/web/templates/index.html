@@ -5,7 +5,13 @@ Welcome
 {% endblock %}
 
 {% block content %}
-<p>Choose:</p>
-<br/>
-<a href="/ratings/">Rate</a> | <a href="/view/">View</a>
+<div class="container-narrow">
+    <div class="main">
+        <h1>Welcome!</h1>
+        <hr/>
+        <a class="btn btn-success" href="/ratings/">Label some content</a>
+        <a class="btn btn-success" href="/view/">Monitor the current models</a>
+        <hr/>
+    </div>
+</div>
 {% endblock %}
