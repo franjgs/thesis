@@ -14,8 +14,8 @@ Label some content
             <hr/>
             <form action="/ratings/{{ story.id }}/rate/" method="post">
                 {% csrf_token %}
-                <button name="label" type="submit" class="btn btn-warning" value="depressed">This sounds depressed</button>
-                <button name="label" type="submit" class="btn btn-success" value="happy">This sounds happy</button>
+                <button name="label" type="submit" class="btn btn-success" value="depressed">This sounds depressed</button>
+                <button name="label" type="submit" class="btn btn-warning" value="happy">This does not sound depressed</button>
             </form>
         {% endif %}
         <hr/>

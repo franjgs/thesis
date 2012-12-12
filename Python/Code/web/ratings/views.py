@@ -4,6 +4,8 @@ from django.template import RequestContext
 
 from ratings.models import Story
 
+import praw
+
 def index(request):
     if Story.objects.filter(label = 0).count() > 0:
         story = Story.objects.filter(label = 0)[0]
@@ -27,4 +29,15 @@ def rate(request, story_id):
         elif request.POST[u'label'] == u'happy':
             story.label = -1
         story.save()
+    return redirect("/ratings/")
+
+def fetch(request):
+    # fetch and store 50 hot stories (each) from /r/depressed, /r/happy, and /r/suicidewatch
+    for name in ['depression', 'happy', 'suicidewatch']:
+        reddit = praw.Reddit(user_agent = name + ' user agent')
+        subreddit = reddit.get_subreddit(name)
+        submissions = subreddit.get_hot(limit = 50)
+        for x in submissions:
+            story = Story(content = x.title, label = 0)
+            story.save()
     return redirect("/ratings/")
