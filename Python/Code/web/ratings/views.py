@@ -32,12 +32,12 @@ def rate(request, story_id):
     return redirect("/ratings/")
 
 def fetch(request):
-    # fetch and store 50 hot stories (each) from /r/depressed, /r/happy, and /r/suicidewatch
     for name in ['depression', 'happy', 'suicidewatch']:
         reddit = praw.Reddit(user_agent = name + ' user agent')
         subreddit = reddit.get_subreddit(name)
-        submissions = subreddit.get_hot(limit = 50)
+        submissions = subreddit.get_hot(limit = 100)
         for x in submissions:
-            story = Story(content = x.title, label = 0)
-            story.save()
+            if Story.objects.filter(id36 = x.id).count() == 0:
+                story = Story(id36 = x.id, content = x.title, label = 0)
+                story.save()
     return redirect("/ratings/")
