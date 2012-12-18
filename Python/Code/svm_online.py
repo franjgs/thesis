@@ -3,7 +3,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 from pprint import pprint
-import numpy, sys
+import numpy, sys, pdb
 
 from lib import util
 
@@ -30,7 +30,9 @@ class OnlineSVM(object):
             self.support_vectors.append([labels[i], comments[i]])
 
     def fit(self, comment, label):
-        '''update the model with the current sample'''
+        '''update the model with the current sample, and return the prediction from the model before it was updated'''
+        # current prediction
+        prediction = self.model.predict(self.vec.transform([comment]))
         # append the current sample to the existing support vectors
         all_labels   = [i[0] for i in self.support_vectors] + [label]
         all_comments = [i[1] for i in self.support_vectors] + [comment]
@@ -46,6 +48,8 @@ class OnlineSVM(object):
         for sv in support_vectors:
             index = numpy.where((comments == sv).all(1) == True)[0][0]
             self.support_vectors.append([all_labels[index], all_comments[index]])
+        # return the prediction obtained before the model was updated
+        return prediction
 
 def main(filename):
     # initial setup
@@ -57,8 +61,8 @@ def main(filename):
     clf.add( [comments[positive], comments[negative]], [labels[positive], labels[negative]] )
     indices = [i for i in xrange(0, len(labels)) if i not in [positive, negative]]
     for i in indices:
-        print "index %d (n_sv = %d)" % (i, len(clf.support_vectors))
-        clf.fit(comments[i], labels[i])
+        prediction = clf.fit(comments[i], labels[i])
+        print "#%d \t (label, predicted) = (%d, %d)" % (i, prediction, labels[i])
 
 if __name__ == "__main__":
     try:
