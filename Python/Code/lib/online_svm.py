@@ -9,13 +9,14 @@ class OnlineSVM(object):
     For each new sample, retraining is done only on the set of support vectors plus the new sample
     '''
 
-    def __init__(self, randomize = False):
+    def __init__(self, randomize = False, factor = 0.5):
         self.clf = None
         self.vec = None
         self.support_vectors = None
         self.randomize = randomize
         if randomize is not False:
             self.indices = None
+            self.factor = factor
 
     def get_classifier(self):
         return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
@@ -32,7 +33,7 @@ class OnlineSVM(object):
         x = self.vec.fit_transform(comments); y = labels;
         if self.randomize:
             total_features = x.get_shape()[1]
-            self.indices = random.sample(xrange(0, total_features), total_features / 2)
+            self.indices = random.sample(xrange(0, total_features), int(total_features * self.factor))
             self.indices.sort()
             x = x[:, self.indices]
         self.clf.fit(x, labels)
@@ -60,7 +61,7 @@ class OnlineSVM(object):
         x = self.vec.fit_transform(all_comments); y = all_labels;
         if self.randomize:
             total_features = x.get_shape()[1]
-            self.indices = random.sample(xrange(0, total_features), total_features / 2)
+            self.indices = random.sample(xrange(0, total_features), int(total_features * self.factor))
             self.indices.sort()
             x = x[:, self.indices]
         self.clf.fit(x, y)
