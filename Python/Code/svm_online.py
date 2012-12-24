@@ -8,7 +8,7 @@ from lib.online_svm import OnlineSVM
 def main(filename):
     # initial setup
     labels, _, comments = get_comments_data(filename)
-    clf = OnlineSVM()
+    clf = OnlineSVM(randomize = True)
 
     # input first two samples (having different labels), and then continue with the online mode
     positive, negative = labels.index(1), labels.index(-1)
