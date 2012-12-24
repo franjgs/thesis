@@ -17,6 +17,8 @@ class OnlineSVM(object):
 
     def fit(self, comments, labels):
         '''fit the model to the first two samples'''
+        assert(len(comments) == 2)
+        assert(len(labels) == 2)
         self.model = self.get_classifier()
         self.vec = self.get_vectorizer()
         self.model.fit(self.vec.fit_transform(comments), labels)
@@ -24,10 +26,14 @@ class OnlineSVM(object):
         for i in xrange(0, 2):
             self.support_vectors.append([labels[i], comments[i]])
 
+    def predict(self, comment):
+        '''return the prediction from the current model'''
+        if self.model is None or self.vec is None:
+            return None
+        return self.model.predict(self.vec.transform([comment]))
+
     def add(self, comment, label):
-        '''update the model with the current sample, and return the prediction from the model before it was updated'''
-        # current prediction
-        prediction = self.model.predict(self.vec.transform([comment]))
+        '''update the model with the current sample'''
         # append the current sample to the existing support vectors
         all_labels   = [i[0] for i in self.support_vectors] + [label]
         all_comments = [i[1] for i in self.support_vectors] + [comment]
@@ -43,6 +49,4 @@ class OnlineSVM(object):
         for sv in support_vectors:
             index = where((comments == sv).all(1) == True)[0][0]
             self.support_vectors.append([all_labels[index], all_comments[index]])
-        # return the prediction obtained before the model was updated
-        return prediction
 

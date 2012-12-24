@@ -15,7 +15,8 @@ def main(filename):
     clf.fit( [comments[positive], comments[negative]], [labels[positive], labels[negative]] )
     indices = [i for i in xrange(0, len(labels)) if i not in [positive, negative]]
     for i in indices:
-        prediction = clf.add(comments[i], labels[i])
+        prediction = clf.predict(comments[i])
+        clf.add(comments[i], labels[i])
         print "#%d \t (label, predicted) = (%d, %d)" % (i, prediction, labels[i])
 
 if __name__ == "__main__":
