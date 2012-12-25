@@ -50,14 +50,11 @@ class OnlineBoosting(object):
         n_samples = float('inf')
         for i in xrange(0, self.n_models):
             self.clf[i].add(comment, label)
-            if len(self.clf[i].support_vectors) < n_samples:
-                n_samples = len(self.clf[i].support_vectors)
+            if len(self.clf[i].support_vectors_x) < n_samples:
+                n_samples = len(self.clf[i].support_vectors_x)
         self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
         for i in xrange(0, self.n_models):
-            labels, comments = list(), list()
-            for j in self.clf[i].support_vectors:
-                labels.append(j[0])
-                comments.append(j[1])
+            labels, comments = self.clf[i].support_vectors_y, self.clf[i].support_vectors_x
             predictions = numpy.zeros((len(labels), 1))
             for j in xrange(0, len(labels)):
                 predictions[j] = self.clf[i].predict(comments[j])

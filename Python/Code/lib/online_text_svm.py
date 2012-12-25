@@ -12,7 +12,8 @@ class OnlineTextSVM(object):
     def __init__(self, randomize = False, factor = 0.5):
         self.clf = None
         self.vec = None
-        self.support_vectors = None
+        self.support_vectors_x = None
+        self.support_vectors_y = None
         self.randomize = randomize
         if randomize is not False:
             self.indices = None
@@ -35,9 +36,11 @@ class OnlineTextSVM(object):
             self.indices.sort()
             x = x[:, self.indices]
         self.clf.fit(x, y, sample_weight = sample_weight)
-        self.support_vectors = list()
+        self.support_vectors_x = list()
+        self.support_vectors_y = list()
         for i in xrange(0, n_samples):
-            self.support_vectors.append([labels[i], comments[i]])
+            self.support_vectors_x.append(comments[i])
+            self.support_vectors_y.append(labels[i])
 
     def predict(self, comment):
         '''return the prediction from the current classifier'''
@@ -54,8 +57,8 @@ class OnlineTextSVM(object):
     def add(self, comment, label):
         '''update the classifier with the current sample'''
         # append the current sample to the existing support vectors
-        all_labels   = [i[0] for i in self.support_vectors] + [label]
-        all_comments = [i[1] for i in self.support_vectors] + [comment]
+        all_labels      = self.support_vectors_y + [label]
+        all_comments    = self.support_vectors_x + [comment]
         # convert the comments text to features
         self.vec = self.get_vectorizer()
         self.clf = self.get_classifier()
@@ -69,8 +72,10 @@ class OnlineTextSVM(object):
         # update the list of support vectors
         support_vectors = self.clf.support_vectors_.toarray()
         comments = x.toarray()
-        self.support_vectors = list()
+        self.support_vectors_x = list()
+        self.support_vectors_y = list()
         for sv in support_vectors:
             index = numpy.where((comments == sv).all(1) == True)[0][0]
-            self.support_vectors.append([all_labels[index], all_comments[index]])
+            self.support_vectors_x.append(all_comments[index])
+            self.support_vectors_y.append(all_labels[index])
 
