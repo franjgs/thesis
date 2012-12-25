@@ -6,7 +6,7 @@ import numpy
 import scipy
 
 from lib.util import get_comments_data
-from lib.online_svm import OnlineSVM
+from lib.online_text_svm import OnlineTextSVM
 
 class OnlineStacking(object):
 

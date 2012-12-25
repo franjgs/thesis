@@ -3,12 +3,12 @@
 import sys
 
 from lib.util import get_comments_data
-from lib.online_svm import OnlineSVM
+from lib.online_text_svm import OnlineTextSVM
 
 def main(filename):
     # initial setup
     labels, _, comments = get_comments_data(filename)
-    clf = OnlineSVM(randomize = False)
+    clf = OnlineTextSVM(randomize = False)
 
     # input first two samples (having different labels), and then continue with the online mode
     positive, negative = labels.index(1), labels.index(-1)

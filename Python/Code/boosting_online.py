@@ -6,7 +6,7 @@ import numpy
 import scipy
 
 from lib.util import get_comments_data
-from lib.online_svm import OnlineSVM
+from lib.online_text_svm import OnlineTextSVM
 
 class OnlineBoosting(object):
 
@@ -18,7 +18,7 @@ class OnlineBoosting(object):
         self.eps        = numpy.matrix(numpy.zeros((self.n_models, 1)))
 
     def get_classifier(self):
-        return OnlineSVM(randomize = False)
+        return OnlineTextSVM(randomize = False)
 
     def predict(self, comment):
         '''return the prediction from the current set of models'''

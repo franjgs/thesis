@@ -3,7 +3,7 @@ import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 
-class OnlineSVM(object):
+class OnlineTextSVM(object):
     '''
     An implementation of an online Support Vector Machine
     For each new sample, retraining is done only on the set of support vectors plus the new sample

@@ -3,7 +3,7 @@
 import sys
 
 from lib.util import get_comments_data
-from lib.online_svm import OnlineSVM
+from lib.online_text_svm import OnlineTextSVM
 
 class OnlineBagging(object):
 
@@ -12,7 +12,7 @@ class OnlineBagging(object):
         self.clf = list()
 
     def get_classifier(self):
-        return OnlineSVM(randomize = True, factor = 0.5)
+        return OnlineTextSVM(randomize = True, factor = 0.5)
 
     def predict(self, comment):
         '''return the prediction from the current set of models'''
