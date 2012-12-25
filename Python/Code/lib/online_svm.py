@@ -2,6 +2,7 @@ import numpy, scipy, random
 from sklearn.svm import SVC
 
 class OnlineSVM(object):
+
     '''
     An implementation of an online Support Vector Machine
     For each new sample, retraining is done only on the set of support vectors plus the new sample
@@ -9,7 +10,6 @@ class OnlineSVM(object):
 
     def __init__(self, randomize = False, factor = 0.5):
         self.clf = None
-        self.vec = None
         self.support_vectors = None
         self.randomize = randomize
         if randomize is not False:
