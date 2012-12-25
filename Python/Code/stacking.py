@@ -1,58 +1,69 @@
 #! /usr/bin/env python
 
-import random
-random.seed(0)
-
-from lib import util
-
+import math, numpy, scipy, sys, random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
 from sklearn.svm import SVC
-import math, numpy, scipy, sys
 
-class StackingSVM:
-    def __init__(self, num_models):
-        self.num_models = num_models
-        # first level classifiers
-        self.models = list()
-        for i in xrange(0, self.num_models):
-            self.models.append(SVC(C = i + 1, kernel = 'linear', class_weight = 'auto'))
-        # second level classifiers
-        self.model = None
+from lib.util import get_comments_data
+
+class StackingSVM(object):
+
+    ''' Stacking - using different Support Vector Machines (trained on different features) as underlying models '''
+
+    def __init__(self, n_models):
+        self.n_models   = n_models
+        self.models     = list()
+        self.features   = list()
+        self.clf        = None
+
+    def get_classifier(self):
+        return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
+
     def fit(self, x, y):
-        # train all the first level classifiers
-        for i in xrange(0, self.num_models):
-            self.models[i].fit(x, y)
+        '''fit the training data to all the classifiers'''
+        # train all the first level classifiers on different features
+        n_samples, n_features = x.get_shape()
+        for i in xrange(0, self.n_models):
+            model = self.get_classifier()
+            features = random.sample(xrange(0, n_features), n_features / self.n_models)
+            features.sort()
+            model.fit(x[:, features], y)
+            self.features.append(features)
+            self.models.append(model)
         # transform the training dataset to second level
         training = None
-        for i in xrange(0, self.num_models):
+        for i in xrange(0, self.n_models):
             if training is None:
-                training = self.models[i].predict(x)
+                training = self.models[i].predict(x[:, self.features[i]])
             else:
-                training = scipy.vstack((training, self.models[i].predict(x)))
+                training = scipy.vstack((training, self.models[i].predict(x[:, self.features[i]])))
         training = training.transpose()
         # train the second level model
-        self.model = SVC(C = 1, kernel = 'linear', class_weight = 'auto')
-        self.model.fit(training, y)
+        self.clf = self.get_classifier()
+        self.clf.fit(training, y)
+
     def score(self, x, y):
+        '''return the accuracy of prediction on testing data'''
         # convert the testing dataset to second level
         testing = None
-        for i in xrange(0, self.num_models):
+        for i in xrange(0, self.n_models):
             if testing is None:
-                testing = self.models[i].predict(x)
+                testing = self.models[i].predict(x[:, self.features[i]])
             else:
-                testing = scipy.vstack((testing, self.models[i].predict(x)))
+                testing = scipy.vstack((testing, self.models[i].predict(x[:, self.features[i]])))
         testing = testing.transpose()
         # measure the predictions and return accuracy
-        return numpy.mean(self.model.predict(testing) == y)
+        return numpy.mean(self.clf.predict(testing) == y)
 
 def main(filename):
     # initialize global data
     vec = TfidfVectorizer(ngram_range = (1, 2))
-    labels, _, comments = util.get_comments_data(filename)
+    labels, _, comments = get_comments_data(filename)
     instances = vec.fit_transform(comments)
+    random.seed(0)
 
-    num_models = 5; cv = 5; cv_accuracy = list();
+    n_models = 5; cv = 5; cv_accuracy = list();
     for i in xrange(0, cv):
         print "Iteration #" + str(i) + "..."
 
@@ -64,7 +75,7 @@ def main(filename):
         y_testing = cv_data[3]
 
         # initialize the classifier
-        clf = StackingSVM(num_models)
+        clf = StackingSVM(n_models)
         clf.fit(x_training, y_training)
 
         # measure prediction accuracy

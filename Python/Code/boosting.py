@@ -1,37 +1,47 @@
 #! /usr/bin/env python
 
-from lib import util
-
+import math, numpy, scipy, sys, random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 from sklearn import cross_validation
-import math, numpy, scipy, sys, random
 
-class BoostingSVM:
-    def __init__(self, num_models):
-        self.num_models = num_models
-        self.models     = list()
-        self.w          = list()
-        self.alpha      = numpy.matrix(numpy.zeros((self.num_models, 1)))
-        self.eps        = numpy.matrix(numpy.zeros((self.num_models, 1)))
+from lib import util
+
+class BoostingSVM(object):
+
+    ''' Boosting - using different (sample weighted) Support Vector Machines as underlying models '''
+
+    def __init__(self, n_models):
+        self.n_models   = n_models
+        self.clf        = list()
+        self.w          = None
+        self.alpha      = numpy.matrix(numpy.zeros((self.n_models, 1)))
+        self.eps        = numpy.matrix(numpy.zeros((self.n_models, 1)))
+
+    def get_classifier(self):
+        return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
+
     def fit(self, x, y, class_weight = None):
+        '''fit the training data to all the classifiers'''
         n_samples, n_features = x.get_shape()
-        self.w.append((1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples)))
-        for i in xrange(0, self.num_models):
-            model = SVC(C = 1, kernel = 'linear', class_weight = 'auto')
-            model.fit(x, y, sample_weight = numpy.array(self.w[-1])[0])
-            I = numpy.matrix(map(lambda f: int(f), model.predict(x) != y))
-            self.eps[i] = (self.w[-1] * I.transpose()) / self.w[-1].sum(1)
+        self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
+        for i in xrange(0, self.n_models):
+            clf = self.get_classifier()
+            clf.fit(x, y, sample_weight = numpy.array(self.w)[0])
+            I = numpy.matrix(map(lambda f: int(f), clf.predict(x) != y))
+            self.eps[i] = (self.w * I.transpose()) / self.w.sum(1)
             self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
-            self.w.append(numpy.multiply(self.w[-1], scipy.exp(self.alpha[i] * I)))
-            self.models.append(model)
+            self.w = numpy.multiply(self.w, scipy.exp(self.alpha[i] * I))
+            self.clf.append(clf)
+
     def score(self, x, y):
+        '''return the accuracy of prediction on testing data'''
         predictions = None
-        for i in xrange(0, self.num_models):
+        for i in xrange(0, self.n_models):
             if predictions is None:
-                predictions = self.models[i].predict(x)
+                predictions = self.clf[i].predict(x)
             else:
-                predictions = scipy.vstack((predictions, self.models[i].predict(x)))
+                predictions = scipy.vstack((predictions, self.clf[i].predict(x)))
         predictions = numpy.sign(predictions.transpose() * self.alpha)
         return numpy.mean(predictions == y)
 
@@ -40,8 +50,9 @@ def main(filename):
     vec = TfidfVectorizer(ngram_range = (1, 2))
     labels, _, comments = util.get_comments_data(filename)
     instances = vec.fit_transform(comments)
+    random.seed(0)
 
-    num_models = 5; cv = 5; cv_accuracy = list();
+    n_models = 5; cv = 5; cv_accuracy = list();
     for i in xrange(0, cv):
         print "Iteration #" + str(i) + "..."
 
@@ -53,7 +64,7 @@ def main(filename):
         y_testing = cv_data[3]
 
         # initialize the classifier
-        clf = BoostingSVM(num_models)
+        clf = BoostingSVM(n_models)
         clf.fit(x_training, y_training)
 
         # measure prediction accuracy

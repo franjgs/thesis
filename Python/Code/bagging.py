@@ -1,41 +1,44 @@
 #! /usr/bin/env python
 
-import random
-random.seed(0)
-
-from lib import util
-
-import sys, numpy, scipy
+import sys, numpy, scipy, random
 from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
 
-class BaggingSVM:
-    def __init__(self, num_models):
-        self.num_models = num_models
-        self.models = list()
+from lib import util
+
+class BaggingSVM(object):
+
+    ''' Bagging - using different Support Vector Machines (each fed with different features) as underlying models '''
+
+    def __init__(self, n_models):
+        self.n_models = n_models
+        self.clf = list()
         self.features = list()
-        for i in xrange(0, self.num_models):
-            self.models.append(SVC(C = 1, kernel = 'linear', class_weight = 'auto'))
-            self.features.append(None)
+
+    def get_classifier(self):
+        return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
+
     def fit(self, x, y):
+        '''fit the training data to all the classifiers'''
         n_samples, n_features = x.get_shape()
-        for i in xrange(self.num_models):
+        for i in xrange(self.n_models):
+            self.clf.append(self.get_classifier())
             # pick random features for each classifier
-            feature_indices = random.sample(xrange(0, n_features), n_features / self.num_models)
+            feature_indices = random.sample(xrange(0, n_features), n_features / self.n_models)
             feature_indices.sort()
-            self.features[i] = feature_indices
-            # train
-            self.models[i].fit(x[:, feature_indices], y)
+            self.features.append(feature_indices)
+            self.clf[i].fit(x[:, feature_indices], y)
+
     def score(self, x, y):
+        '''return the accuracy of prediction on testing data'''
         predictions = None
-        for i in xrange(0, self.num_models):
-            # build the data (with only the features assigned to this model)
+        for i in xrange(0, self.n_models):
             testing = x[:, self.features[i]]
             if predictions is None:
-                predictions = self.models[i].predict(testing)
+                predictions = self.clf[i].predict(testing)
             else:
-                predictions = scipy.vstack((predictions, self.models[i].predict(testing)))
+                predictions = scipy.vstack((predictions, self.clf[i].predict(testing)))
         predictions = numpy.sign(predictions.transpose().sum(1))
         return numpy.mean(predictions == y)
 
@@ -44,9 +47,10 @@ def main(filename):
     vec = TfidfVectorizer(ngram_range = (1, 2))
     labels, _, comments = util.get_comments_data(filename)
     instances = vec.fit_transform(comments)
+    random.seed(0)
 
     # cross validate
-    num_models = 5; cv = 5; cv_accuracy = list();
+    n_models = 5; cv = 5; cv_accuracy = list();
     for i in xrange(0, cv):
         print "Iteration #" + str(i) + "..."
 
@@ -58,7 +62,7 @@ def main(filename):
         y_testing = cv_data[3]
 
         # initialize the classifier
-        clf = BaggingSVM(num_models)
+        clf = BaggingSVM(n_models)
         clf.fit(x_training, y_training)
 
         # measure prediction accuracy
