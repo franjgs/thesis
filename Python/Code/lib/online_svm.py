@@ -24,7 +24,7 @@ class OnlineSVM(object):
     def get_vectorizer(self):
         return TfidfVectorizer(ngram_range = (1, 2), min_df = 1, use_idf = True)
 
-    def fit(self, comments, labels):
+    def fit(self, comments, labels, sample_weight = None):
         '''fit the classifier to the first two samples'''
         assert(len(comments) == 2)
         assert(len(labels) == 2)
@@ -36,7 +36,7 @@ class OnlineSVM(object):
             self.indices = random.sample(xrange(0, total_features), int(total_features * self.factor))
             self.indices.sort()
             x = x[:, self.indices]
-        self.clf.fit(x, labels)
+        self.clf.fit(x, y, sample_weight = sample_weight)
         self.support_vectors = list()
         for i in xrange(0, 2):
             self.support_vectors.append([labels[i], comments[i]])
