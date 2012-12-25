@@ -1,23 +1,27 @@
 #! /usr/bin/env python
 
-import random
-random.seed(0)
-
-from lib import util
-
-import sys
-import numpy
+import sys, numpy, random
 from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
-from pprint import pprint
 
-class SVM:
+from lib import util
+
+class SVM(object):
+
     def __init__(self):
-        self.model = SVC(C = 1, kernel = 'linear', class_weight = 'auto')
+        self.model = None
+
+    def get_classifier(self):
+        return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
+
     def fit(self, x, y):
+        self.model = self.get_classifier()
         self.model.fit(x, y)
+
     def score(self, x, y):
+        if self.model is None:
+            return None
         return numpy.mean(self.model.predict(x) == y)
 
 def main(filename):
@@ -25,6 +29,7 @@ def main(filename):
     labels, _, comments = util.get_comments_data(filename)
     vec = TfidfVectorizer(ngram_range = (1, 2))
     instances = vec.fit_transform(comments)
+    random.seed(0)
 
     # cross validate
     cv = 5; cv_accuracy = list();
@@ -50,7 +55,9 @@ def main(filename):
 
 if __name__ == "__main__":
     try:
-        main(sys.argv[1])
+        filename = sys.argv[1]
     except IndexError:
         print "Usage: python %s <training_file>" % sys.argv[0]
+    else:
+        main(filename)
 

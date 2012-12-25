@@ -1,6 +1,4 @@
-import numpy
-import scipy
-import random
+import numpy, scipy, random
 from sklearn.svm import SVC
 
 class OnlineSVM(object):

@@ -86,7 +86,9 @@ def main(filename):
 
 if __name__ == "__main__":
     try:
-        main(sys.argv[1])
+        filename = sys.argv[1]
     except IndexError:
         print "Usage: python %s <training_file>" % sys.argv[0]
+    else:
+        main(filename)
 
