@@ -19,7 +19,7 @@ class OnlineSVM(object):
         return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
 
     def fit(self, x, y, sample_weight = None):
-        '''fit the classifier to the first two samples'''
+        '''fit the classifier to the first samples'''
         self.clf = self.get_classifier()
         if self.randomize:
             total_features = x.get_shape()[1]

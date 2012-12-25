@@ -25,20 +25,18 @@ class OnlineTextSVM(object):
         return TfidfVectorizer(ngram_range = (1, 2), min_df = 1, use_idf = True)
 
     def fit(self, comments, labels, sample_weight = None):
-        '''fit the classifier to the first two samples'''
-        assert(len(comments) == 2)
-        assert(len(labels) == 2)
+        '''fit the classifier to the first samples'''
         self.clf = self.get_classifier()
         self.vec = self.get_vectorizer()
         x = self.vec.fit_transform(comments); y = labels;
+        n_samples, n_features = x.get_shape()
         if self.randomize:
-            total_features = x.get_shape()[1]
-            self.indices = random.sample(xrange(0, total_features), int(total_features * self.factor))
+            self.indices = random.sample(xrange(0, n_features), int(n_features * self.factor))
             self.indices.sort()
             x = x[:, self.indices]
         self.clf.fit(x, y, sample_weight = sample_weight)
         self.support_vectors = list()
-        for i in xrange(0, 2):
+        for i in xrange(0, n_samples):
             self.support_vectors.append([labels[i], comments[i]])
 
     def predict(self, comment):
