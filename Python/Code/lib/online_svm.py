@@ -13,6 +13,7 @@ class OnlineSVM(object):
         self.support_vectors = None
         self.randomize = randomize
         if randomize is not False:
+            self.indices = None
             self.factor = factor
 
     def get_classifier(self):
@@ -46,12 +47,11 @@ class OnlineSVM(object):
         # fit the data to the model
         self.clf = self.get_classifier()
         if self.randomize:
-            total_features = x.get_shape()[1]
-            self.indices = random.sample(xrange(0, total_features), int(total_features * self.factor))
+            n_samples, n_features = x.get_shape()
+            self.indices = random.sample(xrange(0, n_features), int(n_features * self.factor))
             self.indices.sort()
             x = x[:, self.indices]
         self.clf.fit(x, y)
         # update the list of support vectors
         self.support_vectors_x = self.clf.support_vectors_
         self.support_vectors_y = self.clf.predict(self.support_vectors_x)
-
