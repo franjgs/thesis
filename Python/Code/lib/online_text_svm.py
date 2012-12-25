@@ -45,7 +45,10 @@ class OnlineTextSVM(object):
         '''return the prediction from the current classifier'''
         if self.clf is None or self.vec is None:
             return None
-        x = self.vec.transform([comment])
+        if type(comment) == str:
+            x = self.vec.transform([comment])
+        else:
+            x = self.vec.transform(comment)
         if self.randomize and self.indices:
             x = x[:, self.indices]
         return self.clf.predict(x)
