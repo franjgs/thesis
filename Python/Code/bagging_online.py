@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-import sys
+import sys, numpy
 
 from lib.util import get_comments_data
 from lib.online_text_svm import OnlineTextSVM
@@ -19,7 +19,7 @@ class OnlineBagging(object):
         predictions = list()
         for i in xrange(0, self.n_models):
             predictions.append(self.clf[i].predict(comment))
-        return cmp(sum(predictions), 0)
+        return numpy.sign(sum(predictions))
 
     def fit(self, comments, labels):
         '''fit all the models to the first two samples'''
