@@ -22,7 +22,7 @@ class OnlineBagging(object):
         return numpy.sign(sum(predictions))
 
     def fit(self, comments, labels):
-        '''fit all the models to the first two samples'''
+        '''fit all the models to the first few samples'''
         for i in xrange(0, self.n_models):
             self.clf.append(self.get_classifier())
             self.clf[i].fit(comments, labels)
