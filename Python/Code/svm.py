@@ -5,7 +5,7 @@ from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
 
-from lib import util
+from lib import util, config
 
 class SVM(object):
 
@@ -24,11 +24,11 @@ class SVM(object):
             return None
         return numpy.mean(self.model.predict(x) == y)
 
-def main(filename):
+def main():
     # initialize the data
-    labels, _, comments = util.get_comments_data(filename)
-    vec = TfidfVectorizer(ngram_range = (1, 2))
-    instances = vec.fit_transform(comments)
+    labels, stories = util.get_distress_data(config.CONNECTION)
+    vec = TfidfVectorizer(ngram_range = (1, 5), strip_accents = None, charset_error = 'ignore', stop_words = None)
+    instances = vec.fit_transform(stories)
     random.seed(0)
 
     # cross validate
@@ -54,10 +54,5 @@ def main(filename):
     print "Mean   => " + str(numpy.mean(cv_accuracy))
 
 if __name__ == "__main__":
-    try:
-        filename = sys.argv[1]
-    except IndexError:
-        print "Usage: python %s <training_file>" % sys.argv[0]
-    else:
-        main(filename)
+    main()
 

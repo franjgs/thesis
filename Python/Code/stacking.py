@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
 from sklearn.svm import SVC
 
-from lib.util import get_comments_data
+from lib import util, config
 
 class StackingSVM(object):
 
@@ -56,11 +56,11 @@ class StackingSVM(object):
         # measure the predictions and return accuracy
         return numpy.mean(self.clf.predict(testing) == y)
 
-def main(filename):
+def main():
     # initialize global data
-    vec = TfidfVectorizer(ngram_range = (1, 2))
-    labels, _, comments = get_comments_data(filename)
-    instances = vec.fit_transform(comments)
+    vec = TfidfVectorizer(ngram_range = (1, 5), strip_accents = None, charset_error = 'ignore', stop_words = None)
+    labels, stories = util.get_distress_data(config.CONNECTION)
+    instances = vec.fit_transform(stories)
     random.seed(0)
 
     n_models = 5; cv = 5; cv_accuracy = list();
@@ -85,10 +85,5 @@ def main(filename):
     print "Mean   => " + str(numpy.mean(cv_accuracy))
 
 if __name__ == "__main__":
-    try:
-        filename = sys.argv[1]
-    except IndexError:
-        print "Usage: python %s <training_file>" % sys.argv[0]
-    else:
-        main(filename)
+    main()
 
