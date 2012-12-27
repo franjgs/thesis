@@ -25,7 +25,7 @@ def get_distress_data(connection):
             connection["username"],
             connection["password"],
     )
-    db.query("select * from ratings_story")
+    db.query("select * from ratings_story where label <> 0")
     labels, stories = list(), list()
     results = db.store_result()
     while True:
