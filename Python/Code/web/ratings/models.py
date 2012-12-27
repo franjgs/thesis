@@ -2,7 +2,10 @@ from django.db import models
 
 # 'id36' stores the reddit-allocated id of the story
 # 'content' stores the story text
-# 'label' is 1 if the content is supposed to be depressed, -1 if it is happy, and 0 otherwise
+# 'label'
+#       0 => not yet labelled
+#       1 => depressed
+#      -1 => happy
 class Story(models.Model):
 
     id36    = models.CharField(max_length = 10, db_index = True)
