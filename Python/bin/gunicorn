@@ -1,9 +1,0 @@
-#!/Users/siddhant/Work/TUM/Thesis/Python/bin/python
-# EASY-INSTALL-ENTRY-SCRIPT: 'gunicorn==0.16.1','console_scripts','gunicorn'
-__requires__ = 'gunicorn==0.16.1'
-import sys
-from pkg_resources import load_entry_point
-
-sys.exit(
-   load_entry_point('gunicorn==0.16.1', 'console_scripts', 'gunicorn')()
-)
