@@ -11,10 +11,11 @@ class BaggingSVM(object):
 
     ''' Bagging - using different Support Vector Machines (each fed with different features) as underlying models '''
 
-    def __init__(self, n_models):
+    def __init__(self, n_models, factor):
         self.n_models = n_models
         self.clf = list()
         self.features = list()
+        self.factor = factor
 
     def get_classifier(self):
         return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
@@ -22,10 +23,10 @@ class BaggingSVM(object):
     def fit(self, x, y):
         '''fit the training data to all the classifiers'''
         n_samples, n_features = x.get_shape()
-        for i in xrange(self.n_models):
+        for i in xrange(0, self.n_models):
             self.clf.append(self.get_classifier())
             # pick random features for each classifier
-            feature_indices = random.sample(xrange(0, n_features), n_features / self.n_models)
+            feature_indices = random.sample(xrange(0, n_features), int(n_features * self.factor))
             feature_indices.sort()
             self.features.append(feature_indices)
             self.clf[i].fit(x[:, feature_indices], y)
@@ -62,7 +63,7 @@ def main():
         y_testing = cv_data[3]
 
         # initialize the classifier
-        clf = BaggingSVM(n_models)
+        clf = BaggingSVM(n_models, 0.8)
         clf.fit(x_training, y_training)
 
         # measure prediction accuracy
