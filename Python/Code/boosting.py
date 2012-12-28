@@ -14,7 +14,7 @@ class BoostingSVM(object):
     def __init__(self, n_models):
         self.n_models   = n_models
         self.clf        = list()
-        self.w          = list()
+        self.w          = None
         self.alpha      = numpy.matrix(numpy.zeros((self.n_models, 1)))
         self.eps        = numpy.matrix(numpy.zeros((self.n_models, 1)))
 
@@ -24,14 +24,14 @@ class BoostingSVM(object):
     def fit(self, x, y):
         '''fit the training data to all the classifiers'''
         n_samples, n_features = x.get_shape()
-        self.w.append((1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples)))
+        self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
         for i in xrange(0, self.n_models):
             clf = self.get_classifier()
-            clf.fit(x, y, sample_weight = numpy.array(self.w[-1])[0])
+            clf.fit(x, y, sample_weight = numpy.array(self.w[-1, :])[0])
             I = numpy.matrix(map(lambda f: int(f), clf.predict(x) != y))
-            self.eps[i] = (self.w[-1] * I.transpose()) / self.w[-1].sum(1)
+            self.eps[i] = (self.w[-1, :] * I.transpose()) / self.w[-1, :].sum(1)
             self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
-            self.w.append(numpy.multiply(self.w[-1], numpy.exp(self.alpha[i] * I)))
+            self.w = numpy.vstack((self.w, (numpy.multiply(self.w[-1, :], numpy.exp(self.alpha[i] * I)))))
             self.clf.append(clf)
 
     def score(self, x, y):
