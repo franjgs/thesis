@@ -30,7 +30,10 @@ class BoostingSVM(object):
             clf.fit(x, y, sample_weight = numpy.array(self.w[-1, :])[0])
             I = numpy.matrix(map(lambda f: int(f), clf.predict(x) != y))
             self.eps[i] = (self.w[-1, :] * I.transpose()) / self.w[-1, :].sum(1)
-            self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
+            if self.eps[i] == 0:
+                self.alpha[i] = 1
+            else:
+                self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
             self.w = numpy.vstack((self.w, (numpy.multiply(self.w[-1, :], numpy.exp(self.alpha[i] * I)))))
             self.clf.append(clf)
 
