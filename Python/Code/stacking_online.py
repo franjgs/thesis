@@ -1,9 +1,6 @@
 #! /usr/bin/env python
 
-import sys
-import math
-import numpy
-import scipy
+import sys, math, numpy
 
 from lib import util, config
 from lib.online_svm import OnlineSVM
@@ -30,12 +27,12 @@ class OnlineStacking(object):
             if x is None:
                 x = self.models[i].predict(story)
             else:
-                x = scipy.vstack((x, self.models[i].predict(story)))
+                x = numpy.vstack((x, self.models[i].predict(story)))
         x = x.transpose()
         return self.clf.predict(x)
 
     def fit(self, stories, labels):
-        '''fit all the models to the first two samples'''
+        '''fit all the models to the first few samples'''
         # train the first level models
         for i in xrange(0, self.n_models):
             self.models.append(self.get_classifier(level = 1))
@@ -46,7 +43,7 @@ class OnlineStacking(object):
             if x is None:
                 x = self.models[i].predict(stories)
             else:
-                x = scipy.vstack((x, self.models[i].predict(stories)))
+                x = numpy.vstack((x, self.models[i].predict(stories)))
         x = x.transpose()
         # train the second level model
         self.clf = self.get_classifier(level = 2)
@@ -61,7 +58,7 @@ class OnlineStacking(object):
             if x is None:
                 x = self.models[i].predict(story)
             else:
-                x = scipy.vstack((x, self.models[i].predict(story)))
+                x = numpy.vstack((x, self.models[i].predict(story)))
         x = x.transpose()
         self.clf.add(x, label)
 
