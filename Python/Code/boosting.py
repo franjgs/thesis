@@ -14,24 +14,24 @@ class BoostingSVM(object):
     def __init__(self, n_models):
         self.n_models   = n_models
         self.clf        = list()
-        self.w          = None
+        self.w          = list()
         self.alpha      = numpy.matrix(numpy.zeros((self.n_models, 1)))
         self.eps        = numpy.matrix(numpy.zeros((self.n_models, 1)))
 
     def get_classifier(self):
         return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
 
-    def fit(self, x, y, class_weight = None):
+    def fit(self, x, y):
         '''fit the training data to all the classifiers'''
         n_samples, n_features = x.get_shape()
-        self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
+        self.w.append((1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples)))
         for i in xrange(0, self.n_models):
             clf = self.get_classifier()
-            clf.fit(x, y, sample_weight = numpy.array(self.w)[0])
+            clf.fit(x, y, sample_weight = numpy.array(self.w[-1])[0])
             I = numpy.matrix(map(lambda f: int(f), clf.predict(x) != y))
-            self.eps[i] = (self.w * I.transpose()) / self.w.sum(1)
+            self.eps[i] = (self.w[-1] * I.transpose()) / self.w[-1].sum(1)
             self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
-            self.w = numpy.multiply(self.w, scipy.exp(self.alpha[i] * I))
+            self.w.append(numpy.multiply(self.w[-1], scipy.exp(self.alpha[i] * I)))
             self.clf.append(clf)
 
     def score(self, x, y):
@@ -49,7 +49,7 @@ def main():
     # initialize global data
     vec = TfidfVectorizer(ngram_range = (1, 5), strip_accents = None, charset_error = 'ignore', stop_words = None)
     labels, stories = util.get_distress_data(config.CONNECTION)
-    instances = vec.fit_transform(stories)
+    instances = vec.fit_transform(stories); labels = numpy.array(labels);
     random.seed(0)
 
     n_models = 5; cv = 5; cv_accuracy = list();
