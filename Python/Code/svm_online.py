@@ -2,31 +2,26 @@
 
 import sys
 
-from lib.util import get_comments_data
+from lib import util, config
 from lib.online_text_svm import OnlineTextSVM
 
-def main(filename):
+def main():
     # initial setup
-    labels, _, comments = get_comments_data(filename)
+    labels, stories = util.get_distress_data(config.CONNECTION)
     clf = OnlineTextSVM(randomize = False)
     total, correct = 0.0, 0.0
 
     # input first two samples (having different labels), and then continue with the online mode
     positive, negative = labels.index(1), labels.index(-1)
-    clf.fit( [comments[positive], comments[negative]], [labels[positive], labels[negative]] )
+    clf.fit( [stories[positive], stories[negative]], [labels[positive], labels[negative]] )
     indices = [i for i in xrange(0, len(labels)) if i not in [positive, negative]]
     for i in indices:
-        prediction = clf.predict(comments[i])
-        clf.add(comments[i], labels[i])
+        prediction = clf.predict(stories[i])
+        clf.add(stories[i], labels[i])
         if prediction == labels[i]:
             correct = correct + 1
         total = total + 1
-        print "#%d \t (label, predicted, accuracy) = (%d, %d, %.3f)" % (i, prediction, labels[i], correct * 100 / total)
+        print "#%d => (Cumulative accuracy, Support Vectors) = (%.3f, %d)" % (i, correct / total, clf.get_sv_count())
 
 if __name__ == "__main__":
-    try:
-        filename = sys.argv[1]
-    except:
-        print "Usage: python %s <training_file>" % sys.argv[0]
-    else:
-        main(filename)
+    main()

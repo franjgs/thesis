@@ -36,6 +36,7 @@ def main():
     # initial setup
     labels, stories = util.get_distress_data(config.CONNECTION)
     clf = OnlineBagging(n_models = 5)
+    total, correct = 0.0, 0.0
 
     # input first two samples (having different labels), and then continue with the online mode
     positive, negative = labels.index(1), labels.index(-1)
@@ -44,7 +45,10 @@ def main():
     for i in indices:
         prediction = clf.predict(stories[i])
         clf.add(stories[i], labels[i])
-        print "#%d \t (label, predicted) = (%d, %d)" % (i, prediction, labels[i])
+        if prediction == labels[i]:
+            correct = correct + 1
+        total = total + 1
+        print "#%d => Cumulative accuracy = %.3f" % (i, correct / total)
 
 if __name__ == "__main__":
     main()

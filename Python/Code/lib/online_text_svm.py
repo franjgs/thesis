@@ -25,6 +25,11 @@ class OnlineTextSVM(object):
     def get_vectorizer(self):
         return TfidfVectorizer(ngram_range = (1, 5), min_df = 1, strip_accents = None, charset_error = 'ignore', stop_words = None)
 
+    def get_sv_count(self):
+        if self.support_vectors_x is None:
+            return -1
+        return len(self.support_vectors_x)
+
     def fit(self, stories, labels, sample_weight = None):
         '''fit the classifier to the first samples'''
         self.clf = self.get_classifier()

@@ -10,7 +10,8 @@ class OnlineSVM(object):
 
     def __init__(self, randomize = False, factor = 0.5):
         self.clf = None
-        self.support_vectors = None
+        self.support_vectors_x = None
+        self.support_vectors_y = None
         self.randomize = randomize
         if randomize is not False:
             self.indices = None
@@ -18,6 +19,11 @@ class OnlineSVM(object):
 
     def get_classifier(self):
         return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
+
+    def get_sv_count(self):
+        if self.support_vectors is None:
+            return -1
+        return len(self.support_vectors_x)
 
     def fit(self, x, y, sample_weight = None):
         '''fit the classifier to the first samples'''
