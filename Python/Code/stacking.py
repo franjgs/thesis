@@ -37,7 +37,7 @@ class StackingSVM(object):
             if training is None:
                 training = self.models[i].predict(x[:, self.features[i]])
             else:
-                training = scipy.vstack((training, self.models[i].predict(x[:, self.features[i]])))
+                training = numpy.vstack((training, self.models[i].predict(x[:, self.features[i]])))
         training = training.transpose()
         # train the second level model
         self.clf = self.get_classifier()
@@ -51,7 +51,7 @@ class StackingSVM(object):
             if testing is None:
                 testing = self.models[i].predict(x[:, self.features[i]])
             else:
-                testing = scipy.vstack((testing, self.models[i].predict(x[:, self.features[i]])))
+                testing = numpy.vstack((testing, self.models[i].predict(x[:, self.features[i]])))
         testing = testing.transpose()
         # measure the predictions and return accuracy
         return numpy.mean(self.clf.predict(testing) == y)
@@ -60,7 +60,7 @@ def main():
     # initialize global data
     vec = TfidfVectorizer(ngram_range = (1, 5), strip_accents = None, charset_error = 'ignore', stop_words = None, min_df = 1)
     labels, stories = util.get_distress_data(config.CONNECTION)
-    instances = vec.fit_transform(stories)
+    instances = vec.fit_transform(stories); labels = numpy.array(labels);
     random.seed(0)
 
     n_models = 5; cv = 5; cv_accuracy = list();
