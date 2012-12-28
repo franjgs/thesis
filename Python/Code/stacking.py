@@ -58,7 +58,7 @@ class StackingSVM(object):
 
 def main():
     # initialize global data
-    vec = TfidfVectorizer(ngram_range = (1, 5), strip_accents = None, charset_error = 'ignore', stop_words = None)
+    vec = TfidfVectorizer(ngram_range = (1, 5), strip_accents = None, charset_error = 'ignore', stop_words = None, min_df = 1)
     labels, stories = util.get_distress_data(config.CONNECTION)
     instances = vec.fit_transform(stories)
     random.seed(0)
