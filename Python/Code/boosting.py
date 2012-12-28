@@ -31,7 +31,7 @@ class BoostingSVM(object):
             I = numpy.matrix(map(lambda f: int(f), clf.predict(x) != y))
             self.eps[i] = (self.w[-1] * I.transpose()) / self.w[-1].sum(1)
             self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
-            self.w.append(numpy.multiply(self.w[-1], scipy.exp(self.alpha[i] * I)))
+            self.w.append(numpy.multiply(self.w[-1], numpy.exp(self.alpha[i] * I)))
             self.clf.append(clf)
 
     def score(self, x, y):
@@ -41,7 +41,7 @@ class BoostingSVM(object):
             if predictions is None:
                 predictions = self.clf[i].predict(x)
             else:
-                predictions = scipy.vstack((predictions, self.clf[i].predict(x)))
+                predictions = numpy.vstack((predictions, self.clf[i].predict(x)))
         predictions = numpy.sign(predictions.transpose() * self.alpha)
         return numpy.mean(predictions == y)
 
