@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-import math, numpy, scipy, sys, random
+import math, numpy, random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 from sklearn import cross_validation
