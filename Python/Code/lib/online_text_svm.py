@@ -5,7 +5,7 @@ from sklearn.svm import SVC
 class OnlineTextSVM(object):
 
     '''
-    An implementation of an online Support Vector Machine
+    An implementation of an online Support Vector Machine, used for text input
     For each new sample, retraining is done only on the set of support vectors plus the new sample
     '''
 
@@ -29,7 +29,7 @@ class OnlineTextSVM(object):
         '''fit the classifier to the first samples'''
         self.clf = self.get_classifier()
         self.vec = self.get_vectorizer()
-        x = self.vec.fit_transform(stories); y = labels;
+        x = self.vec.fit_transform(stories); y = numpy.array(labels);
         n_samples, n_features = x.get_shape()
         if self.randomize:
             self.indices = random.sample(xrange(0, n_features), int(n_features * self.factor))
@@ -38,9 +38,12 @@ class OnlineTextSVM(object):
         self.clf.fit(x, y, sample_weight = sample_weight)
         self.support_vectors_x = list()
         self.support_vectors_y = list()
-        for i in xrange(0, n_samples):
-            self.support_vectors_x.append(stories[i])
-            self.support_vectors_y.append(labels[i])
+        support_vectors = self.clf.support_vectors_.toarray()
+        x = x.toarray()
+        for sv in support_vectors:
+            index = numpy.where((x == sv).all(1) == True)[0][0]
+            self.support_vectors_x.append(stories[index])
+            self.support_vectors_y.append(labels[index])
 
     def predict(self, story):
         '''return the prediction from the current classifier'''
@@ -62,10 +65,10 @@ class OnlineTextSVM(object):
         # convert the stories text to features
         self.vec = self.get_vectorizer()
         self.clf = self.get_classifier()
-        x = self.vec.fit_transform(all_stories); y = all_labels;
+        x = self.vec.fit_transform(all_stories); y = numpy.array(all_labels);
         if self.randomize:
-            total_features = x.get_shape()[1]
-            self.indices = random.sample(xrange(0, total_features), int(total_features * self.factor))
+            n_samples, n_features = x.get_shape()
+            self.indices = random.sample(xrange(0, n_features), int(n_features * self.factor))
             self.indices.sort()
             x = x[:, self.indices]
         self.clf.fit(x, y)
