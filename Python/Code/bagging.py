@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-import sys, numpy, scipy, random
+import numpy, random
 from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
@@ -39,7 +39,7 @@ class BaggingSVM(object):
             if predictions is None:
                 predictions = self.clf[i].predict(testing)
             else:
-                predictions = scipy.vstack((predictions, self.clf[i].predict(testing)))
+                predictions = numpy.vstack((predictions, self.clf[i].predict(testing)))
         predictions = numpy.sign(predictions.transpose().sum(1))
         return numpy.mean(predictions == y)
 
@@ -47,7 +47,7 @@ def main():
     # initialize global data
     vec = TfidfVectorizer(ngram_range = (1, 5), strip_accents = None, charset_error = 'ignore', stop_words = None)
     labels, stories = util.get_distress_data(config.CONNECTION)
-    instances = vec.fit_transform(stories)
+    instances = vec.fit_transform(stories); labels = numpy.array(labels);
     random.seed(0)
 
     # cross validate
