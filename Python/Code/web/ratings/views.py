@@ -12,14 +12,14 @@ def index(request):
         story = Story.objects.filter(label = 0)[0]
     except:
         return render_to_response(
-                "ratings/index.html",
-                { 'error_message': 'No unlabeled stories left' },
-                context_instance = RequestContext(request)
+            "ratings/index.html",
+            { 'error_message': 'No unlabeled stories left' },
+            context_instance = RequestContext(request)
         )
     return render_to_response(
-            "ratings/index.html",
-            { 'story': story },
-            context_instance = RequestContext(request)
+        "ratings/index.html",
+        { 'story': story },
+        context_instance = RequestContext(request)
     )
 
 def rate(request, story_id):
