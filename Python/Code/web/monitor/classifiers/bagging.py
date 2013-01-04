@@ -27,4 +27,3 @@ class Bagging(object):
         '''update all the models with the current sample'''
         for i in xrange(0, self.n_models):
             self.clf[i].add(story, label)
-

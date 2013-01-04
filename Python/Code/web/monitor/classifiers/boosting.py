@@ -59,4 +59,3 @@ class Boosting(object):
             else:
                 self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
             self.w = numpy.vstack((self.w[-1, :], numpy.multiply(self.w[-1, :], numpy.exp(self.alpha[i] * I))))
-
