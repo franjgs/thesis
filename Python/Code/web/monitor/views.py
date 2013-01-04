@@ -9,5 +9,5 @@ def stats(request, name):
     if name == "svm":
         context = { 'name': 'SVM' }
     else:
-        context = { 'name': name.capitalize }
+        context = { 'name': name.capitalize() }
     return render_to_response("monitor/index.html", context)
