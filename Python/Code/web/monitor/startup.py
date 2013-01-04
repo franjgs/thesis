@@ -18,7 +18,7 @@ def initialize():
         if model == SVM:
             clf = model()
         else:
-            clf = model(n_models = 5)
+            clf = model(n_models = settings.N_MODELS)
         clf.fit(stories, labels)
         settings.CLASSIFIERS[model.__name__] = clf
         print "Done!"

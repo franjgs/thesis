@@ -96,8 +96,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'web.urls'
 
-# A hash to store all the classifiers (filled up at runtime by monitor/startup.py)
+# Settings for machine learning models
 CLASSIFIERS = {}
+N_MODELS = 5
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'web.wsgi.application'
