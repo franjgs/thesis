@@ -5,10 +5,6 @@ from web import settings
 from django.contrib import admin
 admin.autodiscover()
 
-# Initialize all the machine learning models
-from monitor import startup
-startup.initialize()
-
 urlpatterns = patterns('',
     url(r'^$', 'web.views.index'),
     url(r'^ratings/', include('ratings.urls')),
