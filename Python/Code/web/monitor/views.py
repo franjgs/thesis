@@ -1,10 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
+from tweepy import Stream
 
 from monitor.classifiers.svm import SVM
 from monitor.classifiers.bagging import Bagging
 from monitor.classifiers.boosting import Boosting
 from monitor.classifiers.stacking import Stacking
+from monitor import twitter
 
 from ratings.models import Story
 
@@ -34,4 +36,7 @@ def train(request):
             clf = model(n_models = settings.N_MODELS)
         clf.fit(stories, labels)
         settings.CLASSIFIERS[model.__name__] = clf
+    return redirect("/monitor/")
+
+def fetch(request):
     return redirect("/monitor/")
