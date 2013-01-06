@@ -3,11 +3,7 @@ from django.shortcuts import render_to_response, redirect
 from tweepy import Stream
 from dateutil import parser
 
-from monitor.classifiers.svm import SVM
-from monitor.classifiers.bagging import Bagging
-from monitor.classifiers.boosting import Boosting
-from monitor.classifiers.stacking import Stacking
-from monitor import twitter
+from monitor import classifiers, twitter
 
 from monitor.models import Tweet
 from ratings.models import Story
@@ -30,14 +26,14 @@ def train(request):
     for story in Story.objects.exclude(label = 0):
         labels.append(int(story.label))
         stories.append(story.content)
-    for model in [SVM, Bagging, Boosting, Stacking]:
+    for model in classifiers.models:
         clf = None
-        if model == SVM:
+        if model.__name__ == "SVM":
             clf = model()
         else:
             clf = model(n_models = settings.N_MODELS)
         clf.fit(stories, labels)
-        settings.CLASSIFIERS[model.__name__] = clf
+        settings.CLASSIFIERS[model.__name__.lower()] = clf
     return redirect("/monitor/")
 
 def fetch(request):
@@ -54,4 +50,8 @@ def fetch(request):
                 username = data['user']['screen_name']
             )
             tweet.save()
+    return redirect("/monitor/")
+
+def update_stats(request):
+    # TODO
     return redirect("/monitor/")
