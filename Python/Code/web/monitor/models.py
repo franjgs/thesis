@@ -15,6 +15,15 @@ class Tweet(models.Model):
     
     def __unicode__(self):
         return "(%d) %s" % (self.tweet_id, self.text)
+    
+    @classmethod
+    def from_today(cls):
+        return cls.objects.filter(
+            created_at__gte = datetime.datetime.combine(
+                datetime.datetime.utcnow().date(),
+                datetime.time()
+            ).replace(tzinfo = utc)
+        )
 
 class Stats(models.Model):
     
