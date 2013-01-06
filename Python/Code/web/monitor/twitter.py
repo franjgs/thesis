@@ -18,9 +18,10 @@ class Listener(StreamListener):
     
     def on_data(self, data):
         try:
+            true = True; false = False; null = None;
             data = eval(data)
-        except:
-            print "Exception while parsing => " + data
+        except Exception as e:
+            print "Exception: " + e.message + " => " + data
             return False
         else:
             if type(data) == dict:

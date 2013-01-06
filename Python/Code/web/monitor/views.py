@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from tweepy import Stream
+from dateutil import parser
 
 from monitor.classifiers.svm import SVM
 from monitor.classifiers.bagging import Bagging
@@ -8,6 +9,7 @@ from monitor.classifiers.boosting import Boosting
 from monitor.classifiers.stacking import Stacking
 from monitor import twitter
 
+from monitor.models import Tweet
 from ratings.models import Story
 
 from web import settings
@@ -39,4 +41,17 @@ def train(request):
     return redirect("/monitor/")
 
 def fetch(request):
+    auth = twitter.get_auth()
+    listener = twitter.Listener(settings.MAX_TWEETS)
+    stream = Stream(auth, listener)
+    stream.sample()
+    for data in listener.buffer:
+        if Tweet.objects.filter(tweet_id = data['id']).count() == 0:
+            tweet = Tweet(
+                tweet_id = data['id'],
+                text = data['text'],
+                created_at = parser.parse(data['created_at']),
+                username = data['user']['screen_name']
+            )
+            tweet.save()
     return redirect("/monitor/")
