@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext
+from django.contrib import messages
 
 from ratings.models import Story
 from web import config
@@ -30,9 +31,11 @@ def rate(request, story_id):
         elif request.POST[u'label'] == u'happy':
             story.label = -1
         story.save()
+    messages.add_message(request, messages.INFO, "Stored")
     return redirect("/ratings/")
 
 def fetch(request):
+    count = 0
     for name in ['depression', 'happy', 'suicidewatch']:
         reddit = praw.Reddit(user_agent = name + ' user agent')
         subreddit = reddit.get_subreddit(name)
@@ -41,4 +44,6 @@ def fetch(request):
             if Story.objects.filter(id36 = x.id).count() == 0:
                 story = Story(id36 = x.id, content = x.title, label = 0)
                 story.save()
+                count = count + 1
+    messages.add_message(request, messages.INFO, "Fetched " + str(count) + " stories from Reddit")
     return redirect("/ratings/")

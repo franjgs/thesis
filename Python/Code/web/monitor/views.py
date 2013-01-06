@@ -1,17 +1,17 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
+from django.template import RequestContext
+from django.contrib import messages
 from tweepy import Stream
 from dateutil import parser
 
 from monitor import classifiers, twitter
-
 from monitor.models import Tweet
 from ratings.models import Story
-
 from web import settings
 
 def index(request):
-    return render_to_response("monitor/index.html", {})
+    return render_to_response("monitor/index.html", context_instance = RequestContext(request))
 
 def stats(request, name):
     context = None
@@ -34,6 +34,7 @@ def train(request):
             clf = model(n_models = settings.N_MODELS)
         clf.fit(stories, labels)
         settings.CLASSIFIERS[model.__name__.lower()] = clf
+    messages.add_message(request, messages.INFO, "Models trained on " + str(len(labels)) + " samples")
     return redirect("/monitor/")
 
 def fetch(request):
@@ -50,8 +51,10 @@ def fetch(request):
                 username = data['user']['screen_name']
             )
             tweet.save()
+    messages.add_message(request, messages.INFO, "Fetched " + str(len(listener.buffer)) + " tweets from Twitter")
     return redirect("/monitor/")
 
 def update_stats(request):
     # TODO
+    messages.add_message(request, messages.INFO, "Updated statistics")
     return redirect("/monitor/")

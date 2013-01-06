@@ -21,11 +21,22 @@
 
         <div class="span10">
             <!-- Main content -->
+            
+            {% if messages %}
+                <div class="alert alert-success">
+                    {% for message in messages %}
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong> {{ message }} </strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
             {% if name %}
                 <h3> {{ name }} </h3>
             {% else %}
                 <h3>Select a model from the left</h3>
             {% endif %}
+            
             <hr/>
             <a href="/" class="btn btn-link">Go Home</a> |
             <a href="/monitor/train/" class="btn btn-link">Train models</a> |
