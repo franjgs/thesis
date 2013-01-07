@@ -1,29 +1,15 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 
-class SVM(object):
+from monitor.classifiers.static.base import Base
+
+class SVM(Base):
     
     '''Thin wrapper around the sklearn SVM classifier'''
     
     def __init__(self):
-        self.vec = None
         self.clf = None
-    
-    def get_vectorizer(self):
-        return TfidfVectorizer(
-            ngram_range = (1, 5),
-            min_df = 1,
-            strip_accents = None,
-            charset_error = 'ignore',
-            stop_words = None
-        )
-    
-    def get_classifier(self):
-        return SVC(
-            C = 1,
-            kernel = 'linear',
-            class_weight = 'auto'
-        )
+        super(SVM, self).__init__()
     
     def fit(self, stories, labels):
         self.vec = self.get_vectorizer()

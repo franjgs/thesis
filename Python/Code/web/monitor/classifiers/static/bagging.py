@@ -3,31 +3,17 @@ import numpy
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 
-class Bagging(object):
+from monitor.classifiers.static.base import Base
+
+class Bagging(Base):
     
     '''Thin wrapper around multiple SVMs to implement bagging'''
     
     def __init__(self, n_models):
         self.n_models   = n_models
-        self.vec        = None
         self.clf        = list()
         self.indices    = list()
-    
-    def get_vectorizer(self):
-        return TfidfVectorizer(
-            ngram_range = (1, 5),
-            min_df = 1,
-            strip_accents = None,
-            charset_error = 'ignore',
-            stop_words = None
-        )
-    
-    def get_classifier(self):
-        return SVC(
-            C = 1,
-            kernel = 'linear',
-            class_weight = 'auto'
-        )
+        super(Bagging, self).__init__()
     
     def fit(self, stories, labels):
         self.vec = self.get_vectorizer()

@@ -3,33 +3,19 @@ import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 
-class Boosting(object):
+from monitor.classifiers.static.base import Base
+
+class Boosting(Base):
     
     '''Thin wrapper around multiple SVMs to implement Boosting'''
     
     def __init__(self, n_models):
         self.n_models   = n_models
-        self.vec        = None
         self.clf        = list()
         self.w          = None
         self.alpha      = numpy.matrix(numpy.zeros((self.n_models, 1)))
         self.eps        = numpy.matrix(numpy.zeros((self.n_models, 1)))
-    
-    def get_vectorizer(self):
-        return TfidfVectorizer(
-            ngram_range = (1, 5),
-            min_df = 1,
-            strip_accents = None,
-            charset_error = 'ignore',
-            stop_words = None
-        )
-    
-    def get_classifier(self):
-        return SVC(
-            C = 1,
-            kernel = 'linear',
-            class_weight = 'auto'
-        )
+        super(Boosting, self).__init__()
     
     def fit(self, stories, labels):
         self.vec = self.get_vectorizer()
