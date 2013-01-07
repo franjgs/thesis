@@ -1,3 +1,4 @@
+import math
 import numpy
 import random
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -19,7 +20,7 @@ class Boosting(Base):
     
     def fit(self, stories, labels):
         self.vec = self.get_vectorizer()
-        x = self.vec.fit_transform(stories)
+        x = self.vec.fit_transform(stories); y = labels;
         n_samples, n_features = x.get_shape()
         self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
         for i in xrange(0, self.n_models):
