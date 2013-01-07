@@ -1,6 +1,6 @@
-from monitor.classifiers.svm import SVM
-from monitor.classifiers.bagging import Bagging
-from monitor.classifiers.boosting import Boosting
-from monitor.classifiers.stacking import Stacking
+from monitor.classifiers.online.svm import OnlineSVM
+from monitor.classifiers.online.bagging import OnlineBagging
+from monitor.classifiers.online.boosting import OnlineBoosting
+from monitor.classifiers.online.stacking import OnlineStacking
 
-models = [SVM, Bagging, Boosting, Stacking]
+models = [OnlineSVM, OnlineBagging, OnlineBoosting, OnlineStacking]
