@@ -97,7 +97,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'web.urls'
 
 # Settings for machine learning models
-CLASSIFIERS = {}
 N_MODELS = 5
 
 # Maximum number of tweets to fetch in a single request
