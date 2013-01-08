@@ -6,6 +6,9 @@ class Base(object):
     def __init__(self):
         self.vec = None
     
+    def get_name(self):
+        return self.__class__.__name__.lower()
+    
     def get_vectorizer(self):
         return TfidfVectorizer(
             ngram_range = (1, 5),
