@@ -28,7 +28,7 @@ def train(request):
         labels.append(int(story.label))
         stories.append(story.content)
     Classifiers.fit("all", stories, labels)
-    messages.add_message(request, messages.INFO, "Models trained on " + str(len(labels)) + " samples")
+    messages.add_message(request, messages.SUCCESS, "Models trained on " + str(len(labels)) + " samples")
     return redirect("/monitor/")
 
 def fetch(request):
@@ -45,7 +45,7 @@ def fetch(request):
                 username = data['user']['screen_name']
             )
             tweet.save()
-    messages.add_message(request, messages.INFO, "Fetched " + str(len(listener.buffer)) + " tweets from Twitter")
+    messages.add_message(request, messages.SUCCESS, "Fetched " + str(len(listener.buffer)) + " tweets from Twitter")
     return redirect("/monitor/")
 
 def update_stats(request):
@@ -75,7 +75,7 @@ def update_stats(request):
                 setattr(tweet, "label_" + key, labels[key][index])
             tweet.save()
             index = index + 1
-        messages.add_message(request, messages.INFO, "Updated statistics")
+        messages.add_message(request, messages.SUCCESS, "Updated statistics")
     else:
         messages.add_message(request, messages.ERROR, "Models not trained yet - please train them first")
     return redirect("/monitor/")

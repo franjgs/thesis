@@ -31,7 +31,7 @@ def rate(request, story_id):
         elif request.POST[u'label'] == u'happy':
             story.label = -1
         story.save()
-    messages.add_message(request, messages.INFO, "Stored")
+    messages.add_message(request, messages.SUCCESS, "Stored")
     return redirect("/ratings/")
 
 def fetch(request):
@@ -45,5 +45,5 @@ def fetch(request):
                 story = Story(id36 = x.id, content = x.title, label = 0)
                 story.save()
                 count = count + 1
-    messages.add_message(request, messages.INFO, "Fetched " + str(count) + " stories from Reddit")
+    messages.add_message(request, messages.SUCCESS, "Fetched " + str(count) + " stories from Reddit")
     return redirect("/ratings/")
