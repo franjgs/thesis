@@ -46,3 +46,18 @@ class Classifiers(object):
                 clf = getattr(cls, name)
                 clf.fit(stories, labels)
                 setattr(cls, key, clf)
+    
+    @classmethod
+    def trained(cls, name):
+        if name == "all":
+            for key in cls.__keys__:
+                if getattr(cls, key).vec is None:
+                    return False
+            return True
+        else:
+            if hasattr(cls, name):
+                if getattr(cls, name).vec is None:
+                    return False
+            else:
+                return False
+            return True

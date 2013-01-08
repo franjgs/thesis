@@ -49,30 +49,33 @@ def fetch(request):
     return redirect("/monitor/")
 
 def update_stats(request):
-    # fetch all the tweets from today
-    tweets = Tweet.from_today()
-    # initialize all the labels variables
-    labels = dict()
-    for key in Classifiers.__keys__:
-        labels[key] = None
-    # get predictions from all the classifiers
-    for clf in Classifiers.all():
-        predicted = map(
-            lambda x: int(x),
-            clf.predict(
-                map(
-                    lambda x: x.text,
-                    tweets
+    if Classifiers.trained("all"):
+        # fetch all the tweets from today
+        tweets = Tweet.from_today()
+        # initialize all the labels variables
+        labels = dict()
+        for key in Classifiers.__keys__:
+            labels[key] = None
+        # get predictions from all the classifiers
+        for clf in Classifiers.all():
+            predicted = map(
+                lambda x: int(x),
+                clf.predict(
+                    map(
+                        lambda x: x.text,
+                        tweets
+                    )
                 )
             )
-        )
-        labels[clf.get_name()] = predicted
-    # save all the tweets with the newly assigned labels
-    index = 0
-    for tweet in tweets:
-        for key in Classifiers.__keys__:
-            setattr(tweet, "label_" + key, labels[key][index])
-        tweet.save()
-        index = index + 1
-    messages.add_message(request, messages.INFO, "Updated statistics")
+            labels[clf.get_name()] = predicted
+        # save all the tweets with the newly assigned labels
+        index = 0
+        for tweet in tweets:
+            for key in Classifiers.__keys__:
+                setattr(tweet, "label_" + key, labels[key][index])
+            tweet.save()
+            index = index + 1
+        messages.add_message(request, messages.INFO, "Updated statistics")
+    else:
+        messages.add_message(request, messages.ERROR, "Models not trained yet - please train them first")
     return redirect("/monitor/")
