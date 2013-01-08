@@ -51,8 +51,8 @@ def fetch(request):
 
 def update_stats(request):
     if Classifiers.trained("all"):
-        # fetch all the tweets from today
-        tweets = Tweet.from_today()
+        # fetch all the unlabelled tweets
+        tweets = Tweet.unlabelled()
         # initialize all the labels variables
         labels = dict()
         for key in Classifiers.__keys__:

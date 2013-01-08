@@ -25,6 +25,15 @@ class Tweet(models.Model):
                 datetime.time()
             ).replace(tzinfo = utc)
         )
+    
+    @classmethod
+    def unlabelled(cls):
+        return cls.objects.filter(
+            label_svm = 0,
+            label_bagging = 0,
+            label_boosting = 0,
+            label_stacking = 0
+        )
 
 class Stats(models.Model):
     
