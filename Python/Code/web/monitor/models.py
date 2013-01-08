@@ -50,4 +50,4 @@ class Stats(models.Model):
     not_depressed_count_stacking = models.IntegerField(default = 0)
     
     def __unicode__(self):
-        return "%s: %d depressed and %d happy" % (str(self.created_at), self.depressed_count, self.happy_count)
+        return "Stats for %s" % str(self.created_at)
