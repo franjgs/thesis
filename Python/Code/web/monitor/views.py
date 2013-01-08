@@ -4,10 +4,11 @@ from django.template import RequestContext
 from django.contrib import messages
 from tweepy import Stream
 from dateutil import parser
+import datetime
 
 from monitor.classifiers.static import Classifiers
 from monitor import twitter
-from monitor.models import Tweet
+from monitor.models import Tweet, Stats
 from ratings.models import Story
 from web import settings
 
@@ -75,6 +76,18 @@ def update_stats(request):
                 setattr(tweet, "label_" + key, labels[key][index])
             tweet.save()
             index = index + 1
+        # add to statistics
+        try:
+            stats = Stats.objects.get(created_at = datetime.date.today())
+        except:
+            stats = Stats()
+            stats.created_at = datetime.date.today()
+            for key in Classifiers.__keys__:
+                depressed = labels[key].count(1)
+                not_depressed = labels[key].count(-1)
+                setattr(stats, "depressed_count_" + key, depressed)
+                setattr(stats, "not_depressed_count_" + key, depressed)
+            stats.save()
         messages.add_message(request, messages.SUCCESS, "Updated statistics")
     else:
         messages.add_message(request, messages.ERROR, "Models not trained yet - please train them first")
