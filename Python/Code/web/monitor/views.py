@@ -5,7 +5,7 @@ from django.contrib import messages
 from tweepy import Stream
 from dateutil import parser
 
-from monitor.classifiers.static import models
+from monitor.classifiers.static import classifiers
 from monitor import twitter
 from monitor.models import Tweet
 from ratings.models import Story
@@ -27,14 +27,14 @@ def train(request):
     for story in Story.objects.exclude(label = 0):
         labels.append(int(story.label))
         stories.append(story.content)
-    for model in models:
+    for classifier in classifiers:
         clf = None
-        if model.__name__ == "SVM":
+        if classifier.__name__ == "SVM":
             clf = model()
         else:
             clf = model(n_models = settings.N_MODELS)
         clf.fit(stories, labels)
-        settings.CLASSIFIERS[model.__name__.lower()] = clf
+        settings.CLASSIFIERS[classifier.__name__.lower()] = clf
     messages.add_message(request, messages.INFO, "Models trained on " + str(len(labels)) + " samples")
     return redirect("/monitor/")
 

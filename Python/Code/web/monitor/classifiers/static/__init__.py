@@ -3,4 +3,4 @@ from monitor.classifiers.static.bagging import Bagging
 from monitor.classifiers.static.boosting import Boosting
 from monitor.classifiers.static.stacking import Stacking
 
-models = [ SVM, Bagging, Boosting, Stacking ]
+classifiers = [ SVM, Bagging, Boosting, Stacking ]
