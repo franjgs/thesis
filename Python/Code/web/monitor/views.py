@@ -18,23 +18,30 @@ def index(request):
 def stats(request, name):
     context = dict()
     if name in Classifiers.__keys__:
-        context['data'] = Stats.for_model(name)
-        if name == "svm":
-            context['name'] = "SVM"
+        if Classifiers.trained(name):
+            context['data'] = Stats.for_model(name)
+            if name == "svm":
+                context['name'] = "SVM"
+            else:
+                context['name'] = name.capitalize()
         else:
-            context['name'] = name.capitalize()
+            context['data'] = None
+            messages.add_message(request, messages.ERROR, "Classifier " + name + " not trained yet")
     else:
         context['data'] = None
         messages.add_message(request, messages.ERROR, "No classifier called " + name)
     return render_to_response("monitor/index.html", context_instance = RequestContext(request))
 
 def train(request):
-    labels, stories = list(), list()
-    for story in Story.objects.exclude(label = 0):
-        labels.append(int(story.label))
-        stories.append(story.content)
-    Classifiers.fit("all", stories, labels)
-    messages.add_message(request, messages.SUCCESS, "Models trained on " + str(len(labels)) + " samples")
+    if Story.objects.filter(label = 0).count() == 0:
+        messages.add_message(request, messages.ERROR, "No samples in the database yet - please fetch some stories first")
+    else:
+        labels, stories = list(), list()
+        for story in Story.objects.exclude(label = 0):
+            labels.append(int(story.label))
+            stories.append(story.content)
+        Classifiers.fit("all", stories, labels)
+        messages.add_message(request, messages.SUCCESS, "Models trained on " + str(len(labels)) + " samples")
     return redirect("/monitor/")
 
 def fetch(request):
