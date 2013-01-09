@@ -4,7 +4,8 @@ from django.template import RequestContext
 from django.contrib import messages
 
 from ratings.models import Story
-from web import config
+from ratings import tasks
+from web import settings
 
 import praw
 
@@ -35,15 +36,10 @@ def rate(request, story_id):
     return redirect("/ratings/")
 
 def fetch(request):
-    count = 0
-    for name in ['depression', 'happy', 'suicidewatch']:
-        reddit = praw.Reddit(user_agent = name + ' user agent')
-        subreddit = reddit.get_subreddit(name)
-        submissions = subreddit.get_hot(limit = config.STORIES)
-        for x in submissions:
-            if Story.objects.filter(id36 = x.id).count() == 0:
-                story = Story(id36 = x.id, content = x.title, label = 0)
-                story.save()
-                count = count + 1
-    messages.add_message(request, messages.SUCCESS, "Fetched " + str(count) + " stories from Reddit")
+    tasks.fetch_from_reddit.delay()
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        "Fetching " + str(len(settings.SUBREDDITS) * settings.MAX_STORIES) + " stories from Reddit"
+    )
     return redirect("/ratings/")

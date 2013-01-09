@@ -103,6 +103,10 @@ N_MODELS = 5
 # Maximum number of tweets to fetch in a single request
 MAX_TWEETS = 100
 
+# Maximum number of stories to fetch (from each subreddit) in a single request
+MAX_STORIES = 500
+SUBREDDITS = [ "depression", "suicidewatch", "happy" ]
+
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'web.wsgi.application'
 
