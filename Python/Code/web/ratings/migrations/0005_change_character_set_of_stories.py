@@ -7,7 +7,7 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        db.execute("alter table ratings_story convert to character set utf8 ")
+        db.execute("alter table ratings_story convert to character set utf8")
 
     def backwards(self, orm):
         db.execute("alter table ratings_story convert to character set latin1")
