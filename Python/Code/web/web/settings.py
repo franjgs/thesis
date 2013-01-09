@@ -1,3 +1,4 @@
+import djcelery
 from web import config
 
 DEBUG = True
@@ -120,6 +121,8 @@ INSTALLED_APPS = (
     'ratings',
     'monitor',
     'south',
+    'djcelery',
+    'kombu.transport.django',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -152,3 +155,13 @@ LOGGING = {
         },
     }
 }
+
+# django-celery
+djcelery.setup_loader()
+BROKER_URL = "django://"
+CELERY_IMPORTS = (
+    'ratings.tasks',
+)
+CELERY_RESULT_BACKEND = "database"
+CELERY_RESULT_DBURI = "mysql://" + config.USER + ":" + config.PASSWORD + "@localhost/" + config.NAME
+CELERY_ANNOTATIONS = { "tasks:add": { "rate_limit": "10/s" } }
