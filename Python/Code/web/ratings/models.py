@@ -10,7 +10,7 @@ from django.db import models
 class Story(models.Model):
 
     id36        = models.CharField(max_length = 10, db_index = True)
-    content     = models.CharField(max_length = 500)
+    content     = models.CharField(max_length = 1000)
     subreddit   = models.CharField(max_length = 50, blank = True)
     label       = models.IntegerField(default = 0)
 
