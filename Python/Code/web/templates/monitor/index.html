@@ -8,6 +8,14 @@
     {% endif %}
 {% endblock %}
 
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    /* Code to plot graphs */
+})
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     <div class="row-fluid">
@@ -34,6 +42,15 @@
                             </div>
                     {% endfor %}
             {% endif %}
+            
+            <!-- Hidden element to store raw data -->
+            <p class="hidden" id="data">
+                {{ data }}
+            </p>
+            
+            <!-- Plots go here -->
+            <p class="placeholder" id="graphs">
+            </p>
             
             {% if name %}
                 <h3> {{ name }} </h3>

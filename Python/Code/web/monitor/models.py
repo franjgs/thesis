@@ -51,3 +51,11 @@ class Stats(models.Model):
     
     def __unicode__(self):
         return "Stats for %s" % str(self.created_at)
+    
+    @classmethod
+    def for_model(cls, name):
+        return cls.objects.values(
+            "created_at",
+            "depressed_count_" + name,
+            "not_depressed_count_" + name
+        )

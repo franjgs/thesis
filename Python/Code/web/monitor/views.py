@@ -16,12 +16,17 @@ def index(request):
     return render_to_response("monitor/index.html", context_instance = RequestContext(request))
 
 def stats(request, name):
-    context = None
-    if name == "svm":
-        context = { 'name': 'SVM' }
+    context = dict()
+    if name in Classifiers.__keys__:
+        context['data'] = Stats.for_model(name)
+        if name == "svm":
+            context['name'] = "SVM"
+        else:
+            context['name'] = name.capitalize()
     else:
-        context = { 'name': name.capitalize() }
-    return render_to_response("monitor/index.html", context)
+        context['data'] = None
+        messages.add_message(request, messages.ERROR, "No classifier called " + name)
+    return render_to_response("monitor/index.html", context_instance = RequestContext(request))
 
 def train(request):
     labels, stories = list(), list()
