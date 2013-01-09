@@ -2,13 +2,11 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib import messages
-from tweepy import Stream
-from dateutil import parser
 import datetime
 
 from monitor.classifiers.static import Classifiers
-from monitor import twitter
 from monitor.models import Tweet, Stats
+from monitor import tasks
 from ratings.models import Story
 from web import settings
 
@@ -35,30 +33,16 @@ def stats(request, name):
 def train(request):
     if Story.objects.filter(label = 0).count() == 0:
         messages.add_message(request, messages.ERROR, "No samples in the database yet - please fetch some stories first")
+    elif Story.objects.exclude(label = 0).count() == 0:
+        messages.add_message(request, messages.ERROR, "No samples have been labelled yet - please label some stories first")
     else:
-        labels, stories = list(), list()
-        for story in Story.objects.exclude(label = 0):
-            labels.append(int(story.label))
-            stories.append(story.content)
-        Classifiers.fit("all", stories, labels)
-        messages.add_message(request, messages.SUCCESS, "Models trained on " + str(len(labels)) + " samples")
+        tasks.train_models.delay(request)
+        messages.add_message(request, messages.INFO, "Training models")
     return redirect("/monitor/")
 
 def fetch(request):
-    auth = twitter.get_auth()
-    listener = twitter.Listener(settings.MAX_TWEETS)
-    stream = Stream(auth, listener)
-    stream.sample()
-    for data in listener.buffer:
-        if Tweet.objects.filter(tweet_id = data['id']).count() == 0:
-            tweet = Tweet(
-                tweet_id = data['id'],
-                text = data['text'],
-                created_at = parser.parse(data['created_at']),
-                username = data['user']['screen_name']
-            )
-            tweet.save()
-    messages.add_message(request, messages.SUCCESS, "Fetched " + str(len(listener.buffer)) + " tweets from Twitter")
+    tasks.fetch_from_twitter.delay()
+    messages.add_message(request, messages.INFO, "Fetching " + str(settings.MAX_TWEETS) + " tweets from Twitter")
     return redirect("/monitor/")
 
 def update_stats(request):

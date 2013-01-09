@@ -165,6 +165,7 @@ djcelery.setup_loader()
 BROKER_URL = "django://"
 CELERY_IMPORTS = (
     'ratings.tasks',
+    'monitor.tasks',
 )
 CELERY_RESULT_BACKEND = "database"
 CELERY_RESULT_DBURI = "mysql://" + config.USER + ":" + config.PASSWORD + "@localhost/" + config.NAME
