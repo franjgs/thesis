@@ -61,15 +61,7 @@ def update_stats(request):
                 labels[key] = None
             # get predictions from all the classifiers
             for clf in Classifiers.all():
-                predicted = map(
-                    lambda x: int(x),
-                    clf.predict(
-                        map(
-                            lambda x: x.text,
-                            tweets
-                        )
-                    )
-                )
+                predicted = map(lambda x: int(x), clf.predict(map(lambda x: x.text, tweets)))
                 labels[clf.get_name()] = predicted
             # save all the tweets with the newly assigned labels
             index = 0
@@ -83,6 +75,7 @@ def update_stats(request):
                 stats = Stats.objects.get(created_at = datetime.date.today())
             except:
                 stats = Stats()
+            finally:
                 stats.created_at = datetime.date.today()
                 for key in Classifiers.__keys__:
                     depressed = labels[key].count(1)
