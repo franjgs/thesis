@@ -1,23 +1,11 @@
 from celery import task
 from tweepy import Stream
-from django.contrib import messages
 from dateutil import parser
 
-from ratings.models import Story
-
-from monitor.classifiers.static import Classifiers
 from monitor import twitter
 from monitor.models import Tweet
 
 from web import settings
-
-@task
-def train_models():
-    labels, stories = list(), list()
-    for story in Story.objects.exclude(label = 0):
-        labels.append(int(story.label))
-        stories.append(story.content)
-    Classifiers.fit("all", stories, labels)
 
 @task
 def fetch_from_twitter():

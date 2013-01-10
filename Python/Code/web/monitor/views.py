@@ -36,8 +36,12 @@ def train(request):
     elif Story.objects.exclude(label = 0).count() == 0:
         messages.add_message(request, messages.ERROR, "No samples have been labelled yet - please label some stories first")
     else:
-        tasks.train_models.delay(request)
-        messages.add_message(request, messages.INFO, "Training models")
+        labels, stories = list(), list()
+        for story in Story.objects.exclude(label = 0):
+            labels.append(int(story.label))
+            stories.append(story.content)
+        Classifiers.fit("all", stories, labels)
+        messages.add_message(request, messages.INFO, "Trained models on " + str(len(labels)) + " samples")
     return redirect("/monitor/")
 
 def fetch(request):
