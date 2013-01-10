@@ -15,6 +15,7 @@ def index(request):
 
 def stats(request, name):
     context = dict()
+    context['name'] = name
     if name in Classifiers.__keys__:
         if Classifiers.trained(name):
             context['data'] = Stats.for_model(name)
@@ -28,7 +29,7 @@ def stats(request, name):
     else:
         context['data'] = None
         messages.add_message(request, messages.ERROR, "No classifier called " + name)
-    return render_to_response("monitor/index.html", context_instance = RequestContext(request))
+    return render_to_response("monitor/index.html", context, context_instance = RequestContext(request))
 
 def train(request):
     if Story.objects.count() == 0:
