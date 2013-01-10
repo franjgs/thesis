@@ -1,0 +1,28 @@
+<!-- Main content -->
+{% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <div class="alert alert-{{ message.tags }}">
+            {% else %}
+                <div class="alert alert-success">
+            {% endif %}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong> {{ message }} </strong>
+                </div>
+        {% endfor %}
+{% endif %}
+
+<!-- Hidden element to store raw data -->
+<p class="hidden" id="data">
+    {{ data }}
+</p>
+
+<!-- Plots go here -->
+<p class="placeholder" id="graphs">
+</p>
+
+{% if name %}
+    <h3> {{ name }} </h3>
+{% else %}
+    <h3>Select a model from the left</h3>
+{% endif %}
