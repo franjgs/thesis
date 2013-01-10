@@ -50,50 +50,46 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span2">
-            <!-- Links to models -->
-            <a class="btn btn-link" href="/monitor/svm/">SVM</a> <br/>
-            <a class="btn btn-link" href="/monitor/bagging/">Bagging</a> <br/>
-            <a class="btn btn-link" href="/monitor/boosting/">Boosting</a> <br/>
-            <a class="btn btn-link" href="/monitor/stacking/">Stacking</a>
-        </div>
-        <div class="span10">
-            {% if messages %}
-                {% for message in messages %}
-                    {% if message.tags %}
-                        <div class="alert alert-{{ message.tags }}">
-                    {% else %}
-                        <div class="alert alert-success">
-                    {% endif %}
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong> {{ message }} </strong>
-                        </div>
-                {% endfor %}
-            {% endif %}
+<div class="container">
+    <div class="main">
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags %}
+                    <div class="alert alert-{{ message.tags }}">
+                {% else %}
+                    <div class="alert alert-success">
+                {% endif %}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong> {{ message }} </strong>
+                    </div>
+            {% endfor %}
+        {% endif %}
 
-            {% if name %}
-                <h3> {{ name }} </h3>
-            {% else %}
-                <h3>Select a model from the left</h3>
-            {% endif %}
+        {% if name %}
+            <h3> {{ name }} </h3>
+        {% else %}
+            <h3>Select a model</h3>
+        {% endif %}
 
-            <!-- Hidden element to store raw data -->
-            <div class="hidden" id="data">
-                {{ data }}
-            </div>
+        <!-- Hidden element to store raw data -->
+        <div class="hidden" id="data"> {{ data }} </div>
 
-            <!-- Plots go here -->
-            <div class="placeholder hidden" id="chart"> </div>
+        <!-- Plots go here -->
+        <div class="placeholder hidden" id="chart"> </div>
             
-            <hr/>
-            <!-- Footer -->
-            <a class="btn btn-link" href="/">Go Home</a>
-            <a class="btn btn-link" href="/monitor/train/">Train Models</a>
-            <a class="btn btn-link" href="/monitor/fetch/">Fetch Tweets</a>
-            <a class="btn btn-link" href="/monitor/update_stats/">Update Statistics</a>
-        </div>
+        <hr/>
+        <!-- Models -->
+        <a class="btn btn-link" href="/monitor/svm/">SVM</a> |
+        <a class="btn btn-link" href="/monitor/bagging/">Bagging</a> |
+        <a class="btn btn-link" href="/monitor/boosting/">Boosting</a> |
+        <a class="btn btn-link" href="/monitor/stacking/">Stacking</a>
+        
+        <hr/>
+        <!-- Footer options -->
+        <a class="btn btn-link" href="/">Go Home</a> |
+        <a class="btn btn-link" href="/monitor/train/">Train Models</a> |
+        <a class="btn btn-link" href="/monitor/fetch/">Fetch Tweets</a> |
+        <a class="btn btn-link" href="/monitor/update_stats/">Update Statistics</a>
     </div>
 </div>
 {% endblock %}
