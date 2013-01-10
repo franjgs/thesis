@@ -31,7 +31,7 @@ def stats(request, name):
     return render_to_response("monitor/index.html", context_instance = RequestContext(request))
 
 def train(request):
-    if Story.objects.filter(label = 0).count() == 0:
+    if Story.objects.count() == 0:
         messages.add_message(request, messages.ERROR, "No samples in the database yet - please fetch some stories first")
     elif Story.objects.exclude(label = 0).count() == 0:
         messages.add_message(request, messages.ERROR, "No samples have been labelled yet - please label some stories first")
