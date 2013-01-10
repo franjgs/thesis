@@ -1,7 +1,7 @@
 /* From http://twitter.github.com/bootstrap/examples/marketing-narrow.html */
 
 body {
-    padding-top: 140px;
+    padding-top: 100px;
     padding-bottom: 40px;
 }
 
@@ -33,4 +33,17 @@ body {
 .row-fluid h1 {
     font-size: 72px;
     line-height: 1;
+}
+
+.row-fluid .placeholder {
+    height: auto;
+    width: auto;
+}
+ 
+.jqplot-xaxis {
+    margin-top: 10px;
+}
+ 
+.jqplot-yaxis {
+    margin-right: 10px;
 }

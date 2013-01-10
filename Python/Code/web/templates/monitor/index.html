@@ -1,71 +1,64 @@
 {% extends "base.html" %}
 
-{% block title %}
-    {% if name %}
+{% if name %}
+    {% block title }
         Monitoring {{ name }}
-    {% else %}
+    {% endblock }
+{% else %}
+    {% block title %}
         Select a model
-    {% endif %}
-{% endblock %}
-
-{% block scripts %}
-<script type="text/javascript" src="/static/js/jquery.jqplot.min.js"></script>
-<script type="text/javascript" src="/static/js/jqplot.cursor.min.js"></script>
-<script type="text/javascript" src="/static/js/jqplot.dateAxisRenderer.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    /* Code to plot graphs */
-})
-</script>
-{% endblock %}
+    {% endblock %}
+{% endif %}
+    
+{% if name %}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#chart").attr(
+            "class",
+            $("#chart").attr("class").replace("hidden", "").split(" ").filter(function (e) { return (e.length > 0) }).join(" ")
+        );
+        var plot = $.jqplot("chart", [eval($("#data").html())], {
+            axes: {
+                xaxis: {
+                    renderer: $.jqplot.DateAxisRenderer,
+                    min: 'Apr 1, 2013',
+                    tickInterval: '15 days',
+                    tickOptions: {
+                        formatString: '%b %#d, %y',
+                        fontSize: '10pt'
+                    }
+                },
+                yaxis: {
+                    min: 0,
+                    max: 100
+                }
+            },
+            cursor: {
+                show: true,
+                zoom: true,
+                showTooltip: false
+            },
+            series: [{
+                color: 'red',
+                lineWidth: 1,
+                neighborThreshold: -1,
+                showMarker: true
+            }]
+        });
+    });
+    </script>
+{% endif %}
 
 {% block content %}
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span2">
-            <!-- Sidebar content -->
-            <a class="btn btn-link" href="/monitor/svm/">SVM</a> <br/>
-            <a class="btn btn-link" href="/monitor/bagging/">Bagging</a> <br/>
-            <a class="btn btn-link" href="/monitor/boosting/">Boosting</a> <br/>
-            <a class="btn btn-link" href="/monitor/stacking/">Stacking</a> <br/>
+            {% include "monitor/sidebar.html" %}
         </div>
-
         <div class="span10">
-            <!-- Main content -->
-            
-            {% if messages %}
-                    {% for message in messages %}
-                        {% if message.tags %}
-                            <div class="alert alert-{{ message.tags }}">
-                        {% else %}
-                            <div class="alert alert-success">
-                        {% endif %}
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <strong> {{ message }} </strong>
-                            </div>
-                    {% endfor %}
-            {% endif %}
-            
-            <!-- Hidden element to store raw data -->
-            <p class="hidden" id="data">
-                {{ data }}
-            </p>
-            
-            <!-- Plots go here -->
-            <p class="placeholder" id="graphs">
-            </p>
-            
-            {% if name %}
-                <h3> {{ name }} </h3>
-            {% else %}
-                <h3>Select a model from the left</h3>
-            {% endif %}
-            
+            {% include "monitor/main.html" %}
             <hr/>
-            <a href="/" class="btn btn-link">Go Home</a> |
-            <a href="/monitor/train/" class="btn btn-link">Train models</a> |
-            <a href="/monitor/fetch/" class="btn btn-link">Fetch tweets</a> |
-            <a href="/monitor/update_stats" class="btn btn-link">Update Statistics</a>
+            {% include "monitor/footer.html" %}
         </div>
     </div>
 </div>

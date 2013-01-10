@@ -54,14 +54,12 @@ class Stats(models.Model):
     
     @classmethod
     def for_model(cls, name):
+        d_field  = "depressed_count_" + name
+        nd_field = "not_depressed_count_" + name
         return map(
             lambda x: [
-                str(x["created_at"]),
-                float(x["depressed_count_" + name]) / (x["depressed_count_" + name] + x["not_depressed_count_" + name])
+                str(x.created_at) + " 00:00AM",
+                100 * float(getattr(x, d_field)) / (getattr(x, d_field) + getattr(x, nd_field))
             ],
-            cls.objects.values(
-                "created_at",
-                "depressed_count_" + name,
-                "not_depressed_count_" + name
-            )
+            cls.objects.all()
         )
