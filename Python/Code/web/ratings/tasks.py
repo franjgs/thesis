@@ -12,7 +12,12 @@ def fetch_from_reddit():
         submissions = subreddit.get_hot(limit = settings.MAX_STORIES)
         for x in submissions:
             if Story.objects.filter(id36 = x.id).count() == 0:
-                story = Story(id36 = x.id, content = x.title, label = 0)
+                story = Story(
+                    id36 = x.id,
+                    content = x.title,
+                    label = 0,
+                    subreddit = name
+                )
                 story.save()
                 count = count + 1
 
