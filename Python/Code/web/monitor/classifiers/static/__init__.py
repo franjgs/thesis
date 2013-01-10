@@ -61,3 +61,12 @@ class Classifiers(object):
             else:
                 return False
             return True
+    
+    @classmethod
+    def get_name(cls, name):
+        if name in cls.__keys__:
+            if name == "svm":
+                return "SVM"
+            else:
+                return name.capitalize()
+        return None

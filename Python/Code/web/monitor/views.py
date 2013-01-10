@@ -17,15 +17,12 @@ def stats(request, name):
     context = dict()
     context['name'] = name
     if name in Classifiers.__keys__:
+        context['name'] = Classifiers.get_name(name)
         if Classifiers.trained(name):
             context['data'] = Stats.for_model(name)
-            if name == "svm":
-                context['name'] = "SVM"
-            else:
-                context['name'] = name.capitalize()
         else:
             context['data'] = None
-            messages.add_message(request, messages.ERROR, "Classifier " + name + " not trained yet")
+            messages.add_message(request, messages.ERROR, "Classifier " + Classifiers.get_name(name) + " not trained yet")
     else:
         context['data'] = None
         messages.add_message(request, messages.ERROR, "No classifier called " + name)
