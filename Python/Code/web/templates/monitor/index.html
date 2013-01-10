@@ -2,7 +2,7 @@
 
 {% block title %}
     {% if name %}
-        Monitoring {{ name }}
+        Statistics for {{ name }}
     {% else %}
         Select a model
     {% endif %}
@@ -56,8 +56,8 @@
             <!-- Links to models -->
             <a class="btn btn-link" href="/monitor/svm/">SVM</a> <br/>
             <a class="btn btn-link" href="/monitor/bagging/">Bagging</a> <br/>
-            <a class="btn btn-link" href="/monitor/svm/">Boosting</a> <br/>
-            <a class="btn btn-link" href="/monitor/svm/">Stacking</a>
+            <a class="btn btn-link" href="/monitor/boosting/">Boosting</a> <br/>
+            <a class="btn btn-link" href="/monitor/stacking/">Stacking</a>
         </div>
         <div class="span10">
             {% if messages %}
@@ -92,7 +92,7 @@
             <a class="btn btn-link" href="/">Go Home</a>
             <a class="btn btn-link" href="/monitor/train/">Train Models</a>
             <a class="btn btn-link" href="/monitor/fetch/">Fetch Tweets</a>
-            <a class="btn btn-link" href="/monitor/updated_stats/">Update Statistics</a>
+            <a class="btn btn-link" href="/monitor/update_stats/">Update Statistics</a>
         </div>
     </div>
 </div>
