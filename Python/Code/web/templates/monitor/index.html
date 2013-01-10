@@ -1,17 +1,15 @@
 {% extends "base.html" %}
 
-{% if name %}
-    {% block title }
+{% block title %}
+    {% if name %}
         Monitoring {{ name }}
-    {% endblock }
-{% else %}
-    {% block title %}
+    {% else %}
         Select a model
-    {% endblock %}
-{% endif %}
+    {% endif %}
+{% endblock %}
     
-{% if name %}
-    {% block scripts %}
+{% block scripts %}
+    {% if name %}
         <script type="text/javascript">
         $(document).ready(function() {
             $("#chart").attr(
@@ -48,8 +46,8 @@
             });
         });
         </script>
-    {% endblock %}
-{% endif %}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
