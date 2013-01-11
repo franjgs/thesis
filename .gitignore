@@ -4,3 +4,5 @@ stories.txt
 
 config.py
 *.sqlite3
+
+celerybeat-schedule

@@ -1,5 +1,6 @@
 import djcelery
 from web import config
+from datetime import timedelta
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -170,3 +171,11 @@ CELERY_IMPORTS = (
 CELERY_RESULT_BACKEND = "database"
 CELERY_RESULT_DBURI = "mysql://" + config.USER + ":" + config.PASSWORD + "@localhost/" + config.NAME
 CELERY_ANNOTATIONS = { "tasks:add": { "rate_limit": "10/s" } }
+CELERYBEAT_SCHEDULE = {
+    'runs-every-6-hours': {
+        'task': 'monitor.tasks.fetch_from_twitter',
+        'schedule': timedelta(hours = 6),
+        'args': ()
+    }
+}
+CELERY_TIMEZONE = 'Europe/Berlin'
