@@ -67,9 +67,7 @@ STATIC_ROOT = 'static/'
 STATIC_URL = '/static/'
 
 # Additional locations of static files
-STATICFILES_DIRS = (
-	'static/',
-)
+STATICFILES_DIRS = ()
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -174,9 +172,9 @@ CELERY_RESULT_BACKEND = "database"
 CELERY_RESULT_DBURI = "mysql://" + config.USER + ":" + config.PASSWORD + "@localhost/" + config.NAME
 CELERY_ANNOTATIONS = { "tasks:add": { "rate_limit": "10/s" } }
 CELERYBEAT_SCHEDULE = {
-    'runs-every-6-hours': {
+    'runs-every-3-hours': {
         'task': 'monitor.tasks.fetch_from_twitter',
-        'schedule': timedelta(hours = 6),
+        'schedule': timedelta(hours = 3),
         'args': ()
     }
 }
