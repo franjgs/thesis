@@ -49,40 +49,42 @@ def fetch(request):
 
 def update_stats(request):
     if Classifiers.trained("all"):
-        # fetch all the unlabelled tweets
-        if Tweet.unlabelled().count() > 0:
-            tweets = Tweet.unlabelled()
-            # initialize all the labels variables
-            labels = dict()
+        tweets = Tweet.objects.all()
+        # initialize all the labels variables
+        labels = dict()
+        for key in Classifiers.__keys__:
+            labels[key] = None
+        # get predictions from all the classifiers
+        for clf in Classifiers.all():
+            predicted = map(lambda x: int(x), clf.predict(map(lambda x: x.text, tweets)))
+            labels[clf.get_name()] = predicted
+        # save all the tweets with the newly assigned labels
+        index = 0
+        for tweet in tweets:
             for key in Classifiers.__keys__:
-                labels[key] = None
-            # get predictions from all the classifiers
-            for clf in Classifiers.all():
-                predicted = map(lambda x: int(x), clf.predict(map(lambda x: x.text, tweets)))
-                labels[clf.get_name()] = predicted
-            # save all the tweets with the newly assigned labels
-            index = 0
-            for tweet in tweets:
-                for key in Classifiers.__keys__:
-                    setattr(tweet, "label_" + key, labels[key][index])
-                tweet.save()
-                index = index + 1
-            # add to statistics
-            try:
-                stats = Stats.objects.get(created_at = datetime.date.today())
-            except:
-                stats = Stats()
-            finally:
-                stats.created_at = datetime.date.today()
-                for key in Classifiers.__keys__:
-                    depressed = labels[key].count(1)
-                    not_depressed = labels[key].count(-1)
-                    setattr(stats, "depressed_count_" + key, depressed)
-                    setattr(stats, "not_depressed_count_" + key, depressed)
-                stats.save()
-            messages.add_message(request, messages.SUCCESS, "Updated statistics")
-        else:
-            messages.add_message(request, messages.INFO, "No unlabelled tweets left")
+                setattr(tweet, "label_" + key, labels[key][index])
+            tweet.save()
+            index = index + 1
+        # update statistics
+        dates = list()
+        for row in Tweet.objects.values("created_at"):
+            if row["created_at"] not in dates:
+                # workaround against django distinct not being supported in MySQL
+                date = row["created_at"]
+                try:
+                    stats = Stats.objects.get(created_at = date)
+                except:
+                    stats = Stats()
+                finally:
+                    stats.created_at = date
+                    for key in Classifiers.__keys__:
+                        depressed = labels[key].count(1)
+                        not_depressed = labels[key].count(-1)
+                        setattr(stats, "depressed_count_" + key, depressed)
+                        setattr(stats, "not_depressed_count_" + key, not_depressed)
+                    stats.save()
+                dates.append(row["created_at"])
+        messages.add_message(request, messages.SUCCESS, "Updated statistics")
     else:
         messages.add_message(request, messages.ERROR, "Models not trained yet - please train them first")
     return redirect("/monitor/")
