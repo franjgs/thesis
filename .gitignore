@@ -5,3 +5,6 @@ config.py
 *.sqlite3
 
 celerybeat-schedule
+
+Capfile
+config/
