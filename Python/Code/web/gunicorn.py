@@ -19,7 +19,7 @@ else:
 bind = "0.0.0.0:10001"
 workers = 1
 debug = True
-daemon = False
+daemon = True
 pidfile = home + "/system/gunicorn.pid"
 logfile = home + "/system/gunicorn.log"
 accesslog = home + "/system/gunicorn-access.log"
