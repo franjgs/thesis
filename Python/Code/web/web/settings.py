@@ -1,4 +1,5 @@
 import djcelery
+from os.path import expanduser
 from web import config
 from datetime import timedelta
 
@@ -179,3 +180,6 @@ CELERYBEAT_SCHEDULE = {
     }
 }
 CELERY_TIMEZONE = 'Europe/Berlin'
+CELERYD_NODES = "w1"
+CELERYD_LOG_FILE = expanduser("~") + "/system/celeryd.log"
+CELERYD_PID_FILE = expanduser("~") + "/system/celeryd.pid"
