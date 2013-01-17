@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'south',
     'djcelery',
     'kombu.transport.django',
+    'gunicorn',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
