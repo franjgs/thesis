@@ -2,7 +2,7 @@ import djcelery
 from web import config
 from datetime import timedelta
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
