@@ -26,7 +26,6 @@
 %  DIV: Number of sheet sections (used for layout) (e.g.: DIV12) 
 
 
-
 % include title and author information for the cover
 \input{components/info}
 
@@ -36,7 +35,6 @@
 % include commands
 \input{components/commands}
 
-
 %\makeindex
 %% inter line spacing
 %\linespread{1.0}
@@ -44,35 +42,20 @@
 \makeglossary
 
 \begin{document}
-
     \frontmatter
-	
-	
     \input{components/cover}
     %	\clearemptydoublepage
     %	
     %	\input{components/titlepage}
-	
-	
     %	\input{components/cover_maschmeyer}
     \clearemptydoublepage
-	
     \input{components/titlepage}
-	
-	
     \input{components/disclaimer}
-	
     \input{components/acknowledgements}
-	
     \input{components/abstract}
-
     \tableofcontents
-  
     \input{components/outline}
-
     \mainmatter
-	
-	
     % ---------------------------------------------------------------------------
     %
     %Introduction and Background Theory
@@ -81,8 +64,6 @@
     \part[Introduction and Theory]{Introduction and Theory}
     \label{part:introAndBackgroundTheory}
     \input{chapters/Introduction}
-		
-		
     %
     %% ---------------------------------------------------------------------------
     %%
@@ -91,28 +72,15 @@
     %%% ---------------------------------------------------------------------------
     \part[The 2nd Part]{The Second Part}
     \label{part:secondP}
-		
-		
     % ---------------------------------------------------------------------------
     %
     % Appendix
     %
     % ---------------------------------------------------------------------------
-		
     \part*{Appendix}
     \addcontentsline{toc}{part}{Appendix}
-		
     \appendix %---------------------------------------
-		
     \input{chapters/oneAppendix}
-		
-	
-
-
     \clearemptydoublepage
-  
     \bibliography{bibliography/literature}
-	
- 
 \end{document}
-
