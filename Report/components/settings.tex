@@ -1,5 +1,5 @@
-% Included by MAIN.TEX
-% Defines the settings for the CAMP report document
+% Included by main.tex
+% Defines the settings for the thesis
 
 \renewcommand{\sectfont}{\normalfont \bfseries}        % Schriftart der Kopfzeile
 
@@ -25,9 +25,7 @@
 %to use the subfigures
 \usepackage{subfigure}
 
-
 \usepackage{colortbl}
-
 
 %% show program code\ldots
 %\usepackage{verbatim}
@@ -35,7 +33,6 @@
 
 %% enable TUM symbols on title page
 \usepackage{styles/tumlogo}
-
 
 \usepackage{multirow}
 
@@ -66,8 +63,7 @@
 \usepackage[latin1]{inputenc}       % allow Latin1 characters
 
 % use initals dropped caps - doesn't work with PDF
-\usepackage{dropping}
-
+\usepackage{lettrine}
 
 \usepackage{styles/shortoverview}
 %----------------------------------------------------
@@ -76,41 +72,41 @@
 
 %% check for pdfTeX
 \ifx\pdftexversion\undefined
- %% use PostScript graphics
- \usepackage[dvips]{graphicx}
- \DeclareGraphicsExtensions{.eps,.epsi}
- \graphicspath{{figures/}{figures/review}} 
- %% allow rotations
- \usepackage{rotating}
- %% mark pages as draft copies
- %\usepackage[english,all,light]{draftcopy}
- %% use hypertex version of hyperref
- \usepackage[hypertex,hyperindex=false,colorlinks=false]{hyperref}
+%% use PostScript graphics
+\usepackage[dvips]{graphicx}
+\DeclareGraphicsExtensions{.eps,.epsi}
+\graphicspath{{figures/}{figures/review}} 
+%% allow rotations
+\usepackage{rotating}
+%% mark pages as draft copies
+%\usepackage[english,all,light]{draftcopy}
+%% use hypertex version of hyperref
+\usepackage[hypertex,hyperindex=false,colorlinks=false]{hyperref}
 \else %% reduce output size \pdfcompresslevel=9
- %% declare pdfinfo
- %\pdfinfo { 
- %  /Title (my title) 
- %  /Creator (pdfLaTeX) 
- %  /Author (my name) 
- %  /Subject (my subject	) 
- %  /Keywords (my keywords)
- %}
- %% use pdf or jpg graphics
- \usepackage[pdftex]{graphicx}
- \DeclareGraphicsExtensions{.jpg,.JPG,.png,.pdf,.eps}
- \graphicspath{{figures/}} 
+%% declare pdfinfo
+%\pdfinfo { 
+%  /Title (my title) 
+%  /Creator (pdfLaTeX) 
+%  /Author (my name) 
+%  /Subject (my subject	) 
+%  /Keywords (my keywords)
+%}
+%% use pdf or jpg graphics
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.jpg,.JPG,.png,.pdf,.eps}
+\graphicspath{{figures/}} 
  
- %% Load float package, for enabling floating extensions
- \usepackage{float}
+%% Load float package, for enabling floating extensions
+\usepackage{float}
  
- %% allow rotations
- \usepackage{rotating}
- %% use pdftex version of hyperref
- \usepackage[pdftex,colorlinks=true,linkcolor=red,citecolor=red,%
- anchorcolor=red,urlcolor=red,bookmarks=true,%
- bookmarksopen=true,bookmarksopenlevel=0,plainpages=false%
- bookmarksnumbered=true,hyperindex=false,pdfstartview=%
- ]{hyperref}
+%% allow rotations
+\usepackage{rotating}
+%% use pdftex version of hyperref
+\usepackage[pdftex,colorlinks=true,linkcolor=red,citecolor=red,%
+anchorcolor=red,urlcolor=red,bookmarks=true,%
+bookmarksopen=true,bookmarksopenlevel=0,plainpages=false%
+bookmarksnumbered=true,hyperindex=false,pdfstartview=%
+]{hyperref}
 %
 %\usepackage[pdftex,colorlinks=false,linkcolor=red,citecolor=red,%
 % anchorcolor=red,urlcolor=red,bookmarks=true,%
@@ -118,9 +114,6 @@
 % bookmarksnumbered=true,hyperindex=false,pdfstartview=%
 % ]{hyperref}
 \fi
-
-
-
 
 %% Fancy chapters
 %\usepackage[Lenny]{fncychap}

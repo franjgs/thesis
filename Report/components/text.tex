@@ -1,4 +1,4 @@
-% Included by MAIN.TEX
+% Included by main.tex
 % Put your content in here or include it by using \input (\include won't work)
 
 \addtolength{\evensidemargin}{-12mm}
@@ -13,18 +13,17 @@
 \input{chapters/Introduction}
 \input{chapters/BackgroundTheory} 
 
-%
 %% ---------------------------------------------------------------------------
 %%
-%% Fully Automated Calibration for Ultrasound
+%% All sections (and references to their chapter/ files) go here
 %%
 %%% ---------------------------------------------------------------------------
-\part[Fully Automated Calibration for Ultrasound]{Fully Automated Calibration for Ultrasound}
-\label{part:fullyAutomatedCalibration}
-\input{chapters/FullyAutomatedCalibrationOverview} 
-\input{chapters/MethodsAndImplementation}
-\input{chapters/SpheresPhantom} 
-\input{chapters/ModulatedCirclesPhantom} 
+\part[Ensemble Learning Methods Overview]{Ensemble Learning Methods Overview}
+\label{part:ensembleLearningMethods}
+\input{chapters/EnsembleLearningMethodsOverview}
+\input{chapters/BaggingOverview}
+\input{chapters/BoostingOverview}
+\input{chapters/StackingOverview}
 
 %% ---------------------------------------------------------------------------
 %%
@@ -37,7 +36,6 @@
 \input{chapters/Simulations} 
 \input{chapters/Conclusion} 
 
-
 % ---------------------------------------------------------------------------
 %
 % Appendix
@@ -47,6 +45,6 @@
 \part*{Appendix}
 \addcontentsline{toc}{part}{Appendix}
 
-\appendix %---------------------------------------
+\appendix
 
 \input{chapters/validationDetailed}
