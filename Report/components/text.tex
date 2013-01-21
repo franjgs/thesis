@@ -4,47 +4,34 @@
 \addtolength{\evensidemargin}{-12mm}
 
 % ---------------------------------------------------------------------------
-%
-%Introduction and Background Theory
-%
+%                               Introduction
 % ---------------------------------------------------------------------------
-\part[Introduction and Background Theory]{Introduction and Background Theory}
-\label{part:introAndBackgroundTheory}
-\input{chapters/Introduction}
-\input{chapters/BackgroundTheory} 
-
-%% ---------------------------------------------------------------------------
-%%
-%% All sections (and references to their chapter/ files) go here
-%%
-%%% ---------------------------------------------------------------------------
-\part[Ensemble Learning Methods Overview]{Ensemble Learning Methods Overview}
-\label{part:ensembleLearningMethods}
-\input{chapters/EnsembleLearningMethodsOverview}
-\input{chapters/BaggingOverview}
-\input{chapters/BoostingOverview}
-\input{chapters/StackingOverview}
-
-%% ---------------------------------------------------------------------------
-%%
-%% Results and Conclusion
-%%
-%% ---------------------------------------------------------------------------
-\part[Results and Conclusion]{Results and Conclusion}
-\label{part:resultsAndConclusion}
-\input{chapters/Experiments} 
-\input{chapters/Simulations} 
-\input{chapters/Conclusion} 
+\part[Introduction]{Introduction}
+\label{part:introduction}
+\input{chapters/introduction}
+\input{chapters/related_work}
+\input{chapters/problem_definition}
 
 % ---------------------------------------------------------------------------
-%
-% Appendix
-%
+%                           Theoretical Background
 % ---------------------------------------------------------------------------
+\part[Theoretical Background]{Theoretical Background}
+\label{part:theoretical_background}
+\input{chapters/classification_methods}
+\input{chapters/text_representation}
+\input{chapters/ensemble_learning}
 
-\part*{Appendix}
-\addcontentsline{toc}{part}{Appendix}
+% ---------------------------------------------------------------------------
+%                               Experiments
+% ---------------------------------------------------------------------------
+\part[Experiments]{Experiments}
+\label{part:experiments}
+\input{chapters/experiments}
+\input{chapters/results}
 
-\appendix
-
-\input{chapters/validationDetailed}
+% ---------------------------------------------------------------------------
+%                               Conclusion
+% ---------------------------------------------------------------------------
+\part[Conclusion]{Conclusion}
+\label{part:conclusion}
+\input{chapters/conclusion}
