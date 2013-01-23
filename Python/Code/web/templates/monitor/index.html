@@ -58,6 +58,7 @@
                     showMarker: true
                 }]
             });
+            $("#reset-button").click(function() { plot.resetZoom(); });
         });
         </script>
     {% endif %}
@@ -90,6 +91,7 @@
 
         <!-- Plots go here -->
         <div class="placeholder hidden" id="chart"> </div>
+        <button id="reset-button">Reset Zoom</button>
             
         <hr/>
         <!-- Models -->
