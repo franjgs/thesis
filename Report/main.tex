@@ -3,19 +3,19 @@
 % Don't even include content files by using \input or \inlcude. 
 % Put your content to text.tex or include it there using \input.
 % Uses:
-%       SETTINGS.TEX        contains the settings for this document
-%       COMMANDS.TEX        contains commands which can be used while writing
-%       INFO.TEX            contains the author, title and so on for the cover
-%       COVER.TEX           formats the front cover of the document
-%       ABSTRACT.TEX        contains the abstract to be included (if needed)
-%       TEXT.TEX            contains the actual content of the document
-%       BIB.BIB             contains the BibTeX entries for the document
+%       settings.tex        contains the settings for this document
+%       commands.tex        contains commands which can be used while writing
+%       info.tex            contains the author, title and so on for the cover
+%       cover.tex           formats the front cover of the document
+%       abstract.tex        contains the abstract to be included (if needed)
+%       text.tex            contains the actual content of the document
+%       bib.bib             contains the BibTeX entries for the document
 
 %% Draft document mode
 %% Final document
-\documentclass[11pt,a4paper,bibtotoc,idxtotoc,headsepline,footsepline,footexclude,BCOR12mm,DIV13]{scrbook}
+%\documentclass[11pt,a4paper,bibtotoc,idxtotoc,headsepline,footsepline,footexclude,BCOR12mm,DIV13]{scrbook}
 
-%\documentclass[11pt,a4paper,bibtotoc,idxtotoc,headsepline,footsepline,footexclude,BCOR20mm,DIV10]{scrbook}
+\documentclass[11pt,a4paper,bibtotoc,idxtotoc,headsepline,footsepline,footexclude,BCOR20mm,DIV10]{scrbook}
 
 % KOMA-Optionen:
 %  bibtotoc: include bibliography in table of contents
@@ -23,7 +23,6 @@
 %  headsepline: use horizontalline under heading
 %  BCOR: binding correcion (Bindungskorrektur) (e.g.: BCOR5mm)
 %  DIV: Number of sheet sections (used for layout) (e.g.: DIV12) 
-
 
 % include title and author information for the cover
 \input{components/info}
