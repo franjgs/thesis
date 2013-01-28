@@ -36,3 +36,8 @@ Master.2011.pdf
 *.mtc1
 *.out
 *.synctex.gz
+.main.fls
+.main.fmt
+.main.ini
+.main.tex
+.main.watcher_pid
