@@ -34,3 +34,8 @@ The most popular kernel functions include -
     \item{Radial Basis - $K(x, y) = \exp(-\gamma * {| x - y |}^{2})$}
     \item{Sigmoid - $K(x, y) = \tanh(\gamma * x . y + c)$}
 \end{itemize}
+
+\section{Multiple Kernel Learning}
+Multiple Kernel Learning makes an improvement to standalone Support Vector Machines by using multiple kernels instead of a single one. In contrast to normal SVMs which use a single kernel function to calculate the similarity score between two data points, MKL algorithms combine scores from multiple kernels to obtain one single score, which is then used as the final similarity score. As summarized by \cite{gonen11a}, multiple kernel learning algorithms can be put into 12 major categories, based on some of their key properties (learning method, functional form, target function, training method, base learner, and the computational complexity).
+
+\cite{gonen11a} also mentions the two main uses of MKL algorithms - the first one uses the fact that since different kernels may be used as different notions of similarity, we may maximize the accuracy obtained from each kernel, and then let the learning algorithm decide whether one kernel (which works better than the rest) or a combination of kernels is suitable for the task at hand. The second use is a more traditional use, where different kernels corresponding to different notions of similarity are combined, either in a linear or in a non-linear fashion to obtain a single kernel. As with all machine learning algorithms, multiple kernel learning does not suit all possible use cases, but in a lot of cases, combining multiple kernels may result in increased accuracy.
