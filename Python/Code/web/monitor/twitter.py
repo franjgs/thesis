@@ -33,7 +33,7 @@ class Listener(StreamListener):
             return True
     
     def on_error(self, status):
-        print "Error in " + str(self) + " => " + status
+        print "Error in " + str(self) + " => " + str(status)
     
     def on_timeout(self):
         return False
