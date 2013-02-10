@@ -4,5 +4,21 @@
 % Experiment settings, dataset, system built, approach, and everything practical goes here
 
 \section{Dataset}
+Our work focuses on detecting emotional distress from publicly available tweets/blogs. To predict the label for a particular tweet, we need a similar dataset that contains similar sized text, each having a label corresponding to whether or not the text indicates depression. This dataset comprises the training dataset.
+
+Non availability of such data in the beginning of our work led us to explore a slightly different problem in the same domain that operates on a similar dataset. We initially performed our experiments on a dataset made available by a machine learning competition website \cite{kaggle}, where the aim is to predict whether a certain piece of text (a comment from a conversation on the internet) can be insulting to a user or not. The dataset provided contained the list of comments, each with a binary label. The dataset was split into two parts, the first file containing 3947 comments, while the second one containing 2235 comments.
+
+After conducting our experiments on this dataset, we start building the dataset which can finally help us towards building a system that can identify emotional distress from the given text. We download (on-demand) stories from the website Reddit \cite{reddit}, which is an online community for people to interact with one another, hosting two main subreddits of our interest - the subreddit where people post if in case they are planning to end their lives (\cite{reddit_suicidewatch}), and the subreddit where people post if in case they want to share their happy moments with others (\cite{reddit_happy}). We integrate the process of building the dataset on our main web interface, and every time there's a request to increase the size of the dataset, we download 500 stories from each of the subreddits mentioned and store them in our database. Since our system also aims to incorporate crowd intelligence into the system (letting people assign labels to the training data), we initially label 2000 stories manually to build a strong foundation for the system, and then label the stories on demand.
+
+To actually incorporate identifying emotional distress into our system, we fetch data from Twitter. We use Twitter's public streaming API \cite{twitter_streaming_api} to fetch 100 tweets every 3 hours, hence fetching 800 tweets every single day. This gives us an overall view of the general sentiment of the public, on which we can perform our analysis.
+
+\section{Approach and Setup}
+We experiment and evaluate with various machine learning techniques, including standalone support vector machines, multiple kernel learning algorithms, and finally ensemble learning methods. Our work can broadly be seen as being done in two phases - in the first phase, we evaluate (using cross validation) the machine learning techniques mentioned, and in the second phase, we build a system that monitors emotional distress on the internet.
+
+In the first phase, we use the comments \cite{kaggle} dataset, construct n-grams (of length 2) and then obtain the vector space representation for each comment, along with the label for each. This data is now split into training and testing data according to holdout cross validation. The model is then trained on the training data, and the predictions are obtained for the testing data. Since we already have the actual predictions of the testing data, we calculate the accuracy of the classifier thus trained. We perform a 80-20 split on the data, that is, we use 80\% of the data to train the models, and 20\% of the data to calculate predictions on.
+
+This procedure is repeated for standalone support vector machines (using linear, polynomial, gaussian, and RBF kernels), multiple kernel learning methods, and the ensemble learning methods which include bagging, boosting, and stacking. The calculated accuracy for each method is then reported.
+
+In the second phase, we implement our system that is able to monitor public content (we concentrate on fetching content from Twitter) and identify the tweets which may signal emotional distress.
 
 \section{System Details}

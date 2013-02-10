@@ -14,17 +14,23 @@
 \contentsline {chapter}{\numberline {4}Classification Methods}{11}{chapter.4}
 \contentsline {section}{\numberline {4.1}Introduction}{11}{section.4.1}
 \contentsline {section}{\numberline {4.2}Support Vector Machines}{12}{section.4.2}
-\contentsline {chapter}{\numberline {5}Text Representation}{13}{chapter.5}
-\contentsline {section}{\numberline {5.1}Introduction}{13}{section.5.1}
-\contentsline {section}{\numberline {5.2}Preprocessing}{13}{section.5.2}
-\contentsline {section}{\numberline {5.3}Representation and Scoring}{14}{section.5.3}
-\contentsline {section}{\numberline {5.4}Vector Space Classification}{14}{section.5.4}
-\contentsline {chapter}{\numberline {6}Ensemble Learning}{15}{chapter.6}
-\contentsline {part}{\numberline {III}Experimental Results}{17}{part.3}
-\contentsline {chapter}{\numberline {7}Experiments}{19}{chapter.7}
-\contentsline {chapter}{\numberline {8}Application}{21}{chapter.8}
-\contentsline {chapter}{\numberline {9}Results}{23}{chapter.9}
-\contentsline {part}{\numberline {IV}Conclusion}{25}{part.4}
-\contentsline {chapter}{\numberline {10}Conclusion}{27}{chapter.10}
-\contentsline {part}{Appendix}{31}{part*.9}
-\contentsline {chapter}{\numberline {A}Appendix}{31}{appendix.A}
+\contentsline {section}{\numberline {4.3}Multiple Kernel Learning}{12}{section.4.3}
+\contentsline {chapter}{\numberline {5}Text Representation}{15}{chapter.5}
+\contentsline {section}{\numberline {5.1}Introduction}{15}{section.5.1}
+\contentsline {section}{\numberline {5.2}Preprocessing}{15}{section.5.2}
+\contentsline {section}{\numberline {5.3}Representation and Vector Space Classification}{16}{section.5.3}
+\contentsline {chapter}{\numberline {6}Ensemble Learning}{19}{chapter.6}
+\contentsline {section}{\numberline {6.1}Bagging}{19}{section.6.1}
+\contentsline {section}{\numberline {6.2}Boosting}{19}{section.6.2}
+\contentsline {section}{\numberline {6.3}Stacking}{20}{section.6.3}
+\contentsline {part}{\numberline {III}Experimental Results}{21}{part.3}
+\contentsline {chapter}{\numberline {7}Experiments}{23}{chapter.7}
+\contentsline {section}{\numberline {7.1}Dataset}{23}{section.7.1}
+\contentsline {section}{\numberline {7.2}Approach and Setup}{23}{section.7.2}
+\contentsline {section}{\numberline {7.3}System Details}{24}{section.7.3}
+\contentsline {chapter}{\numberline {8}Results}{25}{chapter.8}
+\contentsline {part}{\numberline {IV}Conclusion}{27}{part.4}
+\contentsline {chapter}{\numberline {9}Conclusion}{29}{chapter.9}
+\contentsline {part}{Appendix}{33}{part*.9}
+\contentsline {chapter}{\numberline {A}Appendix}{33}{appendix.A}
+\contentsline {chapter}{Bibliography}{35}{appendix*.10}
