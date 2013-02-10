@@ -34,6 +34,7 @@ class Listener(StreamListener):
     
     def on_error(self, status):
         print "Error in " + str(self) + " => " + str(status)
+        return False
     
     def on_timeout(self):
         return False
