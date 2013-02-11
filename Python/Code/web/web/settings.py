@@ -101,8 +101,10 @@ ROOT_URLCONF = 'web.urls'
 # Settings for machine learning models
 N_MODELS = 5
 
-# Maximum number of tweets to fetch in a single request
+# Maximum number of tweets to fetch in a single session
 MAX_TWEETS = 250
+# Maximum number of API requests to make in a single session before disconnecting
+MAX_TWEETS_MSG_COUNT = 5000
 
 # Maximum number of stories to fetch (from each subreddit) in a single request
 MAX_STORIES = 500

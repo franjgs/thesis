@@ -2,6 +2,7 @@ from tweepy import Stream, OAuthHandler
 from tweepy.streaming import StreamListener
 
 from web import config
+from web import settings
 
 def get_auth():
     auth = OAuthHandler(config.consumer_key, config.consumer_secret)
@@ -12,7 +13,7 @@ class Listener(StreamListener):
     
     def __init__(self, n):
         self.n = n
-        self.counter = 0
+        self.msg_count = 0
         self.buffer = list()
         super(Listener, self).__init__()
     
@@ -24,13 +25,22 @@ class Listener(StreamListener):
             print "Exception: " + e.message + " => " + data
             return False
         else:
-            if type(data) == dict:
-                if 'delete' not in data.keys() and data.get('lang') == 'en':
-                    self.buffer.append(data)
-                    self.counter = self.counter + 1
-            if self.counter >= self.n:
+            if self.msg_count < settings.MAX_TWEETS_MSG_COUNT:
+                self.msg_count = self.msg_count + 1
+                if len(self.buffer) >= self.n:
+                    return False
+                if type(data) == dict:
+                    if 'delete' not in data.keys():
+                        if data.get('user'):
+                            if data.get('user').get('lang') == 'en':
+                                self.buffer.append(data)
+                                print "Buffer count => " + str(len(self.buffer))
+                        return True
+                    else:
+                        print "Unknown type => " + str(data.keys())
+                        return True
+            else:
                 return False
-            return True
     
     def on_error(self, status):
         print "Error in " + str(self) + " => " + str(status)
