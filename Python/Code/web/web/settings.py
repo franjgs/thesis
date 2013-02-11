@@ -102,7 +102,7 @@ ROOT_URLCONF = 'web.urls'
 N_MODELS = 5
 
 # Maximum number of tweets to fetch in a single request
-MAX_TWEETS = 100
+MAX_TWEETS = 250
 
 # Maximum number of stories to fetch (from each subreddit) in a single request
 MAX_STORIES = 500
