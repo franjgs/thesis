@@ -34,10 +34,8 @@ class Listener(StreamListener):
                         if data.get('user'):
                             if data.get('user').get('lang') == 'en':
                                 self.buffer.append(data)
-                                print "Buffer count => " + str(len(self.buffer))
                         return True
                     else:
-                        print "Unknown type => " + str(data.keys())
                         return True
             else:
                 return False
