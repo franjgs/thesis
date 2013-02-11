@@ -56,10 +56,10 @@ where each value represents the number of times the corresponding feature appear
 In this approach, the values contain term frequencies. A slight improvement is to divide the term weights with the total number of terms in the document, which assigns the feature values while also taking into account the relative importance of the term in the document. But an even better improvement is to use the \emph{tf-idf} value, which (for a term in the document) is defined as -
 
 \begin{center}
-    \emph{$tfidf_{t, d} = tf_{t, d} * idf_{t}$}
+    $\mathrm{tfidf}_{t, d} = \mathrm{tf}_{t, d} * \mathrm{idf}_{t}$
 \end{center}
 
-where $tf_{t, d}$ is the term frequency of the term $t$ in document $d$, and $idf_{t}$ is the inverse document frequency of the term $t$ across the entire collection of documents, usually defined as $log(N / df_{t})$, where $N$ is the total number of documents, and $df_{t}$ is the number of times this term appears in the entire collection of documents. The main idea here is to reduce the term frequency weight of a term by a factor that increases proportional to its frequency in the corpus. This score is the highest when the term occurs many times within a small number of documents, and the lowest when the term occurs in almost all documents, hence providing a good representation of a document in the vector space format. This representation is now used to calculate the similarity between two documents, the standard way for which is to compute the vector dot product between the two vector representations -
+where $tf_{t, d}$ is the term frequency of the term $t$ in document $d$, and $idf_{t}$ is the inverse document frequency of the term $t$ across the entire collection of documents, usually defined as $\log(N / df_{t})$, where $N$ is the total number of documents, and $df_{t}$ is the number of times this term appears in the entire collection of documents. The main idea here is to reduce the term frequency weight of a term by a factor that increases proportional to its frequency in the corpus. This score is the highest when the term occurs many times within a small number of documents, and the lowest when the term occurs in almost all documents, hence providing a good representation of a document in the vector space format. This representation is now used to calculate the similarity between two documents, the standard way for which is to compute the vector dot product between the two vector representations -
 
 \begin{center}
     $sim(x, y) = \frac{(\vec{x} . \vec{y})}{|\vec{x}| | \vec{y}}$

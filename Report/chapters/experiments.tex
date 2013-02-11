@@ -12,6 +12,8 @@ After conducting our experiments on this dataset, we start building the dataset 
 
 To actually incorporate identifying emotional distress into our system, we fetch data from Twitter. We use Twitter's public streaming API \cite{twitter_streaming_api} to fetch 100 tweets every 3 hours, hence fetching 800 tweets every single day. This gives us an overall view of the general sentiment of the public, on which we can perform our analysis.
 
+To summarize, the first part of our training data (comments on the web) comes from a competition on Kaggle, the second part comes from Reddit (main title of the stories posted by users), and the actual data for prediction comes from Twitter.
+
 \section{Approach and Setup}
 We experiment and evaluate with various machine learning techniques, including standalone support vector machines, multiple kernel learning algorithms, and finally ensemble learning methods. Our work can broadly be seen as being done in two phases - in the first phase, we evaluate (using cross validation) the machine learning techniques mentioned, and in the second phase, we build a system that monitors emotional distress on the internet.
 
@@ -22,3 +24,14 @@ This procedure is repeated for standalone support vector machines (using linear,
 In the second phase, we implement our system that is able to monitor public content (we concentrate on fetching content from Twitter) and identify the tweets which may signal emotional distress.
 
 \section{System Details}
+The final output of our work is a web based system that allows users to -
+\begin{itemize}
+    \item{assign labels to stories fetched from Reddit, which helps in building up a larget set of training data, as well as tapping into crowd intelligence}
+    \item{monitor a general \emph{level of distress} amongst people who are posting on Twitter, grouped by date}
+    \item{keep a check on certain tweets that have been classified by the model as depressed}
+\end{itemize}
+
+The system mainly comprises of two modules - \emph{ratings}, and \emph{monitor}.
+
+\subsection{Ratings}
+The \emph{ratings} module is responsible for allowing users to help build the training data. As mentioned before, our source of text is Reddit. After fetching stories from Reddit, we simply store them in our database. When a user chooses to visit the ratings module, he/she is presented with the next story that does not have a label. The user can then proceed to assign a positive (depressed) or a negaive (not depressed) label to it, which is then stored in the database. The welcome 
