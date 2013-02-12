@@ -27,4 +27,5 @@ def fetch_from_twitter():
                 tweet.save()
             except Exception, e:
                 print "Error saving tweet " + str(tweet) + "(" + e.message + ")"
+    stream.close()
     print "fetch_from_twitter => DONE"
