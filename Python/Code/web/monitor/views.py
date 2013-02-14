@@ -43,7 +43,7 @@ def train(request):
     return redirect("/monitor/")
 
 def fetch(request):
-    tasks.fetch_from_twitter.delay()
+    tasks.fetch_from_twitter.apply_async(expires = datetime.datetime.now() + datetime.timedelta(days = 1))
     messages.add_message(request, messages.INFO, "Fetching " + str(settings.MAX_TWEETS) + " tweets from Twitter")
     return redirect("/monitor/")
 
