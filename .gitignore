@@ -6,9 +6,6 @@ config.py
 *.sqlite3
 
 celerybeat-schedule
-
-Capfile
-config/
 system/
 
 Master.2011.pdf
