@@ -1,34 +1,38 @@
 #! /usr/bin/env python
 
 import sys, numpy, random
-from sklearn.svm import SVC
+from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import cross_validation
 
 from lib import util, config
 
 class SVM(object):
-
+    """Simple wrapper on a Linear SVM (purely for consistency)"""
     def __init__(self):
         self.model = None
-
     def get_classifier(self):
-        return SVC(C = 1, kernel = 'linear', class_weight = 'auto')
-
+        return LinearSVC(C = 1, class_weight = 'auto')
     def fit(self, x, y):
-        self.model = self.get_classifier()
+        if self.model is None:
+            self.model = self.get_classifier()
         self.model.fit(x, y)
-
     def score(self, x, y):
         if self.model is None:
             return None
         return numpy.mean(self.model.predict(x) == y)
 
-def main():
+def main(filename):
     # initialize the data
-    labels, stories = util.get_distress_data(config.CONNECTION)
-    vec = TfidfVectorizer(ngram_range = (1, 5), strip_accents = None, charset_error = 'ignore', stop_words = None)
-    instances = vec.fit_transform(stories)
+    labels, timestamps, comments = util.get_comments_data(filename)
+    vec = TfidfVectorizer(
+        ngram_range = (1, 2),
+        strip_accents = None,
+        charset_error = 'ignore',
+        stop_words = None,
+        min_df = 1
+    )
+    instances = vec.fit_transform(comments)
     random.seed(0)
 
     # cross validate
@@ -37,7 +41,7 @@ def main():
         print "Iteration #" + str(i) + "..."
 
         # initialize training/testing data
-        cv_data = cross_validation.train_test_split(instances, labels, test_size = 0.5, random_state = i)
+        cv_data = cross_validation.train_test_split(instances, labels, test_size = 0.2, random_state = i)
         x_training = cv_data[0]
         x_testing = cv_data[1]
         y_training = cv_data[2]
@@ -54,5 +58,8 @@ def main():
     print "Mean   => " + str(numpy.mean(cv_accuracy))
 
 if __name__ == "__main__":
-    main()
-
+    try:
+        main(sys.argv[1])
+    except Exception, e:
+        print "Usage: python %s <filename>" % sys.argv[0]
+        sys.exit(1)
