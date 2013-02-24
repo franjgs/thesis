@@ -1,7 +1,22 @@
 \chapter{Introduction}
 \label{chapter:Introduction}
 
-We start the thesis with an introduction. Do not spend time on formating your thesis, but on its content.
- 
-\section{Latex Introduction}
-There is no need for a latex introduction since there is plenty of literature out there.
+The Internet today is a vast source of information curated by real people. In the recent times, the popularity of websites like Twitter and Wordpress has shown that every day, more and more people are getting comfortable with expressing their inner feelings on the web, irrespective of whether they feel good or bad. Negative feelings expressed this way provide an important indicator of what might be going wrong in their lives, or what may ultimately lead up to something more tragic and terminal. Every year, nearly one million people die because of suicide. In some cases, factors leading up to suicide can be identified early on by looking at the physical and verbal behavior of the people under concern. The work presented in this thesis aims to target this problem.
+
+\section{Machine learning and text classification}
+
+\section{Problem Definition}
+A large portion of people who die every year from suicide include young people, who make their inner feelings public on the web. Suicide is a mental and medical condition that has the potential to be detected early on, by observing the physical and verbal behavior of the person under concern. The work presented in this thesis exploits these two facts, and aims to build a system that can monitor the public feed of Internet websites such as Twitter (on which people post about what they feel) and detect the content that may have been posted by a person facing emotional distress.
+
+Pointing out the exact phrases which lead one to believe that a person may be under some degree of emotional distress is a problem best handled by psychologists. Extreme sophistication of natural language sentiments aside, it is known that machine learning algorithms can identify and categorize the sentiment of a piece of text to a reasonable accuracy even when the text is lacking advanced information that only someone dealing with psychology may provide. A person may need help if he/she posts content which is indicative of the following three major sentiments - suicide, depression, and loneliness. During the work performed in this thesis, the following categories of phrases were found indicative of emotional distress.
+
+\begin{itemize}
+    \item{
+    Direct\\
+    Phrases such as \emph{thoughts of suicide make me happy} reveal that a person is definitely on the path to ending their life, and mean that he/she definitely needs help.
+    }
+    \item{
+    Indirect\\
+    Phrases such as \emph{I don't know anymore}, and \emph{I need help} indicate that the person is under a lot of confusion.
+    }
+\end{itemize}
