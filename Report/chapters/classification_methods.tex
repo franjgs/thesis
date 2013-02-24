@@ -1,24 +1,6 @@
 \chapter{Classification Methods}
 \label{chapter:Classification Methods}
 
-Machine learning is a branch of computer science that deals with building and analyzing systems that are able to learn from data. Algorithms based upon such analysis involve constructing a model from a given dataset, and then using this model to perform required tasks. Machine learning techniques can broadly be divided into two categories - supervised learning, and unsupervised learning.
-\begin{itemize}
-    \item{
-    Supervised Learning\\
-    Methods falling in this category operate in two phases
-    \begin{itemize}
-        \item{In the first step, the availability of training data is assumed, which is used to build a model so that it takes into account the structure of the given dataset}
-        \item{In the second step, this model is used to make predictions on the testing data (the real world data). This is the data that the model has not seen yet, and is required to make predictions on.}
-    \end{itemize}
-    }
-    \item{
-    Unsupervised Learning\\
-    Methods falling under this category operate in a single phase. It starts with a model with zero knowledge about the structure of the given dataset. As data is fed into the model, it continuously learns the structure of the given dataset and calculates the predictions based on this knowledge. The main difference between this family of algorithms and supervised learning algorithms is the presence/absence of training labels.
-    }
-\end{itemize}
-The primary focus in this thesis remains on supervised learning methods.
-
-\section{Introduction}
 Classification is one of the fundamental problems in machine learning. Given a dataset $\mathbf{X}$, it is required to separate the samples contained within the dataset into two (or more than two, depending on the input) classes. Formally, given a dataset that contains $N$ instances $(\mathbf{X}_{n}, \mathbf{Y}_n) |_{n = 1}^{N}$, where each instance ($\mathbf{x}_{n}, \mathbf{y}_{n}$) is of the form $[(\mathbf{x}_{n, 1}, \mathbf{x}_{n, 2}, ... \mathbf{x}_{n, D}), \mathbf{y}_{n}]$, (each $\mathbf{x}_{n, d}$ being the value of the feature $d \in [1, D]$, and $\mathbf{y}_{n}$ is the label of the sample which can take a limited number of possible values) the aim is to calculate the value of $\mathbf{y}_{n}$ given the feature information. This separation can usually be done using a supervised learning method, in which case the training data (on which the model is built) is given and it is required to predict the labels of the test data, or using unsupervised methods, where the model is required to identify the categories of the samples without any information on $\mathbf{y}$.
 
 The performance of a particular classifier varies with the type of the data to be classified. Not all classifiers are good for all classes of problems. Some classifiers suit a particular problem more than some others; choosing a classifier for a problem still remains a decision which may or may not be completely scientific, even though there have been a number of tests been done to correlate classifier performance with data type [citation needed].
