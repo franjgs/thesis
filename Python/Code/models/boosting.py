@@ -56,7 +56,7 @@ def main(filename):
     labels, instances = numpy.array(labels), vec.fit_transform(comments)
     random.seed(0)
     
-    n_models = 5; cv = 5; cv_accuracy = list();
+    n_models = 9; cv = 5; cv_accuracy = list();
     for i in xrange(0, cv):
         print "Iteration #" + str(i) + "..."
         
