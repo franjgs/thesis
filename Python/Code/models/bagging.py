@@ -46,7 +46,7 @@ def main(filename):
         strip_accents = None,
         charset_error = 'ignore',
         stop_words = None,
-        min_df = 1
+        min_df = 2
     )
     labels, instances = numpy.array(labels), vec.fit_transform(comments)
     random.seed(0)
