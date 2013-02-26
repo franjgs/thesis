@@ -4,7 +4,6 @@ load('seeds.mat'); rng(s);
 
 [labels, instances] = libsvmread('Data/n-gram.data');
 
-M = 9;
 cv = cvpartition(labels, 'HoldOut', 0.3);
 cv_accuracy = zeros(1, cv.NumTestSets);
 param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
@@ -18,24 +17,16 @@ for i = 1 : cv.NumTestSets
     x_training = instances(training, :); y_training = labels(training, :);
     x_testing = instances(testing, :); y_testing = labels(testing, :);
     
-    % build the weak learners
+    % train the model
     n = size(x_training, 1);
-    learners = cell(M, 1);
-    for m = 1 : M
-        indices = randsample(n, randi([round(n/2), n]));
-        w = ones(size(indices, 1), 1);
-        positive = numel(indices) / sum(y_training(indices, :) == 1);
-        negative = numel(indices) / sum(y_training(indices, :) == -1);
-        learners{m} = svmtrain(w, y_training(indices, :), x_training(indices, :), sprintf(param, positive, negative));
-    end
+    w = ones(size(x_training, 1), 1);
+    positive = size(y_training, 1) / sum(y_training == 1);
+    negative = size(y_training, 1) / sum(y_training == -1);
+    param = sprintf('-t 0 -c %s -w1 %.3f -w-1 %.3f', num2str(i * 10), positive, negative);
+    model = svmtrain(w, y_training, x_training, param);
 
     % predict on the testing data
-    n = size(x_testing, 1);
-    predictions = zeros(n, M);
-    for m = 1 : M
-        [predictions(:, m), ~, ~] = svmpredict(y_testing, x_testing, learners{m});
-    end
-    predictions = sign(sum(predictions, 2));
+    [predictions, ~, ~] = svmpredict(y_testing, x_testing, model);
     
     cv_accuracy(i) = sum(y_testing == predictions) / size(y_testing, 1);
 end
