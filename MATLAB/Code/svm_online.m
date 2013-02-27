@@ -4,14 +4,14 @@ load('seeds.mat'); rng(s);
 
 [labels_global, instances_global] = libsvmread('Data/n-gram.data');
 
-labels = []; instances = []; M = 100; N = round(size(instances_global, 1) / M);
+labels = []; instances = []; S = 100; N = round(size(instances_global, 1) / S);
 accuracy = zeros(N, 1);
 params = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 % while all samples not processed
 for i = 1 : N
     fprintf('Iteration #%d/%d', i, N);
     
-    % pick another 'M' random samples
+    % pick another 'S' random samples
     if size(instances_global, 1) >= 100
         indices = randsample(size(instances_global, 1), 100);
     else
