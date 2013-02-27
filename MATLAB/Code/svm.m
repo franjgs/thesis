@@ -6,7 +6,7 @@ load('seeds.mat'); rng(s);
 
 cv = cvpartition(labels, 'HoldOut', 0.3);
 cv_accuracy = zeros(1, cv.NumTestSets);
-param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
+params = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 
 for i = 1 : cv.NumTestSets
     fprintf('Iteration #%d\n', i);
@@ -22,8 +22,7 @@ for i = 1 : cv.NumTestSets
     w = ones(size(x_training, 1), 1);
     positive = size(y_training, 1) / sum(y_training == 1);
     negative = size(y_training, 1) / sum(y_training == -1);
-    param = sprintf('-t 0 -c %s -w1 %.3f -w-1 %.3f', num2str(i * 10), positive, negative);
-    model = svmtrain(w, y_training, x_training, param);
+    model = svmtrain(w, y_training, x_training, sprintf(params, positive, negative));
 
     % predict on the testing data
     [predictions, ~, ~] = svmpredict(y_testing, x_testing, model);
