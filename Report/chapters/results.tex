@@ -32,7 +32,7 @@ Support vectors is the subset of data points that the main classifier uses to es
 \end{figure}
 
 \subsection{Ensemble Learning}
-Ensemble learning methods are evaluated.
+Ensemble learning algorithms are nothing but a combination of individual classifiers. In this work, these individual classifiers happen to be support vector machines, which means that irrespective of which class of ensemble methods are used, the behavior is going to depend on the kernel being used. Since the maximum accuracy in the earlier section was found with the linear kernel, the same is used in the following experiments.
 
 Plot number of instances against -
 \begin{itemize}
@@ -46,7 +46,13 @@ Plot accuracy against -
 \end{itemize}
 
 \subsubsection{Bagging}
-results from bagging
+The increase in the accuracy observed by a bagging based ensemble is similar to the increase observed in simple support vector machines. This can be attributed to the fact that at heart, bagging is just a combination of SVM classifiers, with a majority vote deciding the label of the instance. This can be seen observed in Figure~\ref{bagging_accuracy}. A peak value of 80.40\% is observed when the ensemble has to classify 4100 data points.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{bagging_accuracy.eps}
+    \caption{Accuracy of linear kernel SVM based bagging ensemble as measured against the number of instances}
+    \label{bagging_accuracy}
+\end{figure}
 
 \subsubsection{Boosting}
 results from boosting

@@ -33,7 +33,7 @@
 \contentsline {subsubsection}{Number of support vectors}{23}{section*.10}
 \contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{24}{subsection.7.1.2}
 \contentsline {subsubsection}{Bagging}{24}{section*.11}
-\contentsline {subsubsection}{Boosting}{24}{section*.12}
+\contentsline {subsubsection}{Boosting}{25}{section*.12}
 \contentsline {subsubsection}{Stacking}{25}{section*.13}
 \contentsline {section}{\numberline {7.2}System Details}{25}{section.7.2}
 \contentsline {section}{\numberline {7.3}Ratings}{26}{section.7.3}
