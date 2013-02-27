@@ -12,8 +12,8 @@ for i = 1 : N
     fprintf('Iteration #%d/%d', i, N);
     
     % pick another 'S' random samples
-    if size(instances_global, 1) >= 100
-        indices = randsample(size(instances_global, 1), 100);
+    if size(instances_global, 1) >= S
+        indices = randsample(size(instances_global, 1), S);
     else
         indices = (1: size(instances_global, 1))';
     end
