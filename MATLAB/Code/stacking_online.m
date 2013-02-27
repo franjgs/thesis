@@ -4,8 +4,10 @@ load('seeds.mat'); rng(s);
 
 [labels_global, instances_global] = libsvmread('Data/n-gram.data');
 
-labels = []; instances = []; S = 100; N = round(size(instances_global, 1) / S);
-accuracy = zeros(N, 1); M = 9;
+S = 100; N = round(size(instances_global, 1) / S); M = 9;
+labels = []; instances = [];
+accuracy_x = zeros(N + 1, 1); accuracy_y = zeros(N + 1, 1);
+accuracy_x(1) = 0; accuracy_y(1) = 0;
 params = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 % while all samples not processed
 for i = 1 : N
@@ -57,7 +59,10 @@ for i = 1 : N
     [predictions, ~, ~] = svmpredict(y, x, model);
     
     % get accuracy
-    accuracy(i) = sum(predictions == y_testing) / size(y_testing, 1);
+    accuracy_x(i + 1) = size(instances, 1);
+    accuracy_y(i + 1) = 100 * sum(predictions == y_testing) / size(y_testing, 1);
 end
 
-plot(accuracy);
+plot(accuracy_x, accuracy_y, 'bd-');
+axis([0 size(instances, 1) 0 100]);
+legend('Accuracy'); xlabel('Number of instances'); ylabel('Accuracy (%)');
