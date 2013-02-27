@@ -26,20 +26,19 @@
 \contentsline {chapter}{\numberline {6}Experiments}{21}{chapter.6}
 \contentsline {section}{\numberline {6.1}Dataset}{21}{section.6.1}
 \contentsline {section}{\numberline {6.2}Approach and Setup}{22}{section.6.2}
-\contentsline {section}{\numberline {6.3}System Details}{22}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}Ratings}{22}{subsection.6.3.1}
 \contentsline {chapter}{\numberline {7}Results}{23}{chapter.7}
 \contentsline {section}{\numberline {7.1}Evaluation}{23}{section.7.1}
 \contentsline {subsection}{\numberline {7.1.1}SVM}{23}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{23}{subsection.7.1.2}
-\contentsline {subsubsection}{Bagging}{24}{section*.9}
-\contentsline {subsubsection}{Boosting}{24}{section*.10}
-\contentsline {subsubsection}{Stacking}{24}{section*.11}
+\contentsline {subsubsection}{Accuracy with the number of instances}{23}{section*.9}
+\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{24}{subsection.7.1.2}
+\contentsline {subsubsection}{Bagging}{24}{section*.10}
+\contentsline {subsubsection}{Boosting}{24}{section*.11}
+\contentsline {subsubsection}{Stacking}{24}{section*.12}
 \contentsline {section}{\numberline {7.2}System Details}{24}{section.7.2}
-\contentsline {section}{\numberline {7.3}Ratings}{25}{section.7.3}
-\contentsline {section}{\numberline {7.4}Monitoring}{25}{section.7.4}
+\contentsline {section}{\numberline {7.3}Ratings}{26}{section.7.3}
+\contentsline {section}{\numberline {7.4}Monitoring}{26}{section.7.4}
 \contentsline {part}{\numberline {IV}Conclusion}{27}{part.4}
 \contentsline {chapter}{\numberline {8}Conclusion}{29}{chapter.8}
-\contentsline {part}{Appendix}{33}{part*.12}
+\contentsline {part}{Appendix}{33}{part*.13}
 \contentsline {chapter}{\numberline {A}Appendix}{33}{appendix.A}
-\contentsline {chapter}{Bibliography}{35}{appendix*.13}
+\contentsline {chapter}{Bibliography}{35}{appendix*.14}
