@@ -1,39 +1,64 @@
-{% extends "base.html" %}
-
-{% block title %}
-Label some content
-{% endblock %}
-
-{% block content %}
-<div class="container-narrow">
-    <div class="main">
-        
-        {% if messages %}
-            {% for message in messages %}
-                {% if message.tags %}
-                    <div class="alert alert-{{ message.tags }}">
-                {% else %}
-                    <div class="alert alert-success">
-                {% endif %}
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong> {{ message }} </strong>
-                    </div>
-            {% endfor %}
-        {% endif %}
-        
-        {% if error_message %}
-            <h1 class="text-error">{{ error_message }}</h1>
-        {% else %}
-            <h1> {{ story.content }} </h1>
-            <hr/>
-            <form action="/ratings/{{ story.id }}/rate/" method="post">
-                {% csrf_token %}
-                <button name="label" type="submit" class="btn btn-danger" value="depressed">Depressed</button>
-                <button name="label" type="submit" class="btn btn-success" value="happy">Not depressed</button>
-            </form>
-        {% endif %}
-        <hr/>
-        <a href="/" class="btn btn-link">Go Home</a> | <a href="/ratings/fetch/" class="btn btn-link">Fetch more stories</a>
+<!doctype html>
+<html>
+  
+<head>
+    <script src="https://app.divshot.com/js/jquery.min.js"></script>
+    <script src="https://app.divshot.com/js/bootstrap.min.js"></script>
+    <title>Ratings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" href="https://app.divshot.com/themes/inspiritas/inspiritas.css">
+    <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="https://djyhxgczejc94.cloudfront.net/builds/b53a00e65411eb56be06163ef1a04f4ff7e04e56.css"> 
+</head>
+  
+<body>
+    {% if error_message %}
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <b>{{ error_message }}</b>
     </div>
-</div>
-{% endblock %}
+    {% endif %}
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="brand" href="#">TUM</a>
+                <div class="navbar-content">
+                    <ul class="nav ">
+                        <li>
+                            <a href="/">Home</a> 
+                        </li>
+                        <li>
+                            <a href="/about/">About</a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-unit align-center visible-desktop">
+            <h2 class="align-center">random story from reddit</h2>
+            <p></p>
+        </div>
+        <a class="btn btn-large btn-primary btn-block visible-phone" href="#"><span class="btn-label">Sign Up Today!</span></a>
+        <div class="main-features visible-desktop row-fluid">
+            <div class="span6">
+                <div class="well align-center well-small">
+                    <h3 class="align-center">
+                        <div>Depressed</div>
+                    </h3>
+                    <p class="align-center">The author of this story seems to be depressed.</p>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="well align-center well-small">
+                    <h3 class="align-center">Not Depressed</h3>
+                    <p class="align-center">The author of this story is fine.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
