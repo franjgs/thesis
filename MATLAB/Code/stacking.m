@@ -6,7 +6,7 @@ load('seeds.mat'); rng(s);
 
 n_global = size(instances, 1);
 
-cv = cvpartition(labels, 'HoldOut', 0.5);
+cv = cvpartition(labels, 'HoldOut', 0.3);
 cv_accuracy = zeros(1, cv.NumTestSets);
 
 M = 10;

@@ -5,7 +5,7 @@ load('seeds.mat'); rng(s);
 [labels, instances] = libsvmread('Data/n-gram.data');
 
 M = 9;
-cv = cvpartition(labels, 'HoldOut', 0.5);
+cv = cvpartition(labels, 'HoldOut', 0.3);
 cv_accuracy = zeros(1, cv.NumTestSets);
 param = '-t 0 -c 1 -h 0 -w1 %.3f -w-1 %.3f';
 
