@@ -72,7 +72,13 @@ Boosting follows a different approach to ensemble learning, by combining classif
 \end{figure}
 
 \subsubsection{Stacking}
-results from stacking
+Stacking follows a more meta-level appraoch to classification, by training two levels of classifiers to perform the final classification. It can be seen in Figure~\ref{stacking_accuracy} that the performance of stacked classifiers increases with the total number of instances, similar to the other two methods of ensemble learning.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{stacking_accuracy.eps}
+    \caption{Accuracy of linear kernel based stacking ensemble as measured against the number of instances}
+    \label{stacking_accuracy}
+\end{figure}
 
 \section{System Details}
 
