@@ -4,7 +4,7 @@ load('seeds.mat'); rng(s);
 
 [labels_global, instances_global] = libsvmread('Data/n-gram.data');
 
-S = 100; N = round(size(instances_global, 1) / S); M = 9;
+S = 100; N = round(size(instances_global, 1) / S) + 1; M = 9;
 labels = []; instances = [];
 accuracy_x = zeros(N + 1, 1); accuracy_y = zeros(N + 1, 1);
 accuracy_x(1) = 0; accuracy_y(1) = 0;
