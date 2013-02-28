@@ -29,10 +29,7 @@ class Classifiers(object):
     
     @classmethod
     def all(cls):
-        results = list()
-        for key in cls.__keys__:
-            results.append(getattr(cls, key))
-        return results
+        return [getattr(cls, key) for key in cls.__keys__]
     
     @classmethod
     def fit(cls, name, stories, labels):
@@ -45,7 +42,7 @@ class Classifiers(object):
             if hasattr(cls, name):
                 clf = getattr(cls, name)
                 clf.fit(stories, labels)
-                setattr(cls, key, clf)
+                setattr(cls, name, clf)
     
     @classmethod
     def trained(cls, name):
@@ -55,10 +52,7 @@ class Classifiers(object):
                     return False
             return True
         else:
-            if hasattr(cls, name):
-                if getattr(cls, name).vec is None:
-                    return False
-            else:
+            if hasattr(cls, name) or getattr(cls, name).vec is None:
                 return False
             return True
     
