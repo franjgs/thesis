@@ -34,17 +34,25 @@ for i = 1 : N
     % train the 'M' models
     models = cell(M, 1);
     n = size(x_training, 1);
+    m_max = 1;
     w = repmat(1 / n, n, M);
     alpha = zeros(M, 1);
     eps = zeros(M, 1);
     for m = 1 : M
+        m_max = m;
         positive = size(y_training, 1) / sum(y_training == 1);
         negative = size(y_training, 1) / sum(y_training == -1);
         models{m} = svmtrain(w(:, m) ./ min(w(:, m)), y_training, x_training, sprintf(params, positive, negative));
         predictions = svmpredict(y_training, x_training, models{m});
         I = (predictions ~= y_training);
-        eps(m) = (w(:, m)' * I) / sum(w(:, m));
-        alpha(m) = log ( (1 - eps(m)) / eps(m) );
+        if sum(I) == 0
+            eps(m) = 0;
+            alpha(m) = max(alpha) + 1;
+            break;
+        else
+            eps(m) = (w(:, m)' * I) / sum(w(:, m));
+            alpha(m) = log ( (1 - eps(m)) / eps(m) );
+        end
         if m < M
             w(:, m + 1) = w(:, m) .* exp(alpha(m) * I);
         end
@@ -52,7 +60,7 @@ for i = 1 : N
     
     % predict on the testing data
     predictions = zeros(size(x_testing, 1), M);
-    for m = 1 : M
+    for m = 1 : m_max
         [predictions(:, m), ~, ~] = svmpredict(y_testing, x_testing, models{m});
     end
     predictions = sign(predictions * alpha);
