@@ -7,57 +7,57 @@
     <title>Ratings</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <link rel="stylesheet" href="https://app.divshot.com/themes/inspiritas/inspiritas.css">
+    <link rel="stylesheet" href="https://app.divshot.com/themes/readable/bootstrap.min.css">
     <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap-responsive.css">
-    <link rel="stylesheet" href="https://djyhxgczejc94.cloudfront.net/builds/b53a00e65411eb56be06163ef1a04f4ff7e04e56.css"> 
+    <link rel="stylesheet" href="https://djyhxgczejc94.cloudfront.net/builds/b53a00e65411eb56be06163ef1a04f4ff7e04e56.css">
+    <link rel="stylesheet" href="https://app.divshot.com/css/divshot-util.css">
+    <link rel="stylesheet" href="https://app.divshot.com/css/divshot-canvas.css"> 
 </head>
   
 <body>
-    {% if error_message %}
-    <div class="alert">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <b>{{ error_message }}</b>
-    </div>
-    {% endif %}
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <a class="brand" href="#">TUM</a>
+                <a class="brand" href="/">TUM</a>
                 <div class="navbar-content">
                     <ul class="nav ">
-                        <li>
-                            <a href="/">Home</a> 
-                        </li>
-                        <li>
-                            <a href="/about/">About</a> 
-                        </li>
+                        <li> <a href="/">Home</a> </li>
+                        <li> <a href="/about/">About</a> </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+    
+    {% if error_message %}
+    <div class="alert align-center">
+        <b>{{ error_message }}</b>
+    </div>
+    {% endif %}
+    
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} align-center">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <b>{{ message }}</b>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
+    {% if story %}
     <div class="container">
-        <div class="hero-unit align-center visible-desktop">
-            <h2 class="align-center">random story from reddit</h2>
-            <p></p>
+        <h2 class="align-center">{{ story.content }}</h2>
+    </div>
+    <form action="/ratings/{{ story.id }}/rate/" method="post">
+        {% csrf_token %}
+        <div class="form-actions align-center">
+            <button name="label" type="submit" class="btn btn-danger btn-large" value="depressed">This seems depressed</button>
+            <button name="label" type="submit" class="btn btn-success btn-large" value="happy">This is not depressed</button>
         </div>
-        <a class="btn btn-large btn-primary btn-block visible-phone" href="#"><span class="btn-label">Sign Up Today!</span></a>
-        <div class="main-features visible-desktop row-fluid">
-            <div class="span6">
-                <div class="well align-center well-small">
-                    <h3 class="align-center">
-                        <div>Depressed</div>
-                    </h3>
-                    <p class="align-center">The author of this story seems to be depressed.</p>
-                </div>
-            </div>
-            <div class="span6">
-                <div class="well align-center well-small">
-                    <h3 class="align-center">Not Depressed</h3>
-                    <p class="align-center">The author of this story is fine.</p>
-                </div>
-            </div>
-        </div>
+    </form>
+    {% endif %}
+    <div class="align-center">
+        <a class="btn btn-info btn-large" href="/ratings/fetch/">Fetch More Stories</a> 
     </div>
 </body>
 
