@@ -38,27 +38,27 @@ def fetch_from_twitter():
     stream.disconnect()
     print "fetch_from_twitter => DONE"
 
-def fetch_labels(klass, tweets, stories, labels):
-    if klass == SVM:
-        clf = klass()
-    else:
-        clf = klass(n_models = settings.N_MODELS)
-    clf.fit(stories, labels)
-    plabels = map(lambda x: int(x), clf.predict(tweets).tolist())
-    positive = len([i for i in plabels if i == 1])
-    negative = len([i for i in plabels if i == -1])
-    return (positive, negative)
-
 @task
 def update_statistics():
     """update distress stats about tweets"""
     print "update_statistics => BEGIN"
     # collect the training data
+    print "update_statistics => collecting training data"
     labels, stories = list(), list()
     for story in Story.objects.exclude(label = 0):
         labels.append(int(story.label))
         stories.append(story.content)
+    # train the models
+    print "update_statistics => training the classifiers"
+    clf = dict()
+    for klass in [SVM, Bagging, Boosting, Stacking]:
+        if klass == SVM:
+            clf[klass] = klass()
+        else:
+            clf[klass] = klass(n_models = settings.N_MODELS)
+        clf[klass].fit(stories, labels)
     # collect all the unique dates
+    print "update_statistics => collecting unique dates"
     cursor = connection.cursor()
     cursor.execute("select distinct(date(created_at)) from monitor_tweet")
     dates = map(lambda x: x[0], cursor.fetchall())
@@ -79,7 +79,9 @@ def update_statistics():
             stats.created_at = date
         finally:
             for klass in [SVM, Bagging, Boosting, Stacking]:
-                depressed_count, not_depressed_count = fetch_labels(klass, tweets, stories, labels)
+                plabels = map(lambda x: int(x), clf[klass].predict(tweets).tolist())
+                depressed_count = len([i for i in plabels if i == 1])
+                not_depressed_count = len([i for i in plabels if i == -1])
                 setattr(stats, "depressed_count_" + klass.__name__.lower(), depressed_count)
                 setattr(stats, "not_depressed_count_" + klass.__name__.lower(), not_depressed_count)
             stats.save()
