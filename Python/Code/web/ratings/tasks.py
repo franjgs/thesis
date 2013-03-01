@@ -20,7 +20,3 @@ def fetch_from_reddit():
                 )
                 story.save()
                 count = count + 1
-
-@task
-def add(x, y):
-    return x + y
