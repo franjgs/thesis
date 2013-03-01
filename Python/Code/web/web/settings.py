@@ -180,9 +180,9 @@ CELERYBEAT_SCHEDULE = {
         'schedule': timedelta(hours = 3),
         'args': ()
     },
-    'runs-every-24-hours': {
+    'runs-every-25-hours': {
         'task': 'monitor.tasks.update_statistics',
-        'schedule': timedelta(hours = 24),
+        'schedule': timedelta(hours = 25),
         'args': ()
     }
 }
