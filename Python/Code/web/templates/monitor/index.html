@@ -55,6 +55,8 @@
                         Level of emotional distress (in %) on Twitter, as predicted by a
                         {% if name == "svm" %}Support Vector Machine {% else %} {{ name|capfirst }} {% endif %} classifier
                     </p>
+                    <br/>
+                    <p>(Classifiers are auto updated every 24 hours)</p>
                 </div>
                 {% endif %}
             </div>
@@ -64,7 +66,7 @@
                     <div id="chart" class="placeholder"></div>
                     <a class="btn btn-link" id="reset-button">Reset Zoom</a> 
                     {% else %}
-                    <h2> Choose a model from the left </h2>
+                    <h2> Choose a classifier from the left </h2>
                     {% endif %}
                 </div>
                 <div class="row-fluid"></div>
