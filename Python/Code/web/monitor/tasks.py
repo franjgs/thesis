@@ -50,7 +50,7 @@ def fetch_labels(klass, tweets, stories, labels):
     return (positive, negative)
 
 @task
-def update_statistic():
+def update_statistics():
     """update distress stats about tweets"""
     print "update_statistics => BEGIN"
     # collect the training data
