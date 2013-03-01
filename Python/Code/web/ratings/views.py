@@ -34,12 +34,3 @@ def rate(request, story_id):
         story.save()
     messages.add_message(request, messages.SUCCESS, "Stored")
     return redirect("/ratings/")
-
-def fetch(request):
-    tasks.fetch_from_reddit.delay()
-    messages.add_message(
-        request,
-        messages.SUCCESS,
-        "Fetching " + str(len(settings.SUBREDDITS) * settings.MAX_STORIES) + " stories from Reddit"
-    )
-    return redirect("/ratings/")

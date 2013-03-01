@@ -184,6 +184,11 @@ CELERYBEAT_SCHEDULE = {
         'task': 'monitor.tasks.update_statistics',
         'schedule': timedelta(hours = 25),
         'args': ()
+    },
+    'runs-every-49-hours': {
+        'task': 'monitor.fetch_from_reddit',
+        'schedule': timedelta(hours = 49),
+        'args': ()
     }
 }
 CELERY_TIMEZONE = 'Europe/Berlin'
