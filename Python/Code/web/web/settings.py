@@ -179,6 +179,11 @@ CELERYBEAT_SCHEDULE = {
         'task': 'monitor.tasks.fetch_from_twitter',
         'schedule': timedelta(hours = 3),
         'args': ()
+    },
+    'runs-every-24-hours': {
+        'task': 'monitor.tasks.update_statistics',
+        'schedule': timedelta(hours = 24),
+        'args': ()
     }
 }
 CELERY_TIMEZONE = 'Europe/Berlin'
