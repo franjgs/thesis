@@ -7,9 +7,7 @@
     <script type="text/javascript" src="/static/js/jquery.jqplot.min.js"></script>
     <script type="text/javascript" src="/static/js/jqplot.cursor.min.js"></script>
     <script type="text/javascript" src="/static/js/jqplot.dateAxisRenderer.min.js"></script>
-    {% if name %}
-    <script type="text/javascript" src="/static/js/monitor.js"></script>
-    {% endif %}
+    {% if name %} <script type="text/javascript" src="/static/js/monitor.js"></script> {% endif %}
     <title>Monitor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
@@ -26,12 +24,9 @@
                 <a class="brand" href="/">TUM</a>
                 <div class="navbar-content">
                     <ul class="nav">
-                        <li>
-                            <a href="/">Home</a> 
-                        </li>
-                        <li>
-                            <a href="/about/">About</a> 
-                        </li>
+                        <li> <a href="/">Home</a> </li>
+                        <li> <a href="/ratings/">Label</a> </li>
+                        <li class="active"> <a href="/monitor/">Monitor</a> </li>
                     </ul>
                 </div>
             </div>
@@ -56,11 +51,10 @@
                 </ul>
                 {% if name %}
                 <div class="well">
-                    {% ifequal name "svm" %}
-                    <p>Support Vector Machines</p>
-                    {% else %}
-                    <p> {{ name|capfirst}} </p>
-                    {% endifequal %}
+                    <p>
+                        Level of emotional distress (in %) on Twitter, as predicted by a
+                        {% if name == "svm" %}Support Vector Machine {% else %} {{ name|capfirst }} {% endif %} classifier
+                    </p>
                 </div>
                 {% endif %}
             </div>
