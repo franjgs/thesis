@@ -48,4 +48,4 @@ class Boosting(Base):
             else:
                 predictions = numpy.vstack((predictions, self.clf[i].predict(x)))
         predictions = numpy.sign(predictions.transpose() * self.alpha)
-        return predictions
+        return numpy.asarray(predictions.transpose()).reshape(-1)
