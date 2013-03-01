@@ -1,8 +1,4 @@
 $(document).ready(function() {
-    $("#chart").attr(
-        "class",
-        $("#chart").attr("class").replace("hidden", "").split(" ").filter(function (e) { return (e.length > 0) }).join(" ")
-    );
     min_date = null;
     data = eval($("#data").html());
     i = 0;

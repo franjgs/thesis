@@ -7,4 +7,4 @@ def index(request):
 
 def stats(request, name):
     context = { 'name': name, 'data': Stats.for_model(name) }
-    return render_to_response("monitor/index.html")
+    return render_to_response("monitor/index.html", context)

@@ -7,7 +7,9 @@
     <script type="text/javascript" src="/static/js/jquery.jqplot.min.js"></script>
     <script type="text/javascript" src="/static/js/jqplot.cursor.min.js"></script>
     <script type="text/javascript" src="/static/js/jqplot.dateAxisRenderer.min.js"></script>
+    {% if name %}
     <script type="text/javascript" src="/static/js/monitor.js"></script>
+    {% endif %}
     <title>Monitor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
@@ -21,7 +23,7 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="#">TUM</a>
+                <a class="brand" href="/">TUM</a>
                 <div class="navbar-content">
                     <ul class="nav">
                         <li>
@@ -39,45 +41,43 @@
         <div class="row-fluid">
             <div class="span3">
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active">
+                    <li {% if name != "svm" %} class="active" {% endif %}>
                         <a href="/monitor/svm/">SVM</a> 
                     </li>
-                    <li class="active">
+                    <li {% if name != "bagging" %} class="active" {% endif %}>
                         <a href="/monitor/bagging/">Bagging</a> 
                     </li>
-                    <li class="active">
+                    <li {% if name != "boosting" %} class="active" {% endif %}>
                         <a href="/monitor/boosting/">Boosting</a> 
                     </li>
-                    <li class="active">
+                    <li {% if name != "stacking" %} class="active" {% endif %}>
                         <a href="/monitor/stacking/">Stacking</a> 
                     </li>
                 </ul>
                 {% if name %}
                 <div class="well">
-                    <p>Details about the model go here.
-                        <br> 
-                    </p>
+                    {% ifequal name "svm" %}
+                    <p>Support Vector Machines</p>
+                    {% else %}
+                    <p> {{ name|capfirst}} </p>
+                    {% endifequal %}
                 </div>
                 {% endif %}
             </div>
             <div class="span9">
                 <div class="hero-unit align-center">
                     {% if name %}
-                    <h1>draw graphs here
-                        <br> 
-                    </h1>
-                    <p></p>
-                    <a class="btn btn-link">Reset Zoom</a> 
+                    <div id="chart" class="placeholder"></div>
+                    <a class="btn btn-link" id="reset-button">Reset Zoom</a> 
                     {% else %}
-                    <h2>
-                        Choose a model from the left
-                    </h2>
+                    <h2> Choose a model from the left </h2>
                     {% endif %}
                 </div>
                 <div class="row-fluid"></div>
             </div>
         </div>
     </div>
+    <div class="hidden" id="data"> {{ data }} </div>
 </body>
 
 </html>
