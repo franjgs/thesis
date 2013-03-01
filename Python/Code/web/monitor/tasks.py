@@ -5,6 +5,7 @@ from dateutil import parser
 
 from monitor import twitter
 from monitor.models import Tweet, Stats
+from ratings.models import Story
 
 from monitor.classifiers.static.svm import SVM
 from monitor.classifiers.static.bagging import Bagging
@@ -37,13 +38,26 @@ def fetch_from_twitter():
     stream.disconnect()
     print "fetch_from_twitter => DONE"
 
-def get_name(klass):
-    return klass.__name__.lower()
+def fetch_labels(klass, tweets, stories, labels):
+    if klass == SVM:
+        clf = klass()
+    else:
+        clf = klass(n_models = settings.N_MODELS)
+    clf.fit(stories, labels)
+    plabels = map(lambda x: int(x), clf.predict(tweets).tolist())
+    positive = len([i for i in plabels if i == 1])
+    negative = len([i for i in plabels if i == -1])
+    return (positive, negative)
 
 @task
 def update_statistic():
     """update distress stats about tweets"""
     print "update_statistics => BEGIN"
+    # collect the training data
+    labels, stories = list(), list()
+    for story in Story.objects.exclude(label = 0):
+        labels.append(int(story.label))
+        stories.append(story.content)
     # collect all the unique dates
     cursor = connection.cursor()
     cursor.execute("select distinct(date(created_at)) from monitor_tweet")
@@ -51,19 +65,22 @@ def update_statistic():
     # iterate over dates and store labels
     for date in dates:
         # collect all the tweets for the particular date
-        tweets = list()
-        for tweet in Tweet.objects.filter(created_at__year = date.year, created_at__month = date.month, created_at__day = date.day):
-            tweets.append(tweet)
+        tweets = Tweet.objects.filter(
+            created_at__year = date.year,
+            created_at__month = date.month,
+            created_at__day = date.day
+        ).values_list("text", flat = True)
         # store labels for tweets on this particular date
-        print "update_statistics => Updating stats for " + str(date)
+        print "update_statistics => Updating statistics for " + str(date)
         try:
             stats = Stats.objects.get(created_at = date)
         except:
             stats = Stats()
+            stats.created_at = date
         finally:
             for klass in [SVM, Bagging, Boosting, Stacking]:
-                depressed_count, not_depressed_count = fetch_labels(klass, tweets)
-                setattr(stats, "depressed_count_" + get_name(klass), depressed)
-                setattr(stats, "not_depressed_count_" + get_name(klass), not_depressed)
+                depressed_count, not_depressed_count = fetch_labels(klass, tweets, stories, labels)
+                setattr(stats, "depressed_count_" + klass.__name__.lower(), depressed_count)
+                setattr(stats, "not_depressed_count_" + klass.__name__.lower(), not_depressed_count)
             stats.save()
     print "update_statistics => DONE"
