@@ -4,7 +4,7 @@ load('seeds.mat'); rng(s);
 
 [labels_global, instances_global] = libsvmread('Data/n-gram.data');
 
-to_plot = 'n_sv'; % or accuracy
+to_plot = 'accuracy'; % or n_sv
 
 S = 100; N = round(size(instances_global, 1) / S) + 1;
 labels = []; instances = [];
@@ -29,26 +29,33 @@ for i = 1 : N
     instances_global(indices, :) = []; labels_global(indices, :) = [];
     
     % measure the cross validation accuracy on data until now
-    cv = cvpartition(labels, 'HoldOut', 0.3);
-    training = cv.training(1);
-    testing = cv.test(1);
-    x_training = instances(training, :); y_training = labels(training, :);
-    x_testing = instances(testing, :); y_testing = labels(testing, :);
-    
-    % train the model
-    w = ones(size(x_training, 1), 1);
-    positive = size(y_training, 1) / sum(y_training == 1);
-    negative = size(y_training, 1) / sum(y_training == -1);
-    model = svmtrain(w, y_training, x_training, sprintf(params, positive, negative));
-    
-    % get predictions
-    [predictions, ~, ~] = svmpredict(y_testing, x_testing, model);
+    accuracy_total = 0; n_sv_total = 0;
+    cv = cvpartition(labels, 'Kfold', 10);
+    for j = 1 : cv.NumTestSets
+        training = cv.training(j);
+        testing = cv.test(j);
+        x_training = instances(training, :); y_training = labels(training, :);
+        x_testing = instances(testing, :); y_testing = labels(testing, :);
+        
+        % train the model
+        w = ones(size(x_training, 1), 1);
+        positive = size(y_training, 1) / sum(y_training == 1);
+        negative = size(y_training, 1) / sum(y_training == -1);
+        model = svmtrain(w, y_training, x_training, sprintf(params, positive, negative));
+        
+        % get predictions
+        [predictions, ~, ~] = svmpredict(y_testing, x_testing, model);
+        
+        % get accuracy and number of support vectors
+        accuracy_total = accuracy_total + 100 * sum(predictions == y_testing) / size(y_testing, 1);
+        n_sv_total = n_sv_total + model.totalSV;
+    end
     
     % get accuracy and number of support vectors
     accuracy_x(i + 1) = size(instances, 1);
-    accuracy_y(i + 1) = 100 * sum(predictions == y_testing) / size(y_testing, 1);
+    accuracy_y(i + 1) = accuracy_total / cv.NumTestSets;
     n_sv_x(i + 1) = size(instances, 1);
-    n_sv_y(i + 1) = model.totalSV;
+    n_sv_y(i + 1) = n_sv_total / cv.NumTestSets;
 end
 
 if strcmp(to_plot, 'accuracy') == 1
