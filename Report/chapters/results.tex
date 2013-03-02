@@ -8,10 +8,11 @@ The final output of this work is twofold
 \end{itemize}
 
 \section{Evaluation}
+\label{section:evaluation}
 The evaluation of all algorithms used is done on the comments dataset \cite{kaggle}. To report online learning scores, the learning continues in iterations. In each iteration, 100 random samples are picked on which the models are trained and the accuracy is measured. This is continued until no more samples are left. All accuracies reported henceforth are calculated using hold-out cross-validation, training the model on 70\% of the data and testing on the remaining 30\%.
 
 \subsection{SVM}
-The behavior of SVM based classification depends heavily on the kernel being used. Using a linear kernel yields a cross validation accuracy of 79.28\%, while using either of polynomial/RBF/sigmoid kernels gives an accuracy of only 34.35\%. This can be attributed to the intuitive notion of how kernel functions operate. A kernel function calculates the similarity between vectors when the vectors have been transformed from their original low dimensional space into a high dimensional space. In the current scenario, the text corpus contains 23175 features, which is already a very high number. Any transformation from this space into an even higher space results in a decrease in the final accuracy calculated, as can be noted in the results.
+The behavior of SVM based classification depends heavily on the kernel being used. Using a linear kernel yields a cross validation accuracy of 79.06\%, while using either of polynomial/RBF/sigmoid kernels gives an accuracy of only 34.39\%. This can be attributed to the intuitive notion of how kernel functions operate. A kernel function calculates the similarity between vectors when the vectors have been transformed from their original low dimensional space into a high dimensional space. In the current scenario, the text corpus contains 23175 features, which is already a very high number. Any transformation from this space into an even higher space results in a decrease in the final accuracy calculated, as can be noted in the results.
 
 \subsubsection{Accuracy}
 When using a linear kernel, the accuracy of an SVM shows an increase as the number of input instances increases. The score ranges from 70.00\% when measuring on 100 samples, to 79.71\% when measuring on all 6182 samples, as shown in Figure~\ref{svm_accuracy}.
@@ -46,7 +47,8 @@ Plot accuracy against -
 \end{itemize}
 
 \subsubsection{Bagging}
-The increase in the accuracy observed by a bagging based ensemble is similar to the increase observed in simple support vector machines. This can be attributed to the fact that at heart, bagging is just a combination of SVM classifiers, with a majority vote deciding the label of the instance. This can be seen observed in Figure~\ref{bagging_accuracy}. A peak value of 80.40\% is observed when the ensemble has to classify 4100 data points.
+non-online = 79.65\%
+The increase in the accuracy observed by a bagging based ensemble is similar to the increase observed in simple support vector machines. This can be attributed to the fact that at heart, bagging is just a combination of SVM classifiers, with a majority vote deciding the label of the instance. This can be seen observed in Figure~\ref{bagging_accuracy}. A peak value of 79.97\% is observed when the ensemble has to classify 6000 data points.
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{bagging_accuracy.eps}
@@ -81,6 +83,7 @@ Stacking follows a more meta-level appraoch to classification, by training two l
 \end{figure}
 
 \section{System Details}
+\label{section:system_details}
 
 The second major contribution of this thesis is a web based system that allows users to perform (broadly) the following functions - help build the training data, evaluate a level of distress amongst the general public, and find out particular people who have been posting content that appears to be distressed and qualifies as needing-attention.
 
