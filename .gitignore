@@ -8,6 +8,8 @@ config.py
 celerybeat-schedule
 system/
 
+*.mexa64
+
 Master.2011.pdf
 
 # LaTeX
