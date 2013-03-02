@@ -25,34 +25,40 @@ for i = 1 : N
     instances_global(indices, :) = []; labels_global(indices, :) = [];
     
     % measure the cross validation accuracy on data until now
-    cv = cvpartition(labels, 'HoldOut', 0.3);
-    training = cv.training(1);
-    testing = cv.test(1);
-    x_training = instances(training, :); y_training = labels(training, :);
-    x_testing = instances(testing, :); y_testing = labels(testing, :);
+    accuracy_total = 0;
+    cv = cvpartition(labels, 'Kfold', 10);
+    for j = 1 : cv.NumTestSets
+        training = cv.training(j);
+        testing = cv.test(j);
+        x_training = instances(training, :); y_training = labels(training, :);
+        x_testing = instances(testing, :); y_testing = labels(testing, :);
     
-    % train the 'M' models
-    n = size(x_training, 1);
-    learners = cell(M, 1);
-    for m = 1 : M
-        indices = randsample(n, randi([round(n/2), n]));
-        w = ones(size(indices, 1), 1);
-        positive = numel(indices) / sum(y_training(indices, :) == 1);
-        negative = numel(indices) / sum(y_training(indices, :) == -1);
-        learners{m} = svmtrain(w, y_training(indices, :), x_training(indices, :), sprintf(params, positive, negative));
-    end
+        % train the 'M' models
+        n = size(x_training, 1);
+        learners = cell(M, 1);
+        for m = 1 : M
+            indices = randsample(n, randi([round(n/2), n]));
+            w = ones(size(indices, 1), 1);
+            positive = numel(indices) / sum(y_training(indices, :) == 1);
+            negative = numel(indices) / sum(y_training(indices, :) == -1);
+            learners{m} = svmtrain(w, y_training(indices, :), x_training(indices, :), sprintf(params, positive, negative));
+        end
     
-    % predict on the testing data
-    n = size(x_testing, 1);
-    predictions = zeros(n, M);
-    for m = 1 : M
-        [predictions(:, m), ~, ~] = svmpredict(y_testing, x_testing, learners{m});
+        % predict on the testing data
+        n = size(x_testing, 1);
+        predictions = zeros(n, M);
+        for m = 1 : M
+            [predictions(:, m), ~, ~] = svmpredict(y_testing, x_testing, learners{m});
+        end
+        predictions = sign(sum(predictions, 2));
+        
+        % get accuracy
+        accuracy_total = accuracy_total + 100 * sum(predictions == y_testing) / size(y_testing, 1);
     end
-    predictions = sign(sum(predictions, 2));
     
     % get accuracy
     accuracy_x(i + 1) = size(instances, 1);
-    accuracy_y(i + 1) = 100 * sum(predictions == y_testing) / size(y_testing, 1);
+    accuracy_y(i + 1) = accuracy_total / cv.NumTestSets;
 end
 
 plot(accuracy_x, accuracy_y, 'bd-');
