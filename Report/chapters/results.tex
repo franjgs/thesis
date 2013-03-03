@@ -74,6 +74,7 @@ Boosting follows a different approach to ensemble learning, by combining classif
 \end{figure}
 
 \subsubsection{Stacking}
+Overall - 79.48\%
 Stacking follows a more meta-level appraoch to classification, by training two levels of classifiers to perform the final classification. It can be seen in Figure~\ref{stacking_accuracy} that the performance of stacked classifiers increases with the total number of instances, similar to the other two methods of ensemble learning.
 \begin{figure}
     \centering
@@ -85,11 +86,11 @@ Stacking follows a more meta-level appraoch to classification, by training two l
 \section{System Details}
 \label{section:system_details}
 
-The second major contribution of this thesis is a web based system that allows users to perform the following main functions - help build the training data, evaluate a level of distress amongst the general public, and find out particular people who have been posting content that appears to be distressed and qualifies as needing-attention.
+The second major contribution of this thesis is a web based system that allows users to perform various functions including helping building the training data, evaluating a level of distress amongst the general public by monitoring the status of the classifier, and keeping a check on particular instances of content that may appear to be distress and qualified as needing-attention.
 
-Users can assign labels to stories fetched from reddit, which helps in building training data while tapping into crowd intelligence. The \emph{monitoring} module then presents information about a general level of distress amongst people who are posting on Twitter (grouped by date), and about certain tweets that have been classified as depressed. Showing information about particular tweets which have been classified as depressed presents authors of the tweet which may need further attention in the form of psychological help.
+Users help build the training data by assigning labels to stories fetched from Reddit. This accounts for the crowd intelligence part of the whole system, and constitutes the \emph{Ratings} module on the site. The \emph{Monitoring} module then uses this data to train the classifiers and present information about a general level of distress amongst people who are posting on Twitter (grouped by date) as monitored by each class of classifiers (SVM, Bagging, Boosting, and Stacking). The module also presents information about individual instances of content that are most likely to be depressed. This may then serve as a first step towards providing further attention (in the form of human help) to the authors of these tweets.
 
-The system is divided into two modules - \emph{Ratings} and \emph{Monitoring}. This choice is presented to a user as soon as they visit the front page of the web interface, as shown in Figure~\ref{landing}.
+As soon as a user visits the front page of the web interface, they are presented with a choice between the \emph{Ratings} and \emph{Monitoring} modules, as shown in Figure~\ref{landing}.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth,scale=0.5]{landing.png}
@@ -97,16 +98,10 @@ The system is divided into two modules - \emph{Ratings} and \emph{Monitoring}. T
     \label{landing}
 \end{figure}
 
-The flow of the entire system can be seen as being divided into two parts. The first part, which is more manual, includes users fetching stories (from reddit) and labelling them, which helps in building the training data. The second part is built using automatic cron jobs (pieces of code that are executed after specific intervals of time), and involves the following -
-\begin{itemize}
-    \item{every 3 hours - fetching 100 tweets from the public stream of Twitter}
-    \item{every morning - assigning labels to all tweets fetched from Twitter according to the updated model}
-\end{itemize}
+The division of the system into the two mentioned modules is from a user's perspective. From an infrastructure perspective, the system can be seen as being powered by two components, a manual one and an automatic one. The manual component includes users assigning labels to posts fetched from Reddit, which ultimately serves as the training data. The automatic component includes cron jobs (pieces of code that are executed at specific intervals of time) and involves fetching 800 tweets every day from the public stream of Twitter, collecting and consolidating statistics about the total number of depressed and not-depressed content posted each day, and updating the labels of all fetched tweets according to the updated models. In the next two sections, a discussion is presented about the system components from the user's perspective.
 
 \section{Ratings}
-The \emph{Ratings} module is built to help consolidate the training data. Users are provided with options to label the unlabeled data (as ``depressed'' or ``not depressed'') that is already present in the database. If in case there are no unlabeled stories left, then there also exists an option to fetch more data from Reddit. When invoked, this option fetches 500 stories each from \href{http://www.reddit.com/r/happy}{/r/happy} and \href{http://www.reddit.com/r/suicidewatch}{/r/suicidewatch}.
-
-As shown in Figure~\ref{ratings}, the user is presented with a random piece of text that was fetched from Reddit, and two buttons for assigning this story a label.
+The \emph{Ratings} module is built to help consolidate training data. As mentioned earlier, 1000 posts from Reddit are fetched every 2 days (500 each from \href{http://www.reddit.com/r/happy}{/r/happy}, and \href{http://www.reddit.com/r/suicidewatch}{/r/suicidewatch}), which do not contain any label information. As shown in Figure~\ref{ratings}, this module presents a user with a random piece of text fetched from reddit, and two options for assigning this story a label. The label could be either ``depressed'', or ``not depressed''. If in case there are no unlabelled stories left, a simple message saying ``No unlabelled stories left'' is displayed.
 
 \begin{figure}
     \centering
@@ -116,3 +111,38 @@ As shown in Figure~\ref{ratings}, the user is presented with a random piece of t
 \end{figure}
 
 \section{Monitoring}
+The \emph{Monitoring} module is responsible for performing two functions. The first function is to display a list of top few tweets that are most likely to be depressed. This calculation is done based on the number of classifiers that classified a tweet as depressed. This is illustrated in Figure~\ref{monitoring_landing_1} and Figure~\ref{monitoring_landing_2}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,scale=0.5]{monitoring_landing_1.png}
+    \caption{Landing page of Monitoring module}
+    \label{monitoring_landing_1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,scale=0.5]{monitoring_landing_2.png}
+    \caption{Landing page of Monitoring module}
+    \label{monitoring_landing_2}
+\end{figure}
+
+As can be seen in Figure~\ref{monitoring_landing_2}, one of the tweets displayed has the text ``i just hate everything right now''. Such content can be associated with feelings of resentment, and so this is a good candidate to supply to a human for a final call on whether the person posting this is depressed or not. Similarly, Figure~\ref{monitoring_landing_1} shows a tweet with the content that includes the phrase ``i dont know what to do''. A lot of content like this was found on \href{http://www.reddit.com/r/suicidewatch}{/r/suicidewatch}, where people often post when they feel confused in a very negative connotation. Hence, this tweet alone gives somewhat of an indication that this person might be feeling depressed, and this belief could be further solidifed (or not) after looking at the entire stream of this person.
+
+The second function that the \emph{Monitoring} module performs is that of displaying statistics about how many tweets were classified as depressed on a particular day. Figure~\ref{monitoring_bagging} shows the page that is displayed when a user chooses to view the statistics for the bagging classifier.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,scale=0.5]{monitoring_bagging.png}
+    \caption{Statistics for the bagging classifier}
+    \label{monitoring_bagging}
+\end{figure}
+
+As can be seen in the figure, the statistics are displayed for a time period beginning from January 17 (this is when the process of collecting tweets from Twitter began) until March 18, with intervals of 15 days between two consecutive grids in the graph. The graph can also be zoomed in on a smaller period of time, as shown in Figure~\ref{monitoring_bagging_zoomed}, in which case only the statistics for that period of time are displayed. The zoom level can be reset using the \emph{``Reset Zoom''} button.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,scale=0.5]{monitoring_bagging_zoomed.png}
+    \caption{Zooming in on a particular interval of time for Bagging statistics}
+    \label{monitoring_bagging_zoomed}
+\end{figure}
