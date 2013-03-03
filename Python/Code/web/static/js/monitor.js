@@ -17,7 +17,13 @@ $(document).ready(function() {
         axes: {
             xaxis: {
                 renderer: $.jqplot.DateAxisRenderer,
-                min: min_date.toLocaleFormat("%b %e, %Y"),
+                min: min_date.toDateString().split(" ").slice(1).map(function(e) {
+                    if (isNaN(parseInt(e))) {
+                        return e;
+                    } else {
+                        return String(parseInt(e));
+                    }
+                }),
                 tickInterval: '15 days',
                 tickOptions: {
                     formatString: '%b %#d, %y',
