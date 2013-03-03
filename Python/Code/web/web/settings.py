@@ -1,5 +1,6 @@
 import djcelery
 from web import config
+from celery.schedules import crontab
 from datetime import timedelta
 
 DEBUG = True
@@ -177,17 +178,17 @@ CELERY_ANNOTATIONS = { "tasks:add": { "rate_limit": "10/s" } }
 CELERYBEAT_SCHEDULE = {
     'runs-every-3-hours': {
         'task': 'monitor.tasks.fetch_from_twitter',
-        'schedule': timedelta(hours = 3),
+        'schedule': crontab(minute = 0, hour = [0,3,6,9,12,15,18,21]),
         'args': ()
     },
-    'runs-every-25-hours': {
+    'runs-every-day': {
         'task': 'monitor.tasks.update_statistics',
-        'schedule': timedelta(hours = 25),
+        'schedule': crontab(minute = 0, hour = 1),
         'args': ()
     },
-    'runs-every-49-hours': {
+    'runs-every-2-days': {
         'task': 'monitor.fetch_from_reddit',
-        'schedule': timedelta(hours = 49),
+        'schedule': crontab(day_of_month = '2-30/3'),
         'args': ()
     }
 }
