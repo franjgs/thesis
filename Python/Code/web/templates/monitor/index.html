@@ -75,9 +75,9 @@
                     <p>The following tweets might be depressed</p>
                     {% for tweet in tweets %}
                     <blockquote class="twitter-tweet" data-conversation="none" align="center">
-                        <p>{{ tweet.1 }}</p>
-                        &mdash; (@{{ tweet.2 }})
-                        <a href="https://twitter.com/{{ tweet.2 }}/status/{{ tweet.0 }}">{{ tweet.3 }}</a>
+                        <p>{{ tweet.text }}</p>
+                        &mdash; (@{{ tweet.username }})
+                        <a href="https://twitter.com/{{ tweet.username }}/status/{{ tweet.tweet_id }}">{{ tweet.tweet_text }}</a>
                     </blockquote>
                     {% endfor %}
                     {% else %}

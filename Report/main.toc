@@ -10,7 +10,7 @@
 \contentsline {section}{\numberline {1.1}Machine learning and text classification}{3}{section.1.1}
 \contentsline {section}{\numberline {1.2}Problem Definition}{4}{section.1.2}
 \contentsline {chapter}{\numberline {2}Related Work}{7}{chapter.2}
-\contentsline {part}{\numberline {II}Methodology}{9}{part.2}
+\contentsline {part}{\numberline {II}Theory}{9}{part.2}
 \contentsline {chapter}{\numberline {3}Classification Methods}{11}{chapter.3}
 \contentsline {section}{\numberline {3.1}Support Vector Machines}{11}{section.3.1}
 \contentsline {section}{\numberline {3.2}Multiple Kernel Learning}{12}{section.3.2}
@@ -37,9 +37,9 @@
 \contentsline {subsubsection}{Stacking}{27}{section*.12}
 \contentsline {section}{\numberline {7.2}System Details}{27}{section.7.2}
 \contentsline {section}{\numberline {7.3}Ratings}{29}{section.7.3}
-\contentsline {section}{\numberline {7.4}Monitoring}{29}{section.7.4}
-\contentsline {part}{\numberline {IV}Conclusion}{31}{part.4}
-\contentsline {chapter}{\numberline {8}Conclusion}{33}{chapter.8}
-\contentsline {part}{Appendix}{37}{part*.13}
-\contentsline {chapter}{\numberline {A}Appendix}{37}{chapter.1}
-\contentsline {chapter}{Bibliography}{39}{chapter.1}
+\contentsline {section}{\numberline {7.4}Monitoring}{30}{section.7.4}
+\contentsline {part}{\numberline {IV}Conclusion}{33}{part.4}
+\contentsline {chapter}{\numberline {8}Conclusion}{35}{chapter.8}
+\contentsline {part}{Appendix}{39}{part*.13}
+\contentsline {chapter}{\numberline {A}Appendix}{39}{chapter.1}
+\contentsline {chapter}{Bibliography}{41}{chapter.1}
