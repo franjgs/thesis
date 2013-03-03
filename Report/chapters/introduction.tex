@@ -1,10 +1,11 @@
 \chapter{Introduction}
 \label{chapter:Introduction}
 
-The Internet today is a vast source of information curated by real people. In the recent times, the popularity of websites like Twitter, Reddit, and Wordpress has shown that every day, more and more people are getting comfortable with expressing their inner feelings on the web, irrespective of whether they feel good or bad. Negative feelings expressed this way provide an important indicator of what might be going wrong in their lives, or what may ultimately lead up to something more tragic or even terminal. In some cases, factors leading up to suicide can be identified early on by looking at the physical and verbal behavior of the person under concern. The work presented in this thesis addresses this problem.
+The Internet today is a vast source of information curated by real people. In recent times, the popularity of websites like Twitter, Reddit, and Wordpress has shown that every day, more and more people are getting comfortable with expressing their inner feelings on the web, irrespective of whether they feel good or bad. Negative feelings expressed this way provide an important indicator of what might be going wrong in their lives, or what may ultimately lead up to something more tragic or even terminal. In some cases, factors leading up to suicide can be identified early on by looking at the physical and verbal behavior of the person under concern. The work presented in this thesis addresses this problem.
 
 \section{Machine learning and text classification}
 Machine learning is a branch of computer science that deals with building and analyzing systems that are able to learn from data. Algorithms based on such analysis involve constructing a model from a given dataset, and then using this model to perform required tasks. Machine learning techniques can broadly be divided into two categories - supervised learning, and unsupervised learning.
+
 \begin{itemize}
     \item{
     Supervised Learning\\
@@ -19,6 +20,7 @@ Machine learning is a branch of computer science that deals with building and an
     Methods falling under this category operate in a single phase. It starts with a model with zero knowledge about the structure of the given dataset. As data is fed into the model, it continuously learns the structure of the given dataset and calculates the predictions based on this knowledge. The main difference between this family of algorithms and supervised learning algorithms is the presence/absence of training labels.
     }
 \end{itemize}
+
 The primary focus in this thesis remains on supervised learning methods.
 
 Text classification is a subset of machine learning algorithms used to assign specific categories to pieces of data. More precisely, given some sample information (such as what kind of data points are to be assigned to which category), these algorithms allow for assigning categories to data points in the future. Under the scope of this thesis, the data is always assumed to be English-text. Since machine learning algorithms only deal with real numbers, a necessary first step is the conversion of natural language text into real numbers. The work presented in this thesis makes extensive use of supervised text classification algorithms.
@@ -41,9 +43,11 @@ Pointing out the exact phrases which lead one to believe that a person may be un
 
 Both the category of phrases indicate that the person under consideration is not in a very good emotional health, and may need help.
 
-The final outcome of the work presented in this thesis is twofold -
+The final outcome of the work presented in this thesis is twofold.
+
 \begin{itemize}
     \item{an evaluation of various text classification algorithms that could be a good fit for the problem at hand (identification of text which may or may not have been posted by a depressed person)}
     \item{a system that proactively looks for content on the Internet (on places like Twitter), and identifies people who have been posting emotionally distressed content; this system is then going to serve as a first step towards extending a helping hand to people who need it}
 \end{itemize}
+
 The classification done in this work is distinguished by normal text classification by the sole factor of crowd intelligence, a detailed explanation of which can be found in Chapter~\ref{chapter:Experiments}.

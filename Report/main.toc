@@ -28,16 +28,16 @@
 \contentsline {section}{\numberline {6.2}Approach and Setup}{22}{section.6.2}
 \contentsline {chapter}{\numberline {7}Results}{23}{chapter.7}
 \contentsline {section}{\numberline {7.1}Evaluation}{23}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}SVM}{23}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.1}Support Vector Machine}{23}{subsection.7.1.1}
 \contentsline {subsubsection}{Accuracy}{24}{section*.8}
 \contentsline {subsubsection}{Number of support vectors}{24}{section*.9}
-\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{24}{subsection.7.1.2}
+\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{25}{subsection.7.1.2}
 \contentsline {subsubsection}{Bagging}{25}{section*.10}
-\contentsline {subsubsection}{Boosting}{25}{section*.11}
+\contentsline {subsubsection}{Boosting}{27}{section*.11}
 \contentsline {subsubsection}{Stacking}{27}{section*.12}
 \contentsline {section}{\numberline {7.2}System Details}{27}{section.7.2}
 \contentsline {section}{\numberline {7.3}Ratings}{29}{section.7.3}
-\contentsline {section}{\numberline {7.4}Monitoring}{30}{section.7.4}
+\contentsline {section}{\numberline {7.4}Monitoring}{29}{section.7.4}
 \contentsline {part}{\numberline {IV}Conclusion}{33}{part.4}
 \contentsline {chapter}{\numberline {8}Conclusion}{35}{chapter.8}
 \contentsline {part}{Appendix}{39}{part*.13}
