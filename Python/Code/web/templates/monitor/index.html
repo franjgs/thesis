@@ -8,6 +8,7 @@
     <script type="text/javascript" src="/static/js/jqplot.cursor.min.js"></script>
     <script type="text/javascript" src="/static/js/jqplot.dateAxisRenderer.min.js"></script>
     {% if name %} <script type="text/javascript" src="/static/js/monitor.js"></script> {% endif %}
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     <title>Monitor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
@@ -58,6 +59,10 @@
                     <br/>
                     <p>(Classifiers are auto updated every 24 hours)</p>
                 </div>
+                {% else %}
+                <div class="well">
+                    <p>Choose one of the models from above to see individual performances.</p>
+                </div>
                 {% endif %}
             </div>
             <div class="span9">
@@ -66,7 +71,18 @@
                     <div id="chart" class="placeholder"></div>
                     <a class="btn btn-link" id="reset-button">Reset Zoom</a> 
                     {% else %}
-                    <h2> Choose a classifier from the left </h2>
+                    {% if tweets|length > 0 %}
+                    <p>The following tweets might be depressed</p>
+                    {% for tweet in tweets %}
+                    <blockquote class="twitter-tweet" data-conversation="none" align="center">
+                        <p>{{ tweet.1 }}</p>
+                        &mdash; (@{{ tweet.2 }})
+                        <a href="https://twitter.com/{{ tweet.2 }}/status/{{ tweet.0 }}">{{ tweet.3 }}</a>
+                    </blockquote>
+                    {% endfor %}
+                    {% else %}
+                    <p>No tweets seem to be labelled as depressed yet.</p>
+                    {% endif %}
                     {% endif %}
                 </div>
                 <div class="row-fluid"></div>
