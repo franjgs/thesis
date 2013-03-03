@@ -69,7 +69,8 @@ def update_statistics():
             created_at__year = date.year,
             created_at__month = date.month,
             created_at__day = date.day
-        ).values_list("text", flat = True)
+        )
+        tweets_text = map(lambda tweet: tweet.text, tweets)
         # store labels for tweets on this particular date
         print "update_statistics => Updating statistics for " + str(date)
         try:
@@ -79,10 +80,18 @@ def update_statistics():
             stats.created_at = date
         finally:
             for klass in [SVM, Bagging, Boosting, Stacking]:
-                plabels = map(lambda x: int(x), clf[klass].predict(tweets).tolist())
+                plabels = map(lambda x: int(x), clf[klass].predict(tweets_text).tolist())
+                # update overall statistics
                 depressed_count = len([i for i in plabels if i == 1])
                 not_depressed_count = len([i for i in plabels if i == -1])
                 setattr(stats, "depressed_count_" + klass.__name__.lower(), depressed_count)
                 setattr(stats, "not_depressed_count_" + klass.__name__.lower(), not_depressed_count)
+                # update label of each tweet
+                for i in xrange(0, len(plabels)):
+                    setattr(tweets[i], "label_" + klass.__name__.lower(), plabels[i])
+            # write overall statistics back to the database
             stats.save()
+            # write label of each tweet back to the database
+            for tweet in tweets:
+                tweet.save()
     print "update_statistics => DONE"
