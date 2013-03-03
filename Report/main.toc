@@ -29,17 +29,15 @@
 \contentsline {chapter}{\numberline {7}Results}{25}{chapter.7}
 \contentsline {section}{\numberline {7.1}Evaluation}{25}{section.7.1}
 \contentsline {subsection}{\numberline {7.1.1}Support Vector Machine}{25}{subsection.7.1.1}
-\contentsline {subsubsection}{Accuracy}{26}{section*.8}
-\contentsline {subsubsection}{Number of support vectors}{26}{section*.9}
-\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{27}{subsection.7.1.2}
-\contentsline {subsubsection}{Bagging}{27}{section*.10}
-\contentsline {subsubsection}{Boosting}{29}{section*.11}
-\contentsline {subsubsection}{Stacking}{29}{section*.12}
+\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{26}{subsection.7.1.2}
+\contentsline {subsubsection}{Bagging}{27}{section*.8}
+\contentsline {subsubsection}{Boosting}{27}{section*.9}
+\contentsline {subsubsection}{Stacking}{29}{section*.10}
 \contentsline {section}{\numberline {7.2}System Details}{29}{section.7.2}
-\contentsline {section}{\numberline {7.3}Ratings}{31}{section.7.3}
+\contentsline {section}{\numberline {7.3}Ratings}{30}{section.7.3}
 \contentsline {section}{\numberline {7.4}Monitoring}{31}{section.7.4}
 \contentsline {part}{\numberline {IV}Conclusion}{35}{part.4}
 \contentsline {chapter}{\numberline {8}Conclusion}{37}{chapter.8}
-\contentsline {part}{Appendix}{41}{part*.13}
+\contentsline {part}{Appendix}{41}{part*.11}
 \contentsline {chapter}{\numberline {A}Appendix}{41}{chapter.1}
 \contentsline {chapter}{Bibliography}{43}{chapter.1}
