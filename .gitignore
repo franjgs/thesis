@@ -9,6 +9,7 @@ celerybeat-schedule
 system/
 
 *.mexa64
+demBoosting1.m
 
 Master.2011.pdf
 Master.2013.1.pdf

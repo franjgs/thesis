@@ -1,14 +1,39 @@
 \chapter{Classification Methods}
 \label{chapter:Classification Methods}
 
-Classification is one of the fundamental problems in machine learning. Given a dataset $\mathbf{X}$, it is required to separate the samples contained within the dataset into two (or more than two, depending on the input) classes. Formally, given a dataset that contains $N$ instances $(\mathbf{X}_{n}, \mathbf{Y}_n) |_{n = 1}^{N}$, where each instance ($\mathbf{x}_{n}, \mathbf{y}_{n}$) is of the form $[(\mathbf{x}_{n, 1}, \mathbf{x}_{n, 2}, ... \mathbf{x}_{n, D}), \mathbf{y}_{n}]$, (each $\mathbf{x}_{n, d}$ being the value of the feature $d \in [1, D]$, and $\mathbf{y}_{n}$ is the label of the sample which can take a limited number of possible values) the aim is to calculate the value of $\mathbf{y}_{n}$ given the feature information. This separation can usually be done using a supervised learning method, in which case the training data (on which the model is built) is given and it is required to predict the labels of the test data, or using unsupervised methods, where the model is required to identify the categories of the samples without any information on $\mathbf{y}$.
+Classification is one of the fundamental problems in machine learning. Given a dataset $\mathbf{X}$, it is required to separate the samples contained within the dataset into two (or more than two, depending on the input) classes. Formally, given a dataset that contains $N$ instances $(\mathbf{X}_{n}, \mathbf{Y}_n) |_{n = 1}^{N}$, where each instance ($\mathbf{x}_{n}, \mathbf{y}_{n}$) is of the form $[(\mathbf{x}_{n, 1}, \mathbf{x}_{n, 2}, ... \mathbf{x}_{n, D}), \mathbf{y}_{n}]$, (each $\mathbf{x}_{n, d}$ being the value of the feature $d \in [1, D]$, and $\mathbf{y}_{n}$ is the label of the sample which can take a limited number of possible values) the aim is to calculate the value of $\mathbf{y}_{n}$ given the feature information. This separation can usually be done using a supervised learning method, in which case the training data (on which the model is built) is given and it is required to predict the labels of the test data, or using unsupervised methods, where the model is required to identify the categories of the samples without any information on $\mathbf{y}$.\\
 
 The performance of a particular classifier varies with the type of the data to be classified. Not all classifiers are good for all classes of problems. Some classifiers suit a particular problem more than some others; choosing a classifier for a problem still remains a decision which may or may not be completely scientific, even though there have been a number of tests been done to correlate classifier performance with data type [citation needed].
 
 \section{Support Vector Machines}
-Support Vector Machines (SVMs) form a fairly popular class of machine learning algorithms used mainly for binary classification and regression analysis. Given the training data, the goal of an SVM is to find a decision boundary (a hyperplane in a high or infinite dimensional space) that separates the two classes of data while maximizing the distance of the boundary from any data point. The resulting decision function is fully specified by a (usually small) subset of the data, and the points in this subset are referred to as support vectors.
+Support Vector Machines (SVMs) form a fairly popular class of machine learning algorithms used mainly for binary classification and regression analysis. Given the training data, the goal of an SVM is to find a decision boundary (a hyperplane in a high or infinite dimensional space) that separates the two classes of data while maximizing the distance of the boundary from any data point. The resulting decision function is fully specified by a (usually small) subset of the data, and the points in this subset are referred to as support vectors.\\
 
-All classifiers resort to a distance function, in some form or the other, that can provide a similarity measurement between two points. In the simplest form of an SVM, the distance function is simply the dot product between two points, and such SVMs are referred to as \emph{Linear Support Vector Machines}. In the case that a simple linear SVM is not able to find a sufficiently accurate decision boundary that can separate the data points into two classes (simply because the input data is not linearly separable), the so-called \emph{kernel trick} is used, which involves transforming the data from a low dimensional space to a much higher dimensional feature space (in which the input data may be separable) using an appropriate function $\phi(\mathbf{x}): \mathbf{X} \in \mathbb{R}^{L} \rightarrow \mathbb{R}^H (L \ll H)$, and then using the kernel function $\mathbf{K(\phi(x), \phi(y))}$ to actually perform the separation. The trick involved is that even though the transformation $\phi(x)$ may be expensive, computing the final similarity value $\mathbf{K(\phi(x), \phi(y))}$ is not.
+All classifiers resort to a distance function, in some form or the other, that can provide a similarity measurement between two points. In the simplest form of an SVM, the distance function is simply the dot product between two points, and such SVMs are referred to as \emph{Linear Support Vector Machines}. In the case that a simple linear SVM is not able to find a sufficiently accurate decision boundary that can separate the data points into two classes (simply because the input data is not linearly separable), the so-called \emph{kernel trick} is used, which involves transforming the data from a low dimensional space to a much higher dimensional feature space (in which the input data may be separable) using an appropriate function $\phi(\mathbf{x}): \mathbf{X} \in \mathbb{R}^{L} \rightarrow \mathbb{R}^H (L \ll H)$, and then using the kernel function $\mathbf{K(\phi(x), \phi(y))}$ to actually perform the separation. The trick involved is that even though the transformation $\phi(x)$ may be expensive, computing the final similarity value $\mathbf{K(\phi(x), \phi(y))}$ is not.\\
+
+Figure~\ref{fig:svm_linear_classify} shows a scenario where an SVM is used to classify two sets of points from partially overlapping Gaussian distributions, generated as listed in Listing~\ref{lst:svm_linear_classify}. The same dataset, when classified using an RBF kernel results in a decision boundary that looks like as shown in Figure~\ref{fig:svm_rbf_classify}
+
+\begin{lstlisting}[language=Matlab,frame=single,captionpos=b,caption={Generating the dataset to be classified by a linear classifier},label={lst:svm_linear_classify}]
+    n1 = 100; n2 = 100;
+    S1 = eye(2); S2 = eye(2);
+    m1 = [1; 0]; m2 = [-1; 0];
+    x1 = bsxfun(@plus, chol(S1)'*randn(2,n1), m1);
+    x2 = bsxfun(@plus, chol(S2)'*randn(2,n2), m2);
+    x = [x1 x2]'; y = [-ones(1,n1) ones(1,n2)]';
+\end{lstlisting}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,scale=0.5]{svm_linear_classification.eps}
+    \caption{Linear kernel SVM}
+    \label{fig:svm_linear_classify}
+\end{figure}
+    
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,scale=0.5]{svm_rbf_classification.eps}
+    \caption{RBF kernel SVM}
+    \label{fig:svm_rbf_classify}
+\end{figure}
 
 The most popular kernel functions include
 \begin{itemize}
@@ -17,8 +42,3 @@ The most popular kernel functions include
     \item{Radial Basis - $\mathbf{K(x, y)} = \exp(-\gamma {| \mathbf{x} - \mathbf{y} |}^{2})$}
     \item{Sigmoid - $\mathbf{K(x, y)} = \tanh(\gamma \mathbf{x} \cdot \mathbf{y} + \mathbf{c})$}
 \end{itemize}
-
-\section{Multiple Kernel Learning}
-Multiple Kernel Learning makes an improvement to standalone support vector machines by using multiple kernels instead of a single one. In contrast to standard SVMs which use a single kernel function to calculate the similarity score between two data points, MKL algorithms combine scores from multiple kernels to obtain one single score, which is then used as the final similarity score. As summarized by \cite{gonen11a}, multiple kernel learning algorithms can be put into 12 major categories, based on some of their key properties (learning method, functional form, target function, training method, base learner, and the computational complexity).
-
-The two main uses of MKL algorithms are also discussed by \cite{gonen11a}. The first one uses the fact that since different kernels may be used as different notions of similarity, the accuracy obtained from each kernel may be maximized, and then the learning algorithm could be left to decide whether one kernel (which works better than the rest) or a combination of kernels is suitable for the task at hand. The second use is a more traditional use, where different kernels corresponding to different notions of similarity are combined, either in a linear or in a non-linear fashion to obtain a single kernel. As with all machine learning algorithms, multiple kernel learning does not suit all possible use cases, but in a lot of cases, combining multiple kernels may result in increased accuracy.
