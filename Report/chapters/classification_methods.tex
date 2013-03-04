@@ -10,29 +10,58 @@ Support Vector Machines (SVMs) form a fairly popular class of machine learning a
 
 All classifiers resort to a distance function, in some form or the other, that can provide a similarity measurement between two points. In the simplest form of an SVM, the distance function is simply the dot product between two points, and such SVMs are referred to as \emph{Linear Support Vector Machines}. In the case that a simple linear SVM is not able to find a sufficiently accurate decision boundary that can separate the data points into two classes (simply because the input data is not linearly separable), the so-called \emph{kernel trick} is used, which involves transforming the data from a low dimensional space to a much higher dimensional feature space (in which the input data may be separable) using an appropriate function $\phi(\mathbf{x}): \mathbf{X} \in \mathbb{R}^{L} \rightarrow \mathbb{R}^H (L \ll H)$, and then using the kernel function $\mathbf{K(\phi(x), \phi(y))}$ to actually perform the separation. The trick involved is that even though the transformation $\phi(x)$ may be expensive, computing the final similarity value $\mathbf{K(\phi(x), \phi(y))}$ is not.\\
 
-Figure~\ref{fig:svm_linear_classify} shows a scenario where an SVM is used to classify two sets of points that are generated from partially overlapping Gaussian distributions. The code for obtaining these points is shown in Listing~\ref{lst:svm_linear_classify}. The same dataset, when classified using an RBF kernel results in a decision boundary that looks like as shown in Figure~\ref{fig:svm_rbf_classify}. It can be observed that while the linear kernel makes a best effort to classify the two sets of points correctly, a number of points exist on the different side of boundary than the one to which they belong. The RBF kernel, on the other hand, manages to draw a more accuracy decision boundary and hence yields a better accuracy.
+Figure~\ref{fig:svm_linear_classify} shows a scenario where an SVM is used to classify two sets of points that are generated from partially overlapping Gaussian distributions. This dataset can be classified by a linear kernel SVM since this data is linearly separable. However, for a case when the data looks like as shown in Figure~\ref{fig:svm_non_linear_data}, when the data is not linearly separable, the linear kernel performs poorly. This is show in Figure~\ref{fig:svm_non_linear_classify_linear}. In such a scenario, an RBF kernel draws a much better boundary, as shown in Figure~\ref{fig:svm_non_linear_classify_rbf}.
 
 \begin{lstlisting}[language=Matlab,frame=single,captionpos=b,caption={Generating the dataset to be classified by a linear classifier},label={lst:svm_linear_classify}]
-    n1 = 100; n2 = 100;
-    S1 = eye(2); S2 = eye(2);
-    m1 = [1; 0]; m2 = [-1; 0];
-    x1 = bsxfun(@plus, chol(S1)'*randn(2,n1), m1);
-    x2 = bsxfun(@plus, chol(S2)'*randn(2,n2), m2);
-    x = [x1 x2]'; y = [-ones(1,n1) ones(1,n2)]';
+    % total number of points for each class
+    n = 200;
+
+    radius = 10;
+    theta = 2 * pi * rand(n, 1);
+
+    % points inside the circle of the specific radius
+    r_in = rand(n, 1) * radius;
+    x_in = r_in .* cos(theta);
+    y_in = r_in .* sin(theta);
+    label_in = ones(n, 1);
+
+    % points outside the circle
+    r_out = radius + rand(n, 1) * radius;
+    x_out = r_out .* cos(theta);
+    y_out = r_out .* sin(theta);
+    label_out = -1 * ones(n, 1);
+
+    % final points
+    instances = [x_in y_in; x_out y_out;];
+    labels = [label_in; label_out;];
 \end{lstlisting}
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth,scale=0.5]{svm_linear_classification.eps}
-    \caption{Linear kernel SVM}
+    \caption{Classification using a linear kernel SVM}
     \label{fig:svm_linear_classify}
 \end{figure}
-    
+
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth,scale=0.5]{svm_rbf_classification.eps}
-    \caption{RBF kernel SVM}
-    \label{fig:svm_rbf_classify}
+    \includegraphics[width=\textwidth,scale=0.5]{svm_non_linear_data.eps}
+    \caption{A dataset which is not linearly separable}
+    \label{fig:svm_non_linear_data}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,scale=0.5]{svm_non_linear_classify_linear.eps}
+    \caption{Dataset for Figure~\ref{fig:svm_non_linear_data} being classified using a linear kernel}
+    \label{fig:svm_non_linear_classify_linear}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,scale=0.5]{svm_non_linear_classify_rbf.eps}
+    \caption{Dataset for Figure~\ref{fig:svm_non_linear_data} being classified using an RBF kernel}
+    \label{fig:svm_non_linear_classify_rbf}
 \end{figure}
 
 The most popular kernel functions include

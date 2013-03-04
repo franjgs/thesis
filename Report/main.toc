@@ -13,30 +13,30 @@
 \contentsline {part}{\numberline {II}Theory}{11}{part.2}
 \contentsline {chapter}{\numberline {3}Classification Methods}{13}{chapter.3}
 \contentsline {section}{\numberline {3.1}Support Vector Machines}{13}{section.3.1}
-\contentsline {chapter}{\numberline {4}Text Representation}{17}{chapter.4}
-\contentsline {section}{\numberline {4.1}Introduction}{17}{section.4.1}
-\contentsline {section}{\numberline {4.2}Preprocessing}{17}{section.4.2}
-\contentsline {section}{\numberline {4.3}Representation and Vector Space Classification}{18}{section.4.3}
-\contentsline {chapter}{\numberline {5}Ensemble Learning}{21}{chapter.5}
-\contentsline {section}{\numberline {5.1}Bagging}{21}{section.5.1}
-\contentsline {section}{\numberline {5.2}Boosting}{22}{section.5.2}
-\contentsline {section}{\numberline {5.3}Stacking}{22}{section.5.3}
-\contentsline {part}{\numberline {III}Experimental Results}{23}{part.3}
-\contentsline {chapter}{\numberline {6}Experiments}{25}{chapter.6}
-\contentsline {section}{\numberline {6.1}Dataset}{25}{section.6.1}
-\contentsline {section}{\numberline {6.2}Approach and Setup}{26}{section.6.2}
-\contentsline {chapter}{\numberline {7}Results}{27}{chapter.7}
-\contentsline {section}{\numberline {7.1}Evaluation}{27}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}Support Vector Machine}{27}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{28}{subsection.7.1.2}
-\contentsline {subsubsection}{Bagging}{29}{section*.8}
-\contentsline {subsubsection}{Boosting}{29}{section*.9}
-\contentsline {subsubsection}{Stacking}{31}{section*.10}
-\contentsline {section}{\numberline {7.2}System Details}{31}{section.7.2}
-\contentsline {section}{\numberline {7.3}Ratings}{32}{section.7.3}
-\contentsline {section}{\numberline {7.4}Monitoring}{33}{section.7.4}
-\contentsline {part}{\numberline {IV}Conclusion}{37}{part.4}
-\contentsline {chapter}{\numberline {8}Conclusion}{39}{chapter.8}
-\contentsline {part}{Appendix}{43}{part*.11}
-\contentsline {chapter}{\numberline {A}Appendix}{43}{chapter.1}
-\contentsline {chapter}{Bibliography}{45}{chapter.1}
+\contentsline {chapter}{\numberline {4}Text Representation}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Introduction}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Preprocessing}{19}{section.4.2}
+\contentsline {section}{\numberline {4.3}Representation and Vector Space Classification}{20}{section.4.3}
+\contentsline {chapter}{\numberline {5}Ensemble Learning}{23}{chapter.5}
+\contentsline {section}{\numberline {5.1}Bagging}{23}{section.5.1}
+\contentsline {section}{\numberline {5.2}Boosting}{24}{section.5.2}
+\contentsline {section}{\numberline {5.3}Stacking}{24}{section.5.3}
+\contentsline {part}{\numberline {III}Experimental Results}{25}{part.3}
+\contentsline {chapter}{\numberline {6}Experiments}{27}{chapter.6}
+\contentsline {section}{\numberline {6.1}Dataset}{27}{section.6.1}
+\contentsline {section}{\numberline {6.2}Approach and Setup}{28}{section.6.2}
+\contentsline {chapter}{\numberline {7}Results}{29}{chapter.7}
+\contentsline {section}{\numberline {7.1}Evaluation}{29}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Support Vector Machine}{29}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{30}{subsection.7.1.2}
+\contentsline {subsubsection}{Bagging}{31}{section*.8}
+\contentsline {subsubsection}{Boosting}{31}{section*.9}
+\contentsline {subsubsection}{Stacking}{33}{section*.10}
+\contentsline {section}{\numberline {7.2}System Details}{33}{section.7.2}
+\contentsline {section}{\numberline {7.3}Ratings}{34}{section.7.3}
+\contentsline {section}{\numberline {7.4}Monitoring}{35}{section.7.4}
+\contentsline {part}{\numberline {IV}Conclusion}{39}{part.4}
+\contentsline {chapter}{\numberline {8}Conclusion}{41}{chapter.8}
+\contentsline {part}{Appendix}{45}{part*.11}
+\contentsline {chapter}{\numberline {A}Appendix}{45}{chapter.1}
+\contentsline {chapter}{Bibliography}{47}{chapter.1}
