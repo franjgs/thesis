@@ -1,8 +1,5 @@
-% total number of samples for each class
-n = 200;
-
-radius = 10;
-theta = 2 * pi * rand(n, 1);
+% constants
+n = 200; radius = 10; theta = 2 * pi * rand(n, 1);
 
 % points inside the circle
 r_in = rand(n, 1) * radius;
