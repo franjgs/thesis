@@ -13,10 +13,8 @@ All classifiers resort to a distance function, in some form or the other, that c
 Figure~\ref{fig:svm_linear_classify} shows a scenario where an SVM is used to classify two sets of points that are generated from partially overlapping Gaussian distributions. This dataset can be classified by a linear kernel SVM since this data is linearly separable. However, for a case when the data looks like as shown in Figure~\ref{fig:svm_non_linear_data}, when the data is not linearly separable, the linear kernel performs poorly. This is show in Figure~\ref{fig:svm_non_linear_classify_linear}. In such a scenario, an RBF kernel draws a much better boundary, as shown in Figure~\ref{fig:svm_non_linear_classify_rbf}.
 
 \begin{lstlisting}[language=Matlab,frame=single,captionpos=b,caption={Generating the dataset to be classified by a linear classifier},label={lst:svm_linear_classify}]
-    % total number of points for each class
-    n = 200;
-
-    radius = 10;
+    % constants
+    n = 200; radius = 10;
     theta = 2 * pi * rand(n, 1);
 
     % points inside the circle of the specific radius
