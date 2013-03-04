@@ -34,32 +34,41 @@ Figure~\ref{fig:svm_linear_classify} shows a scenario where an SVM is used to cl
     labels = [label_in; label_out;];
 \end{lstlisting}
 
-\begin{figure}[t]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=0.8\textwidth]{svm_linear_classification.eps}
     \caption{Classification using a linear kernel SVM}
     \label{fig:svm_linear_classify}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=0.8\textwidth]{svm_non_linear_data.eps}
     \caption{A dataset which is not linearly separable}
     \label{fig:svm_non_linear_data}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=0.8\textwidth]{svm_non_linear_classify_linear.eps}
     \caption{Dataset for Figure~\ref{fig:svm_non_linear_data} being classified using a linear kernel}
     \label{fig:svm_non_linear_classify_linear}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=0.8\textwidth]{svm_non_linear_classify_rbf.eps}
     \caption{Dataset for Figure~\ref{fig:svm_non_linear_data} being classified using an RBF kernel}
     \label{fig:svm_non_linear_classify_rbf}
+\end{figure}
+
+The working of kernel functions can be visualized in yet another way. For the non-linearly-separable dataset presented in Figure~\ref{fig:svm_non_linear_data}, using a linear kernel in 2 dimensions does not yield very good results. However, a simple transformation of this data into three dimensions, by simply assigning them a third dimension whose value increases along the Z axis bring the data in the format as shown in Figure~\ref{fig:svm_non_linear_data_3d}. It can be noted from this figure, that after this transformation, the separation can now progress in three dimensions, for which the boundary would be the equation of a plane in three dimensions.
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{svm_non_linear_data_3d.eps}
+    \caption{The dataset from Figure~\ref{fig:svm_non_linear_data}, exported into a three dimensional space, which can now be separated by a linear plane}
+    \label{fig:svm_non_linear_data_3d}
 \end{figure}
 
 The most popular kernel functions include
