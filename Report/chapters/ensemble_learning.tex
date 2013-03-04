@@ -13,6 +13,23 @@ Boosting aims to build an ensemble by iteratively training weak classifiers on a
 
 At all times, each classifier's performance is maintained in a vector (usually named $\alpha$). Whenever a new point has to be classified, the individual predictions are obtained from the constituent classifiers, and a weighted sum (from the $\alpha$ values) is taken across all the classifiers to obtain the final prediction. One of the very popular Boosting techniques is AdaBoost. The main aim of Boosting is to build a strong classifier from a set of weak classifiers. To that effect, even classifiers only slightly better than random are considered useful, because in the final predictions, they will still contribute positively to the aggregate prediction by behaving like their inverses because of having negative coefficients in the final linear combination of classifiers.
 
+The algorithm used to train a model over a dataset is the following.
+
+\begin{enumerate}
+    \item{Initialize the sample weights $w_n = 1/N$, for $n = 1, 2, ..., N$}
+    \item{
+    For $m = 1, 2, ..., M$:
+    \begin{itemize}
+        \item{Train a classifier $\mathbf{y_m(x)}$ on the training data using the sample weights $\mathbf{w}$}
+        \item{Calculate $$\epsilon_m = \frac{\displaystyle \sum_{n = 1}^{N} w_n I_n}{\displaystyle \sum_{n = 1}^{N} w_n}$$ where $I(y_m(x_n) \neq y_n)$ is the indicator function and equals 1 when the predicted label $y_m(x_n) \neq$ the actual label $y_n$, and 0 otherwise}
+        \item{Set $$\alpha_m = \log(\frac{1 - \epsilon_m}{\epsilon_m})$$}
+        \item{Update $\mathbf{w}$ using $$w_n := w_n \exp(\alpha_m I(y_m(x_n) \neq y_n))$$}
+    \end{itemize}
+    }
+\end{enumerate}
+
+After all the models have been trained, the prediction for an instance $x_n$ is obtained by calculating $$sign(\displaystyle \sum_{m = 1}^{M} \alpha_m y_m(x_n))$$
+
 \section{Stacking}
 Stacking combines classifiers not by analyzing their performances on the training data, but by treating the individual predictions (on the training data) as a second level of training data, and then using this piece of data to build a final model that is ultimately used for making the final prediction. Different from the previous ensemble learning methods, stacking operates by feeding the initial training data to the set of base classifiers chosen. After these base classifiers have been well calibrated, the predictions on the training data are obtained from the base classifiers, forming a new dataset. This dataset is now fed into a second level classifier, which is responsible for making the final prediction. Often, the base classifiers (at the first level) are trained using different features of the input data to increase classifier diversity.\\
 
