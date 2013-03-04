@@ -27,7 +27,7 @@ Figure~\ref{fig:svm_linear_classify} shows a scenario where a support vector mac
     \label{fig:svm_linear_classify}
 \end{figure}
 
-However, for a case when the data is not linearly separable and looks like as shown in Figure~\ref{fig:svm_non_linear_data}, the linear kernel performs poorly. This is shown in Figure~\ref{fig:svm_non_linear_classify_linear}. When the dataset has such characteristics, a much better option is to use a kernel that is able to work with such data. For instance, an RBF kernel draws a much better boundary in this case, as shown in Figure~\ref{fig:svm_non_linear_classify_rbf}.
+However, for a case when the data is not linearly separable and looks like as shown in Figure~\ref{fig:svm_non_linear_data}, the linear kernel performs poorly. This is shown in Figure~\ref{fig:svm_non_linear_classify_linear}. When the dataset has such characteristics, a much better option is to use a kernel that is able to work with such data. For instance, an RBF kernel draws a much better boundary in this case, as shown in Figure~\ref{fig:svm_non_linear_classify_rbf}.\\
 
 \begin{figure}[t!]
     \centering
@@ -50,13 +50,13 @@ However, for a case when the data is not linearly separable and looks like as sh
     \label{fig:svm_non_linear_classify_rbf}
 \end{figure}
 
-Intuitively, the work done by the $\phi(x)$ function can be visualized from Figure~\ref{fig:svm_non_linear_data}, and Figure~\ref{fig:svm_non_linear_data_3d}. Figure~\ref{fig:svm_non_linear_data} shows the original dataset that the linear kernel failed to classify with reasonable accuracy. A simple transformation can be applied in this case to make the data separable, transforming the two dimensional input to a three dimensional input by adding the following transformation.
+Intuitively, the work done by the $\phi(x)$ function can be visualized from Figure~\ref{fig:svm_non_linear_data}, and Figure~\ref{fig:svm_non_linear_data_3d}. Figure~\ref{fig:svm_non_linear_data} shows the original dataset that the linear kernel failed to classify with reasonable accuracy. A simple transformation can be applied in this case to make the data separable, transforming the two dimensional input to a three dimensional input by adding the following transformation.\\
 
 \begin{center}
     $ \phi(x) = \sqrt{x_1^2 + x_2^2} $
 \end{center}
 
-This transformation transforms the input data in the shape of a three dimensional cone which is separated into two parts by a simple plane in three dimensions. The points in the inner circle form the tip and the surrounding areas of the cone, while the rest of the cone is constituted by the remaining points. The resulting data looks like Figure~\ref{fig:svm_non_linear_data_3d}.
+This transformation transforms the input data in the shape of a three dimensional cone which is separated into two parts by a simple plane in three dimensions. The points in the inner circle form the tip and the surrounding areas of the cone, while the rest of the cone is constituted by the remaining points. The resulting data looks like Figure~\ref{fig:svm_non_linear_data_3d}.\\
 
 \begin{figure}[t!]
     \centering
@@ -65,22 +65,20 @@ This transformation transforms the input data in the shape of a three dimensiona
     \label{fig:svm_non_linear_data_3d}
 \end{figure}
 
-The code for this transformation (including the generation of the original data) is shown in Listing~\ref{lst:svm_linear_classify}.
+The code for this transformation (including the generation of the original data) is shown in Listing~\ref{lst:svm_linear_classify}.\\
 
-\begin{lstlisting}[language=Matlab,frame=single,captionpos=b,caption={Generating the dataset to be classified by a linear classifier},label={lst:svm_linear_classify}]
+\begin{lstlisting}[language=Matlab,frame=single,captionpos=b,caption={Generating the dataset to be classified by a linear classifier},breaklines=true,label={lst:svm_linear_classify}]
     % constants
     n = 200; radius = 10; theta = 2 * pi * rand(n, 1);
-
+    
     % points inside the circle
     r_in = rand(n, 1) * radius;
-    x_in = r_in .* cos(theta);
-    y_in = r_in .* sin(theta);
+    x_in = r_in .* cos(theta); y_in = r_in .* sin(theta);
     label_in = ones(n, 1);
-
+    
     % points outside the circle
-    r_out = radius + 5 + rand(n, 1) * radius;
-    x_out = r_out .* cos(theta);
-    y_out = r_out .* sin(theta);
+    r_out = radius + rand(n, 1) * radius;
+    x_out = r_out .* cos(theta); y_out = r_out .* sin(theta);
     label_out = -1 * ones(n, 1);
 
     % final points
@@ -88,12 +86,14 @@ The code for this transformation (including the generation of the original data)
     labels = [label_in; label_out;];
 
     % plot the points in 2D
-    % scatter(instances(1:200, 1), instances(1:200, 2), 'r');
-    % hold on;
-    % scatter(instances(201:400, 1), instances(201:400, 2), 'b');
-    % hold off;
+    figure(1);
+    scatter(instances(1:200, 1), instances(1:200, 2), 'r');
+    hold on;
+    scatter(instances(201:400, 1), instances(201:400, 2), 'b');
+    hold off;
 
     % transform the input to 3D and plot again
+    figure(2);
     instances = [instances sqrt(power(instances(:, 1), 2) + power(instances(:, 2), 2))];
     scatter3(instances(1:n, 1), instances(1:n, 2), instances(1:n, 3), 'r');
     hold on;
