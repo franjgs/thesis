@@ -181,14 +181,14 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(minute = 0, hour = [0,3,6,9,12,15,18,21]),
         'args': ()
     },
-    'runs-every-day': {
+    'runs-every-day-twitter': {
         'task': 'monitor.tasks.update_statistics',
         'schedule': crontab(minute = 0, hour = 1),
         'args': ()
     },
-    'runs-every-2-days': {
+    'runs-every-day-reddit': {
         'task': 'ratings.tasks.fetch_from_reddit',
-        'schedule': crontab(day_of_month = '2-30/3'),
+        'schedule': crontab(minute = 0, hour = 2),
         'args': ()
     }
 }
