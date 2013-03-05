@@ -187,7 +187,7 @@ CELERYBEAT_SCHEDULE = {
         'args': ()
     },
     'runs-every-2-days': {
-        'task': 'ratings.fetch_from_reddit',
+        'task': 'ratings.tasks.fetch_from_reddit',
         'schedule': crontab(day_of_month = '2-30/3'),
         'args': ()
     }
