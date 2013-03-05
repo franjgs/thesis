@@ -1,4 +1,23 @@
 \chapter{Conclusion and Future Work}
 \label{chapter:Conclusion}
 
-Conclude
+This work presented two results. The first was an evaluation of support vector machines and ensemble learning methods in the domain of text classification. It is well known that not all machine learning techniques suit every problem. Indeed, while Boosting is one of the best ensemble learning methods having been found to show significant improvements in accuracy in a number of works, it was outperformed by a support vector machine classifier, a bagging ensemble, and a stacked classifier. For the dataset used in this thesis, the accuracy obtained by a linear kernel support vector machine was found to be 79.06\%, which was chosen as a baseline against which all other performances were compared. When 9 such SVMs were combined to form a bagging ensemble, the accuracy obtained was 79.65\%. This is a small improvement over the baseline classifier. Similarly, when the same number of SVMs were combined to form a boosting ensemble, the accuracy obtained was 72.84\%, which is significantly less than the simple support vector machine. The third and final ensemble learning method that was evaluated in this thesis was stacking, which gave an average accuracy of 79.48\%, which is again a small improvement over the baseline.
+
+The second contribution of this work is a web based system that is able to detect distress amongst people who choose to post their inner feelings on the web. A system is presented that uses a support vector machine, a bagging ensemble, a boosting ensemble, and a stacking ensemble to make its predictions on public tweets on the Internet to classify them as depressed or not depressed. The top few tweets are then listed on a section on the website, so that the end user can check whether the system is calculating reasonable results or not. In the experiments performed under the scope of this work, the results were found very reasonable. Text classified as depressed included tweets like ```Scared and don't know what to do'' and ``i just hate everything right now''. On comparing it to the text posted on \href{http://www.reddit.com/r/suicidewatch}{/r/reddit}, it was found that the classification was not wrong. Another component of the system was a real time detection of the level of distress present on the Internet. It is difficult to qualitatively evalute this component, since this measure will only increase when a worldwide event happens which causes widespread depression. Hence, the only way to evaluate this component was to make sure that it was not predicting high levels of depression amongst the general public when absolutely nothing happened. This was found to be true.
+
+The main scope for future work in this thesis is presented by the web based system. The following list describes some of the improvements and additions that could be performed in order to improve.
+
+\begin{itemize}
+    \item{
+    \bf{Fetch more tweets}- Currently, the system fetches 100 tweets every 3 hours, or 800 tweets per day. This is a very safe number, so as to not exceed the API limits of Twitter. While in the performed experiments, this number gave sufficiently reasonable results, the prediction quality could be further increased by increasing this number and fetching more number of tweets per day.
+    }
+    \item{
+    \bf{Increase the crowd intelligence involved}- The system trains the machine learning models based on data collected from reddit and labels collected from users assigning them, the labelling being powered by crowd intelligence. Currently, only 1000 posts from reddit are fetched every day, and a lesser number of them are labelled every day. The system could benefit from having a widespread adoption as well as more reddit posts being fetched every day.
+    }
+    \item{
+    \bf{Relabeling process}- Every day at 2AM, all the models are retrained, and all the tweets are re-classified. This is a slow process, and could be done away with. Attention worthy text needs to be acted upon immediately, hence re-classifying old tweets is important from an evaluation perspective, but not really helpful in a real world deployment of this system. Removing this piece of code execution will result in a more efficient system.
+    }
+    \item{
+    \bf{Select one model}- Currently, the system uses 4 models to make its predictions, SVM, bagging, boosting, and stacking. The best performance was observed using SVM, Bagging, and Stacking. For a real world deployment of the system, eliminating the classifiers which are not needed and selecting the one which is most accurate is going to improve the system in the long run.
+    }
+\end{itemize}
