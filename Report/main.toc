@@ -33,8 +33,8 @@
 \contentsline {subsubsection}{Boosting}{33}{section*.9}
 \contentsline {subsubsection}{Stacking}{33}{section*.10}
 \contentsline {section}{\numberline {7.2}System Details}{34}{section.7.2}
-\contentsline {section}{\numberline {7.3}Ratings}{35}{section.7.3}
-\contentsline {section}{\numberline {7.4}Monitoring}{35}{section.7.4}
+\contentsline {subsection}{\numberline {7.2.1}Ratings}{35}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}Monitoring}{35}{subsection.7.2.2}
 \contentsline {part}{\numberline {IV}Conclusion}{39}{part.4}
 \contentsline {chapter}{\numberline {8}Conclusion}{41}{chapter.8}
 \contentsline {part}{Appendix}{45}{part*.11}
