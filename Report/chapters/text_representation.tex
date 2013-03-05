@@ -13,7 +13,7 @@ Preprocessing documents typically involves all the steps that are needed to be p
     \item{
     Tokenization - Tokenization is the process of splitting a sequence of words into distinct pieces of alphanumeric characters, called tokens. Extra characters which are not needed, such as punctuations and white spaces and linebreaks are removed. For instance, tokenizing the text \emph{"The quick, brown, fox jumps over the lazy dog;"} results in the following list of tokens - \\
     \begin{center}
-        \fbox{the} \fbox{quick} \fbox{brown} \fbox{fox} \fbox{jumps} \fbox{over} \fbox{the} \fbox{lazy} \fbox{dog}\\
+        \begin{verbatim} the | quick | brown | fox | jumps | over | the | lazy | dog \end{verbatim}
     \end{center}
     In most cases, tokens are split using whitespcaces, line breaks, or punctuation characters. Splitting on white spaces may also result in some loss of information. For instance, if the string \emph{San Francisco} appears in the text, then the tokens extracted will be \emph{San} and \emph{Francisco}, whereas the correct tokenization should treat both the terms in one token. One approach to solving such problems is using n-grams, which is explained later in this section.
     }
@@ -51,25 +51,17 @@ where each dimension $\mathbf{x}_{n, d}$ corresponds to a token, and the value d
 After data extraction, the documents look like the following,
 
 \begin{center}
-    \begin{verbatim}
-        Munich We are headquartered in Munich, Germany
-    \end{verbatim}
+    \begin{verbatim} Munich We are headquartered in Munich, Germany \end{verbatim}
     and
-    \begin{verbatim}
-        Berlin We also have an office in Berlin, Germany
-    \end{verbatim}
+    \begin{verbatim} Berlin We also have an office in Berlin, Germany \end{verbatim}
 \end{center}
 
 It can be seen that all the HTML tags have been stripped off and only the relevant information remains. The documents are further subjected to token extraction, after which they look like the following,
 
 \begin{center}
-    \begin{verbatim}
-    Munich | We | are | headquartered | in | Munich | Germany
-    \end{verbatim}
+    \begin{verbatim} Munich | We | are | headquartered | in | Munich | Germany \end{verbatim}
     and
-    \begin{verbatim}
-    Berlin | We | also | have | an | office | in | Berlin | Germany
-    \end{verbatim}
+    \begin{verbatim} Berlin | We | also | have | an | office | in | Berlin | Germany \end{verbatim}
 \end{center}
 
 The next step in preprocessing involves removing stop words and stemming. After removing the stop words, the only tokens that are left in the corpus include ``Munich'', ``headquartered'', ``office'', and ``Germany'', forming a term dictionary over which will not really illustrate the vector space representation in a good way. Hence, ignoring the stop words removal for the sake of this example, the corpus looks like the following after stemming
