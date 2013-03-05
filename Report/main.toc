@@ -34,8 +34,8 @@
 \contentsline {section}{\numberline {7.2}System Details}{34}{section.7.2}
 \contentsline {subsection}{\numberline {7.2.1}Ratings}{35}{subsection.7.2.1}
 \contentsline {subsection}{\numberline {7.2.2}Monitoring}{35}{subsection.7.2.2}
-\contentsline {part}{\numberline {IV}Conclusion}{39}{part.4}
-\contentsline {chapter}{\numberline {8}Conclusion}{41}{chapter.8}
+\contentsline {part}{\numberline {IV}Conclusion and Future Work}{39}{part.4}
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{41}{chapter.8}
 \contentsline {part}{Appendix}{45}{part*.11}
 \contentsline {chapter}{\numberline {A}Appendix}{45}{chapter.1}
 \contentsline {chapter}{Bibliography}{47}{chapter.1}
