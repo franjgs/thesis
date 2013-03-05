@@ -1,64 +1,115 @@
 \chapter{Text Representation}
 \label{chapter:Text Representation}
 
-\section{Introduction}
-Machine learning algorithms are designed to operate on real values. While classifying documents, a prerequisite is to convert the text in natural language to a format that such an algorithm can understand and work on. One such format is the vector space mode. Such processes include obtaining text from documents, building a vocabulary, text preprocessing (such as tokenization, stemming, stop words removal), and converting terms to actual usable feature values. All such issues are explored in this chapter, except the issues that arise due to usage of non-English languages (since this work focuses only on text in English).
+Machine learning algorithms are designed to operate on real values. To classify documents, a prerequisite is to convert the natural language text to a format that such an algorithm can understand and work on. One such format is the vector space model. Processes to convert natural language text to such formats include obtaining text from documents, building a vocabulary, text preprocessing (such as tokenization, stemming, and stop words removal), and converting terms to actual usable feature values. The processes may differ slightly for different languages. For instance, tokenization for English text is different from tokenization for Chinese text because of differences in word boundaries. But these differences are minor and do not change the overall flow.
 
 \section{Preprocessing}
-Preprocessing documents typically involves all the steps that are needed to be performed before proceeding on to extracting meaningful information from text. Text documents in their original forms normally contain a lot of redundant information that usually does not affect how a classifier behaves. Preprocessing a document removes all the noise, and brings a document in a state where it can be used for scoring. The following are the various filters that are applied.
+Preprocessing documents typically involves all the steps that are needed to be performed before proceeding on to extracting meaningful information from text that the classifier could handle. Text documents in their original forms normally contain a lot of redundant information that usually does not affect how a classifier behaves. Preprocessing removes all the noise, and brings a document in a state where it can be used for scoring. The following are the various filters that are applied.
 
 \begin{itemize}
     \item{
-    Tokenization\\
-    Tokenization is the process of splitting a sequence of words into distinct pieces of alphanumeric characters, called tokens. Extra characters which are not needed, such as punctuations and white spaces are removed. For instance, tokenizing the text \emph{"The quick, brown, fox jumps over the lazy dog;"} results in the following list of tokens - \\
-    $$\fbox{the} \fbox{quick} \fbox{brown} \fbox{fox} \fbox{jumps} \fbox{over} \fbox{the} \fbox{lazy} \fbox{dog}$$\\
-    In most cases, tokens are split using whitespcaces, line breaks, or punctuation characters. Splitting on white spaces may also result in some loss of information. For instance, if the string \emph{San Francisco} appears in the text, then the tokens extracted will be \emph{San} and \emph{Francisco}, whereas the correct tokenization should treat both the terms in one token. Such problems are solved using n-grams, which are explained later in this section.
+    Extraction - Data extraction involves extracting relevant data out of documents. Often, documents are unstructured, poorly structured, or are in a format such as XML or HTML. In such cases, the documents in their original forms contain a lot of redundant information. Extracting relevant data by using methods like parsing brings documents to a state where they are ready to be tokenized.
     }
     \item{
-    Stop Words Removal\\
-    Some of the words in the English language such as \emph{and}, \emph{the}, and \emph{a}, besides some others appear in almost every text. These words add very little meaning to the text on the whole, and their frequency of occurrence is very high. Consequently, since these documents appear a lot in almost every document, it may lead to high, but inaccurate similarity scores between two documents; the best option is to remove such words from the text.
+    Tokenization - Tokenization is the process of splitting a sequence of words into distinct pieces of alphanumeric characters, called tokens. Extra characters which are not needed, such as punctuations and white spaces and linebreaks are removed. For instance, tokenizing the text \emph{"The quick, brown, fox jumps over the lazy dog;"} results in the following list of tokens - \\
+    \begin{center}
+        \fbox{the} \fbox{quick} \fbox{brown} \fbox{fox} \fbox{jumps} \fbox{over} \fbox{the} \fbox{lazy} \fbox{dog}\\
+    \end{center}
+    In most cases, tokens are split using whitespcaces, line breaks, or punctuation characters. Splitting on white spaces may also result in some loss of information. For instance, if the string \emph{San Francisco} appears in the text, then the tokens extracted will be \emph{San} and \emph{Francisco}, whereas the correct tokenization should treat both the terms in one token. One approach to solving such problems is using n-grams, which is explained later in this section.
     }
     \item{
-    Stemming\\
-    Stemming is the process of reducing words to their root form, usually by stripping some characters from the word endings. A strict requirement for stemming is that related words must stem to the same final word. For instance, the words \emph{car}, \emph{cars}, \emph{car's} and \emph{car`s}, must all stem to the same word \emph{car}. This helps in removing unnecessary information from the text which would otherwise inflate the vocabulary with low-signal information.
+    Stop Words Removal - Some of the words in the English language such as \emph{and}, \emph{the}, and \emph{a}, besides some others appear in almost every text. These words add very little meaning to the text on the whole, and their frequency of occurrence is very high. Consequently, since these words appear a lot in almost every document, it may lead to high and inaccurate similarity scores between two documents; the best option is to remove such words from the text.
+    }
+    \item{
+    Stemming - Stemming is the process of reducing words to their root form, usually by stripping some characters from the word endings. A strict requirement for stemming is that related words must stem to the same final word. For instance, the words \emph{car}, \emph{cars}, \emph{car's} and \emph{car`s}, must all stem to the same word \emph{car}. This helps in removing unnecessary information from the text which would otherwise inflate the vocabulary with low-signal information.
     }
 \end{itemize}
 
 \section{Representation and Vector Space Classification}
-After a document has been preprocessed, it needs to be represented in terms of the useful content that it has, such that the relative importance of each word has been taken into account. Since a document is just a collection of tokens, a document $\mathbf{x_{n}}$ is represented as a vector $\mathbf{x}_{n} = (\mathbf{x}_{n, 1}, \mathbf{x}_{n, 2}, ... , \mathbf{x}_{n, D})$, where each dimension $\mathbf{x}_{n, d}$ corresponds to a token, and the value depends on its occurrence, either only in the document, or in the document as well as in the entire corpus. This approach is called the bag-of-words model.
+After a document has been preprocessed, it needs to be represented in terms of the useful content that it has, such that the relative importance of each word has been taken into account. Since a preprocessed document is just a collection of tokens, it can be represented as a vector
 
-For instance, consider two simple text documents,
+$$\mathbf{x}_{n} = (\mathbf{x}_{n, 1}, \mathbf{x}_{n, 2}, ... , \mathbf{x}_{n, D})$$
+
+where each dimension $\mathbf{x}_{n, d}$ corresponds to a token, and the value depends on its occurrence, either only in the document, or in the document as well as in the entire corpus. This approach is called the bag-of-words model. For instance, consider two simple HTML documents containing English text,
 
 \begin{center}
-    \fbox{We are headquartered in Munich, Germany}\\
-    \fbox{We also have an office in Berlin, Germany}\\
+    \begin{verbatim}
+        <html>
+            <head> <title>Munich</title> </head>
+            <body> We are headquartered in Munich, Germany. </body>
+        </html>
+    \end{verbatim}
+    and
+    \begin{verbatim}
+        <html>
+            <head> <title>Berlin</title> </head>
+            <body> We also have an office in Berlin, Germany. </body>
+        </html>
+    \end{verbatim}
 \end{center}
 
-Based on these two documents, the token dictionary is built like the following -
+After data extraction, the documents look like the following,
 
-\fbox{
-    \parbox{\linewidth}{
-        { ``We'': 1, ``are'': 2, ``headquartered'': 3, ``in'': 4, ``Munich'': 5, ``Germany'': 6, ``also'': 7, ``have'': 8, ``an'': 9, ``office'': 10, ``Berlin'': 11 }
-    }
-}
+\begin{center}
+    \begin{verbatim}
+        Munich We are headquartered in Munich, Germany
+    \end{verbatim}
+    and
+    \begin{verbatim}
+        Berlin We also have an office in Berlin, Germany
+    \end{verbatim}
+\end{center}
 
-and the documents are represented as the following vectors -
+It can be seen that all the HTML tags have been stripped off and only the relevant information remains. The documents are further subjected to token extraction, after which they look like the following,
 
-\fbox{
-    \parbox{\linewidth}{
-        {1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}\\
-        {1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1}\\
-    }
-}
+\begin{center}
+    \begin{verbatim}
+    Munich | We | are | headquartered | in | Munich | Germany
+    \end{verbatim}
+    and
+    \begin{verbatim}
+    Berlin | We | also | have | an | office | in | Berlin | Germany
+    \end{verbatim}
+\end{center}
 
-where each value represents the number of times the corresponding token appeared in the document. The order of words does not matter; the features simply indicate whether or not the word appears in the document.
+The next step in preprocessing involves removing stop words and stemming. After removing the stop words, the only tokens that are left in the corpus include ``Munich'', ``headquartered'', ``office'', and ``Germany'', forming a term dictionary over which will not really illustrate the vector space representation in a good way. Hence, ignoring the stop words removal for the sake of this example, the corpus looks like the following after stemming
 
-In this approach, the values represent term frequencies. A slight improvement is to divide the term weights with the total number of terms in the document, which assigns the feature values while also taking into account the relative importance of the term in the document. But an even better improvement is to use the \emph{tf-idf} value, which (for a term in the document) is defined as
+\begin{center}
+    \begin{verbatim}
+        {
+            'We': 1,
+            'are': 2,
+            'headquarter': 3,
+            'in': 4,
+            'Munich': 5,
+            'Germany': 6,
+            'also': 6,
+            'have': 8,
+            'an': 9,
+            'office': 10,
+            'Berlin': 11
+        }
+    \end{verbatim}
+\end{center}
+
+and the documents are then represented as the following vectors
+
+\begin{center}
+    \begin{verbatim}
+        {1, 1, 1, 1, 2, 1, 0, 0, 0, 0, 0}
+    \end{verbatim}
+    and
+    \begin{verbatim}
+        {1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 2}
+    \end{verbatim}
+\end{center}
+
+where each value represents the number of times the particular token appeared in the corresponding document. The order of words does not matter; the features simply indicate whether or not the word appeared in the document.
+
+In this example, the values represent term frequencies. A slight improvement is to divide the term weights with the total number of terms in the document, which assigns the feature values while also taking into account the relative importance of the term in the document. An even better improvement is to use the $\mathrm{tf-idf}$ value, which (for a term in the document) is defined as
 
 $$\mathbf{tfidf}_{t, d} = \mathbf{tf}_{t, d} * \mathbf{idf}_{t}$$
 
-where $\mathrm{tf}_{t, d}$ is the term frequency of the term $\mathbf{t}$ in document $\mathbf{d}$, and $\mathrm{idf}_{t}$ is the inverse document frequency of the term $\mathbf{t}$ across the entire collection of documents, usually defined as $\log(N / \mathrm{df_{t}})$, where $\mathrm{N}$ is the total number of documents, and $df_{t}$ is the number of times this term appears in the entire collection of documents. The main idea here is to reduce the term frequency weight of a term by a factor that increases proportional to its frequency in the corpus. This tf-idf value is the highest when the term occurs many times within a small number of documents, and the lowest when the term occurs in almost all documents. Hence it provides a good representation of a document in the vector space format. This representation is now used to calculate the similarity between two documents. The standard way for this is to compute the dot product between the two vector representations
+where $\mathrm{tf}_{t, d}$ is the term frequency of the term $\mathbf{t}$ in document $\mathbf{d}$, and $\mathrm{idf}_{t}$ is the inverse document frequency of the term $\mathbf{t}$ across the entire collection of documents, usually defined as $\log(N / \mathrm{df_{t}})$, where $\mathrm{N}$ is the total number of documents, and $df_{t}$ is the number of times this term appears in the entire collection of documents. The main idea here is to reduce the term frequency weight of a term by a factor that increases proportional to its frequency in the corpus. This tf-idf value is the highest when the term occurs many times within a small number of documents, and the lowest when the term occurs in almost all documents. Hence it provides a good representation of a document in the vector space format. This representation can now be used to calculate the similarity between two documents. The standard way for this is to compute the dot product between the two vector representations
 
 $$\mathbf{sim(x, y)} = \frac{\vec{\mathbf{x}} \cdot \vec{\mathbf{y}}}{|\vec{\mathbf{x}}| | \vec{\mathbf{y}}|}$$
-
-Representing documents as vectors and calculating similarities based on their dot products leads to a view of a corpus as a \emph{term-document} matrix, the rows for which represent the documents, and the columns for which represent the terms present in the corpus.

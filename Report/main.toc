@@ -14,9 +14,8 @@
 \contentsline {chapter}{\numberline {3}Classification Methods}{11}{chapter.3}
 \contentsline {section}{\numberline {3.1}Support Vector Machines}{11}{section.3.1}
 \contentsline {chapter}{\numberline {4}Text Representation}{17}{chapter.4}
-\contentsline {section}{\numberline {4.1}Introduction}{17}{section.4.1}
-\contentsline {section}{\numberline {4.2}Preprocessing}{17}{section.4.2}
-\contentsline {section}{\numberline {4.3}Representation and Vector Space Classification}{18}{section.4.3}
+\contentsline {section}{\numberline {4.1}Preprocessing}{17}{section.4.1}
+\contentsline {section}{\numberline {4.2}Representation and Vector Space Classification}{18}{section.4.2}
 \contentsline {chapter}{\numberline {5}Ensemble Learning}{21}{chapter.5}
 \contentsline {section}{\numberline {5.1}Bagging}{21}{section.5.1}
 \contentsline {section}{\numberline {5.2}Boosting}{22}{section.5.2}
