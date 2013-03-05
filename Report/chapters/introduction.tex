@@ -1,17 +1,17 @@
 \chapter{Introduction}
 \label{chapter:Introduction}
 
-The Internet today is a vast source of information curated by real people. In recent times, the popularity of websites like Twitter, Reddit, and Wordpress has shown that every day, more and more people are getting comfortable with expressing their inner feelings on the web, irrespective of whether they feel good or bad. Negative feelings expressed this way provide an important indicator of what might be going wrong in their lives, or what may ultimately lead up to something more tragic or even terminal. In some cases, factors leading to suicide can be identified early on by looking at the physical and verbal behavior of the person under consideration. Public availability of a larger set of data that may contain content posted by emotionally distressed people, and non-availability of a system that can analyze such data to find such people is a clear problem. This thesis attempts to address this problem by applying machine learning techniques to build such a system that is able to find instances of emotionally distressed content on the Internet. This can then serve as a first step towards providing further help to such people, possibly in the form of human intervention.
+The Internet today is a vast source of information curated by real people. In recent times, the popularity of websites like Twitter, Reddit, and Wordpress has shown that every day, more and more people are getting comfortable with expressing their inner feelings on the web, irrespective of whether they feel good or bad. Negative feelings expressed this way provide an important indicator of what might be going wrong in their lives, or what may ultimately lead up to something more tragic or even terminal. In some cases, factors leading to suicide can be identified early on by looking at the physical and verbal behavior of the person under consideration. Public availability of a larger set of data that may contain content posted by emotionally distressed people, and non-availability of a system that can analyze such data to find such people is a clear disconnect. This thesis attempts to bridge this gap by applying machine learning techniques to build a system that is able to find instances of emotionally distressed content on the Internet. This can then serve as a first step towards providing further help to such people, possibly in the form of human intervention.
 
 \section{Machine learning and text classification}
 Machine learning is a branch of computer science that deals with building and analyzing systems that are able to learn from data. Algorithms based on such analysis involve constructing a model from a given dataset, and then using this model to perform required tasks. Machine learning techniques can broadly be divided into two categories - supervised learning, and unsupervised learning.
 
 \begin{itemize}
     \item{
-    Supervised Learning - Methods falling in this category operate in two phases. In the first step, the availability of training data is assumed, which is used to build a model so that it takes into account the structure of the given dataset. In the second step, this model is used to make predictions on the testing data (the real world data). This is the data that the model has not seen yet, and is required to make predictions on.
+    \bf{Supervised Learning} - Methods falling in this category operate in two phases. In the first step, the availability of training data is assumed, which is used to build a model so that it takes into account the structure of the given dataset. In the second step, this model is used to make predictions on the testing data (the real world data). This is the data that the model has not seen yet, and is required to make predictions on.
     }
     \item{
-    Unsupervised Learning - Methods falling under this category operate in a single phase. It starts with a model with zero knowledge about the structure of the given dataset. As data is fed into the model, it continuously learns the structure of the given dataset and calculates the predictions based on this knowledge. The main difference between this family of algorithms and supervised learning algorithms is the presence/absence of training labels.
+    \bf{Unsupervised Learning} - Methods falling under this category operate in a single phase. It starts with a model with zero knowledge about the structure of the given dataset. As data is fed into the model, it continuously learns the structure of the given dataset and calculates the predictions based on this knowledge. The main difference between this family of algorithms and supervised learning algorithms is the presence/absence of training labels.
     }
 \end{itemize}
 
@@ -40,10 +40,10 @@ Pointing out the exact phrases which lead one to believe that a person may be un
 
 \begin{itemize}
     \item{
-    Direct - Phrases such as \emph{``thoughts of suicide make me happy''}, \emph{``I have a rope around my neck''} or \emph{``my suicide note''} indicate in a very straightforward manner that the author is not only depressed, but is also on the path of taking his/her own life. Such phrases are very direct indicators of the emotional condition of the person.
+    \bf{Direct} - Phrases such as \emph{``thoughts of suicide make me happy''}, \emph{``I have a rope around my neck''} or \emph{``my suicide note''} indicate in a very straightforward manner that the author is not only depressed, but is also on the path of taking his/her own life. Such phrases are very direct indicators of the emotional condition of the person.
     }
     \item{
-    Indirect - Phrases such as \emph{``I don't know anything anymore''} or \emph{``Need someone to talk to''} or \emph{``Please help''} indicate that the person who is posting such content does not necessarily want to kill themselves yet, but they are not in a very good emotional condition either. Such words indicate that this person is under depression, or is feeling lonely. Even though they may not be suicidal yet, such a dramatic and tragic event might be the next step in their lives.
+    \bf{Indirect} - Phrases such as \emph{``I don't know anything anymore''} or \emph{``Need someone to talk to''} or \emph{``Please help''} indicate that the person who is posting such content does not necessarily want to kill themselves yet, but they are not in a very good emotional condition either. Such words indicate that this person is under depression, or is feeling lonely. Even though they may not be suicidal yet, such a dramatic and tragic event might be the next step in their lives.
     }
 \end{itemize}
 
