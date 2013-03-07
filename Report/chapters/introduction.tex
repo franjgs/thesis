@@ -3,6 +3,34 @@
 
 The Internet today is a vast source of information curated by real people. In recent times, the popularity of websites like Twitter, Reddit, and Wordpress has shown that every day, more and more people are getting comfortable with expressing their inner feelings on the web, irrespective of whether they feel good or bad. Negative feelings expressed this way provide an important indicator of what might be going wrong in their lives, or what may ultimately lead up to something more tragic or even terminal. In some cases, factors leading to suicide can be identified early on by looking at the physical and verbal behavior of the person under consideration. Public availability of a larger set of data that may contain content posted by emotionally distressed people, and non-availability of a system that can analyze such data to find such people is a clear disconnect. This thesis attempts to bridge this gap by applying machine learning techniques to build a system that is able to find instances of emotionally distressed content on the Internet. This can then serve as a first step towards providing further help to such people, possibly in the form of human intervention.
 
+\section{Public emotion on the Internet}
+There have been some studies conducted on the measure of happiness on Twitter as a function of time. One such work \cite{dodds2011temporal} performed the analysis on a dataset comprising of 46 billion words collected from Twitter over a period of 33 months, and showed that over time, the amount of negative emotions being expressed on Twitter has been on the rise. Visualization of a part of their results can be seen in Figure~\ref{fig:twitter_happiness}. The words that were assigned negative emotions in this study included \emph{``death''}, \emph{``hate''}, and even \emph{``suicide''}. A study conducted at Cornell University \cite{golder2011diurnal} analyzes the effects of the time of the day on the moods of people, all from a dataset collected from Twitter. Studies like these show that in recent times, people are getting more and more comfortable with expressing their emotions on Twitter.\\
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{twitter_happiness.png}
+    \caption{A plot of happiness on Twitter as a function of time}
+    \label{fig:twitter_happiness}
+\end{figure}
+
+In the past, there have been very public instances of people posting updates about how they are feeling right before they have committed suicide. Figure~\ref{fig:twitter_kcs} shows the last tweet of Twitter user \href{http://twitter.com/CapitalSTEEZ\_}{KING CAPITAL \$TEEZ} before committing suicide. Similarly, Figure~\ref{fig:twitter_fe} shows the series of updates posted by Twitter user \href{http://twitter.com/Freddy\_E}{Freddy\_E} prior to committing suicide.\\
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{twitter_kcs.png}
+    \caption{The last tweet of Twitter user \href{http://twitter.com/CapitalSTEEZ\_}{KING CAPITAL \$TEEZ}}
+    \label{fig:twitter_kcs}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{twitter_fe.png}
+    \caption{Last few updates posted by Twitter user \href{http://twitter.com/Freddy\_E}{Freddy\_E}}
+    \label{fig:twitter_fe}
+\end{figure}
+
+While these were the instances where the person under concern had a number of followers on their Twitter accounts, it is not unreasonable to assume that there are countless other instances where similar content was posted but did not reach a lot of people because the account did not have many followers. Lives in such cases are lost, partially because there was no one to help them. A system that can proactively look for such content online will go a long way in solving this problem.
+
 \section{Problem Definition}
 A large portion of the nearly one million people who die every year from suicide includes young people. In recent times, these people have started to express their inner feelings on the web, on websites like Twitter, Wordpress, Reddit (Figure~\ref{fig:reddit_happy} and Figure~\ref{fig:reddit_suicidewatch}), and many others. Suicide is a medical condition that has the potential to be detected early on, by observing the physical and verbal behavior of the person under concern. The work presented in this thesis exploits these two facts, and attempts to build a system that can monitor the public feed of Internet websites such as Twitter (on which people post about what they feel) and detect the content that may have been posted by a person under emotional distress.\\
 
