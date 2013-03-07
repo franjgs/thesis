@@ -58,7 +58,7 @@ class Stats(models.Model):
         nd_field = "not_depressed_count_" + name
         return map(
             lambda x: [
-                str(x.created_at) + " 00:00AM",
+                str(x.created_at),
                 100 * float(getattr(x, d_field)) / (getattr(x, d_field) + getattr(x, nd_field))
             ],
             cls.objects.all()

@@ -4,9 +4,8 @@
 <head>
     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.jqplot.min.js"></script>
-    <script type="text/javascript" src="/static/js/jqplot.cursor.min.js"></script>
-    <script type="text/javascript" src="/static/js/jqplot.dateAxisRenderer.min.js"></script>
+    <script type="text/javascript" src="/static/js/highstock.js"></script>
+    <script type="text/javascript" src="/static/js/exporting.js"></script>
     {% if name %} <script type="text/javascript" src="/static/js/monitor.js"></script> {% endif %}
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     <title>Monitor</title>
@@ -69,7 +68,6 @@
                 <div class="hero-unit align-center">
                     {% if name %}
                     <div id="chart" class="placeholder"></div>
-                    <a class="btn btn-link" id="reset-button">Reset Zoom</a> 
                     {% else %}
                     {% if tweets|length > 0 %}
                     <p>The following tweets might be depressed</p>

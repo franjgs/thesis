@@ -1,51 +1,33 @@
 $(document).ready(function() {
-    min_date = null;
-    data = eval($("#data").html());
-    i = 0;
-    while (i < data.length) {
-        date = new Date(data[i][0].split(" ")[0]);
-        if (min_date == null) {
-            min_date = date;
-        } else {
-            if (date < min_date) {
-                min_date = date;
-            }
-        }
-        i++;
-    }
-    var plot = $.jqplot("chart", [data], {
-        axes: {
-            xaxis: {
-                renderer: $.jqplot.DateAxisRenderer,
-                min: min_date.toDateString().split(" ").slice(1).map(function(e) {
-                    if (isNaN(parseInt(e))) {
-                        return e;
-                    } else {
-                        return String(parseInt(e));
-                    }
-                }),
-                tickInterval: '15 days',
-                tickOptions: {
-                    formatString: '%b %#d, %y',
-                    fontSize: '10pt'
-                }
-            },
-            yaxis: {
-                min: 0,
-                max: 100
-            }
+    data = $.map(eval($("#data").html()), function(d) {
+        return [[(new Date(d[0])).getTime(), d[1]]];
+    });
+    
+    window.chart = new Highcharts.StockChart({
+        chart: {
+            renderTo: "chart"
         },
-        cursor: {
-            show: true,
-            zoom: true,
-            showTooltip: false
+        rangeSelector: {
+            selected: 1
+        },
+        title: {
+            text: "Depression Rate v/s Time"
+        },
+        tooltip: {
+            style: {
+                width: '200px'
+            },
+            valueDecimals: 2
+        },
+        yAxis: {
+            title: {
+                text: "% population depressed"
+            }
         },
         series: [{
-            color: 'red',
-            lineWidth: 1,
-            neighborThreshold: -1,
-            showMarker: true
+            name: "%",
+            data: data,
+            id: 'dataseries'
         }]
     });
-    $("#reset-button").click(function() { plot.resetZoom(); });
 });
