@@ -13,38 +13,38 @@ There have been some studies conducted on the measure of happiness on Twitter as
     \label{fig:twitter_happiness}
 \end{figure}
 
-In the past, there have been very public instances of people posting updates about how they are feeling right before they have committed suicide. Figure~\ref{fig:twitter_kcs} shows the last tweet of Twitter user \href{http://twitter.com/CapitalSTEEZ\_}{KING CAPITAL \$TEEZ} before committing suicide. Similarly, Figure~\ref{fig:twitter_fe} shows the series of updates posted by Twitter user \href{http://twitter.com/Freddy\_E}{Freddy\_E} prior to committing suicide.\\
+In the past, there have been very public instances of people posting updates about how they are feeling right before they have committed suicide. Figure~\ref{fig:twitter_kcs} shows the last tweet of Twitter user ``@CapitalSTEEZ\_''\footnote{\url{http://twitter.com/CapitalSTEEZ\_}} before committing suicide. Similarly, Figure~\ref{fig:twitter_fe} shows the series of updates posted by Twitter user ``@Freddy\_E''\footnote{\url{http://twitter.com/Freddy\_E}} prior to committing suicide.\\
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{twitter_kcs.png}
-    \caption{The last tweet of Twitter user \href{http://twitter.com/CapitalSTEEZ\_}{KING CAPITAL \$TEEZ}}
+    \caption{The last tweet of Twitter user ``@CapitalSTEEZ\_''}
     \label{fig:twitter_kcs}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{twitter_fe.png}
-    \caption{Last few updates posted by Twitter user \href{http://twitter.com/Freddy\_E}{Freddy\_E}}
+    \caption{Last few updates posted by Twitter user ``@Freddy\_E''}
     \label{fig:twitter_fe}
 \end{figure}
 
 While these were the instances where the person under concern had a number of followers on their Twitter accounts, it is not unreasonable to assume that there are countless other instances where similar content was posted but did not reach a lot of people because the account did not have many followers. Lives in such cases are lost, partially because there was no one to help them. A system that can proactively look for such content online will go a long way in solving this problem.
 
 \section{Problem Definition}
-A large portion of the nearly one million people who die every year from suicide includes young people. In recent times, these people have started to express their inner feelings on the web, on websites like Twitter, Wordpress, Reddit (Figure~\ref{fig:reddit_happy} and Figure~\ref{fig:reddit_suicidewatch}), and many others. Suicide is a medical condition that has the potential to be detected early on, by observing the physical and verbal behavior of the person under concern. The work presented in this thesis exploits these two facts, and attempts to build a system that can monitor the public feed of Internet websites such as Twitter (on which people post about what they feel) and detect the content that may have been posted by a person under emotional distress.\\
+A large portion of the nearly one million people who die every year from suicide includes young people. In recent times, these people have started to express their inner feelings on the web, on websites like Twitter, Wordpress, Reddit, and many others. Two sections of Reddit are of particular interest in this thesis - ``/r/happy''\footnote{\url{http://www.reddit.com/r/happy}}, shown in Figure~\ref{fig:reddit_happy} and ``/r/suicidewatch''\footnote{\url{http://www.reddit.com/r/suicidewatch}}, shown in Figure~\ref{fig:reddit_suicidewatch}. Suicide is a medical condition that has the potential to be detected early on, by observing the physical and verbal behavior of the person under concern. The work presented in this thesis exploits these two facts, and attempts to build a system that can monitor the public feed of Internet websites such as Twitter (on which people post about what they feel) and detect the content that may have been posted by a person under emotional distress.\\
 
 \begin{figure}[t!]
     \centering
     \includegraphics[width=0.8\textwidth]{reddit_happy.png}
-    \caption{\href{http://www.reddit.com/r/happy}{``/r/happy''}, the section of the website Reddit \cite{reddit} where people post content when they are happy and want to share it with everyone else.}
+    \caption{``/r/happy'' \cite{reddit_happy}, the section of the website Reddit \cite{reddit} where people post content when they are happy and want to share it with everyone else.}
     \label{fig:reddit_happy}
 \end{figure}
 
 \begin{figure}[t!]
     \centering
     \includegraphics[width=0.8\textwidth]{reddit_suicidewatch.png}
-    \caption{\href{http://www.reddit.com/r/suicidewatch}{``/r/suicidewatch''}, the section of Reddit \cite{reddit} where people post when they are depressed, or are on the verge of taking their own lives.}
+    \caption{``/r/suicidewatch'' \cite{reddit_suicidewatch}, the section of Reddit \cite{reddit} where people post when they are depressed, or are on the verge of taking their own lives.}
     \label{fig:reddit_suicidewatch}
 \end{figure}
 
