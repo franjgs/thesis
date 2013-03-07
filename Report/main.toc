@@ -10,33 +10,33 @@
 \contentsline {section}{\numberline {1.1}Problem Definition}{3}{section.1.1}
 \contentsline {chapter}{\numberline {2}Related Work}{7}{chapter.2}
 \contentsline {part}{\numberline {II}Theory}{9}{part.2}
-\contentsline {chapter}{\numberline {3}Machine Learning and Classification Methods}{11}{chapter.3}
+\contentsline {chapter}{\numberline {3}Theory}{11}{chapter.3}
 \contentsline {section}{\numberline {3.1}Machine Learning}{11}{section.3.1}
 \contentsline {section}{\numberline {3.2}Classification Methods}{11}{section.3.2}
 \contentsline {section}{\numberline {3.3}Support Vector Machines}{12}{section.3.3}
-\contentsline {chapter}{\numberline {4}Text Representation}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}Preprocessing}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}Representation and Vector Space Classification}{20}{section.4.2}
-\contentsline {chapter}{\numberline {5}Ensemble Learning}{23}{chapter.5}
-\contentsline {section}{\numberline {5.1}Bagging}{23}{section.5.1}
-\contentsline {section}{\numberline {5.2}Boosting}{24}{section.5.2}
-\contentsline {section}{\numberline {5.3}Stacking}{25}{section.5.3}
-\contentsline {part}{\numberline {III}Experimental Results}{27}{part.3}
-\contentsline {chapter}{\numberline {6}Experiments}{29}{chapter.6}
-\contentsline {section}{\numberline {6.1}Dataset}{29}{section.6.1}
-\contentsline {section}{\numberline {6.2}Approach and Setup}{30}{section.6.2}
-\contentsline {chapter}{\numberline {7}Results}{31}{chapter.7}
-\contentsline {section}{\numberline {7.1}Evaluation}{31}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}Support Vector Machine}{31}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}Ensemble Learning}{32}{subsection.7.1.2}
-\contentsline {subsubsection}{Bagging}{33}{section*.8}
-\contentsline {subsubsection}{Boosting}{35}{section*.9}
-\contentsline {subsubsection}{Stacking}{35}{section*.10}
-\contentsline {section}{\numberline {7.2}System Details}{36}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}Ratings}{37}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}Monitoring}{37}{subsection.7.2.2}
-\contentsline {part}{\numberline {IV}Conclusion and Future Work}{41}{part.4}
-\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{43}{chapter.8}
-\contentsline {part}{Appendix}{47}{part*.11}
-\contentsline {chapter}{\numberline {A}Appendix}{47}{chapter.1}
-\contentsline {chapter}{Bibliography}{49}{chapter.1}
+\contentsline {section}{\numberline {3.4}Text Representation}{17}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Preprocessing}{17}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Representation and Vector Space Classification}{18}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Ensemble Learning}{20}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Bagging}{20}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Boosting}{21}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Stacking}{22}{subsection.3.5.3}
+\contentsline {part}{\numberline {III}Experimental Results}{25}{part.3}
+\contentsline {chapter}{\numberline {4}Experiments}{27}{chapter.4}
+\contentsline {section}{\numberline {4.1}Dataset}{27}{section.4.1}
+\contentsline {section}{\numberline {4.2}Approach and Setup}{28}{section.4.2}
+\contentsline {chapter}{\numberline {5}Results}{29}{chapter.5}
+\contentsline {section}{\numberline {5.1}Evaluation}{29}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Support Vector Machine}{29}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Ensemble Learning}{30}{subsection.5.1.2}
+\contentsline {subsubsection}{Bagging}{31}{section*.8}
+\contentsline {subsubsection}{Boosting}{33}{section*.9}
+\contentsline {subsubsection}{Stacking}{33}{section*.10}
+\contentsline {section}{\numberline {5.2}System Details}{34}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Ratings}{35}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Monitoring}{35}{subsection.5.2.2}
+\contentsline {part}{\numberline {IV}Conclusion and Future Work}{39}{part.4}
+\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{41}{chapter.6}
+\contentsline {part}{Appendix}{45}{part*.11}
+\contentsline {chapter}{\numberline {A}Appendix}{45}{chapter.1}
+\contentsline {chapter}{Bibliography}{47}{chapter.1}
