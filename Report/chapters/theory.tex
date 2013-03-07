@@ -39,7 +39,7 @@ Most classifiers resort to a distance function, in some form or the other, that 
     $\phi(x): \mathbb{R}^{L} \rightarrow \mathbb{R}^H (L \ll H)$
 \end{center}
 
-and then using the kernel function $\mathbf{k(\phi(x), \phi(y))}$ to actually perform the separation. The trick involved is that even though the transformation $\phi(x)$ may be expensive, computing the final similarity value $\mathbf{k(\phi(x), \phi(y))}$ is not.\\
+and then using the kernel function $k(\phi(x), \phi(y))$ to actually perform the separation. The trick involved is that even though the transformation $\phi(x)$ may be expensive, computing the final similarity value $k(\phi(x), \phi(y))$ is not.\\
 
 Some of the most popular kernel functions include
 \begin{itemize}
@@ -128,9 +128,9 @@ Preprocessing documents typically involves all the steps that are needed to be p
 \subsection{Representation and Vector Space Classification}
 After a document has been preprocessed, it needs to be represented in terms of the useful content that it has, such that the relative importance of each word has been taken into account. Since a preprocessed document is just a collection of tokens, it can be represented as a vector
 
-$$\mathbf{x}_{n} = (\mathbf{x}_{n, 1}, \mathbf{x}_{n, 2}, ... , \mathbf{x}_{n, D})$$
+$$x_n = (x_{n, 1}, x_{n, 2}, ... , x_{n, D})$$
 
-where each dimension $\mathbf{x}_{n, d}$ corresponds to a token, and the value depends on its occurrence, either only in the document, or in the document as well as in the entire corpus. This approach is called the bag-of-words model. For instance, consider two simple HTML documents containing English text,
+where each dimension $x_{n, d}$ corresponds to a token, and the value depends on its occurrence, either only in the document, or in the document as well as in the entire corpus. This approach is called the bag-of-words model. For instance, consider two simple HTML documents containing English text,
 
 \begin{center}
     \begin{verbatim}
@@ -237,7 +237,7 @@ The algorithm used to train a model over a dataset is the following.
 After all the models have been trained, the prediction for an instance $x_n$ is obtained by calculating $$sign(\displaystyle \sum_{m = 1}^{M} \alpha_m y_m(x_n))$$
 
 \subsection{Stacking}
-Stacking, also called Stacked Generalization was first introduced in \cite{wolpert1992stacked}, and obtains predictions by a two step process. It is assumed that there exists a training input matrix that has $N$ rows for $D$ samples, and $D$ columns for $D$ features. In the first step, $M$ distinct classifiers are trained on the training data. After the classifiers have been trained, a new dataset of $N$ rows and $M$ columns is generated, each column being populated by predictions for each of the $M$ classifiers. This new dataset forms the training data for a second level classifier, from which the final prediction is obtained. The process for prediction from a Stacking ensemble follows a similar path. Given a sample $x_n$ of the form $[(\mathbf{x}_{n, 1}, \mathbf{x}_{n, 2}, ... \mathbf{x}_{n, D})]$, it is first run through the $M$ classifiers to obtain $M$ predictions $(y_m)$ for $m = 1, 2, ..., M$. These values are then fed to the second level classifier, which yields the final label.\\
+Stacking, also called Stacked Generalization was first introduced in \cite{wolpert1992stacked}, and obtains predictions by a two step process. It is assumed that there exists a training input matrix that has $N$ rows for $D$ samples, and $D$ columns for $D$ features. In the first step, $M$ distinct classifiers are trained on the training data. After the classifiers have been trained, a new dataset of $N$ rows and $M$ columns is generated, each column being populated by predictions for each of the $M$ classifiers. This new dataset forms the training data for a second level classifier, from which the final prediction is obtained. The process for prediction from a Stacking ensemble follows a similar path. Given a sample $x_n$ of the form $[(x_{n, 1}, x_{n, 2}, ... x_{n, D})]$, it is first run through the $M$ classifiers to obtain $M$ predictions $(y_m)$ for $m = 1, 2, ..., M$. These values are then fed to the second level classifier, which yields the final label.\\
 
 \begin{figure}
     \centering
