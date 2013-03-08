@@ -1,3 +1,4 @@
+from django.db import connection
 from django.shortcuts import render_to_response
 
 from monitor.models import Tweet, Stats
@@ -10,5 +11,9 @@ def index(request):
     return render_to_response("monitor/index.html", { 'tweets': tweets })
 
 def stats(request, name):
-    context = { 'name': name, 'data': Stats.for_model(name) }
+    context = {
+        'name': name,
+        'data': Stats.for_model(name),
+        'labelled_tweets': Tweet.labelled_by_date(name)
+    }
     return render_to_response("monitor/index.html", context)
