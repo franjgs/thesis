@@ -126,11 +126,20 @@ The second function that the \emph{Monitoring} module performs is that of displa
     \label{fig:monitoring_bagging}
 \end{figure}
 
-As can be seen in the figure, the statistics are displayed for a time period beginning from January 17 (this is when the process of collecting tweets from Twitter began) until March 18, with intervals of 15 days between two consecutive sections in the graph. The graph can also be zoomed in on a smaller period of time, as shown in Figure~\ref{fig:monitoring_bagging_zoomed}, in which case only the statistics for that period of time are displayed. The zoom level can be reset using the \emph{``Reset Zoom''} button.
+As can be seen in the figure, the statistics are displayed for a time period beginning from January 17 (this is when the process of collecting tweets from Twitter began) until March 18, with intervals of 15 days between two consecutive sections in the graph. The Y-Axis displays the net percentage of tweets which were found depressed on that particular day, and scales automatically with the data.  The graph can also be zoomed in on a smaller period of time by adjusting the slider at the bottom, as shown in Figure~\ref{fig:monitoring_bagging_zoomed}, in which case only the statistics for that period of time are displayed.\\
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{monitoring_bagging_zoomed.png}
     \caption{Zooming in on a particular interval of time for Bagging statistics}
     \label{fig:monitoring_bagging_zoomed}
+\end{figure}
+
+Each data point displays one tweet which was found depressed on that particular day (as shown in Figure~\ref{fig:monitoring_bagging_tweet_info}). Since the confidence measures of the classifier are not stored along with the predictions, this procedure shows the first tweet from that day which was classified as being depressed.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{monitoring_bagging_tweet_info.png}
+    \caption{Displaying one tweet from a particular day}
+    \label{fig:monitoring_bagging_tweet_info}
 \end{figure}
