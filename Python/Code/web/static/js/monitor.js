@@ -4,9 +4,9 @@ $(document).ready(function() {
     });
     
     labels = $.map($.map(eval($("#labelled_tweets").html()), function(e) {
-        return [[(new Date(e[0])).getTime(), e[1]]];
+        return [[(new Date(e[0])).getTime(), e[1], e[2]]];
     }), function(e) {
-        return { x: e[0], title: "T", text: e[1] };
+        return { x: e[0], title: e[2], text: e[1] };
     });
     
     window.chart = new Highcharts.StockChart({

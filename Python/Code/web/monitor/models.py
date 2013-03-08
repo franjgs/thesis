@@ -38,10 +38,10 @@ class Tweet(models.Model):
     @classmethod
     def labelled_by_date(cls, name):
         cursor = connection.cursor()
-        cursor.execute("select date(created_at) as d, text from monitor_tweet where label_" + name + " = 1 group by d")
+        cursor.execute("select date(created_at) as d, text, count(*) as c from monitor_tweet where label_" + name + " = 1 group by d")
         results = cursor.fetchall()
         cursor.close()
-        return map(lambda x: [str(x[0]), str(x[1])], results)
+        return map(lambda x: [str(x[0]), str(x[1]), str(x[2])], results)
 
 class Stats(models.Model):
     
