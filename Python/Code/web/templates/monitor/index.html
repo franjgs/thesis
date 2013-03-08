@@ -7,7 +7,6 @@
     <script type="text/javascript" src="/static/js/highstock.js"></script>
     <script type="text/javascript" src="/static/js/exporting.js"></script>
     {% if name %} <script type="text/javascript" src="/static/js/monitor.js"></script> {% endif %}
-    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     <title>Monitor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
@@ -76,6 +75,7 @@
                         <p>{{ tweet.text }}</p>
                         &mdash; (@{{ tweet.username }})
                         <a href="https://twitter.com/{{ tweet.username }}/status/{{ tweet.tweet_id }}">{{ tweet.tweet_text }}</a>
+                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </blockquote>
                     {% endfor %}
                     {% else %}
