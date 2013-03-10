@@ -49,19 +49,21 @@ def update_statistics():
         labels.append(int(story.label))
         stories.append(story.content)
     # train the models
-    print "update_statistics => training the classifiers"
+    print "update_statistics => training the classifiers on %d stories" % len(stories)
     clf = dict()
     for klass in [SVM, Bagging, Boosting, Stacking]:
         if klass == SVM:
             clf[klass] = klass()
         else:
             clf[klass] = klass(n_models = settings.N_MODELS)
+        print "update_statistics => initializing %s" % klass.__name__
         clf[klass].fit(stories, labels)
     # collect all the unique dates
     print "update_statistics => collecting unique dates"
     cursor = connection.cursor()
     cursor.execute("select distinct(date(created_at)) from monitor_tweet")
     dates = map(lambda x: x[0], cursor.fetchall())
+    print "update_statistics => collected %d unique dates" % len(dates)
     # iterate over dates and store labels
     for date in dates:
         # collect all the tweets for the particular date
@@ -72,7 +74,7 @@ def update_statistics():
         )
         tweets_text = map(lambda tweet: tweet.text, tweets)
         # store labels for tweets on this particular date
-        print "update_statistics => Updating statistics for " + str(date)
+        print "update_statistics => Updating statistics for %s (%d tweets)" % (str(date), len(tweets))
         try:
             stats = Stats.objects.get(created_at = date)
         except:
