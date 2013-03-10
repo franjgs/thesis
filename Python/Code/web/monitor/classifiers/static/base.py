@@ -11,8 +11,8 @@ class Base(object):
     
     def get_vectorizer(self):
         return TfidfVectorizer(
-            ngram_range = (1, 5),
-            min_df = 1,
+            ngram_range = (1, 2),
+            min_df = 2,
             strip_accents = None,
             charset_error = 'ignore',
             stop_words = None
