@@ -12,19 +12,16 @@ class Bagging(Base):
     def __init__(self, n_models):
         self.n_models   = n_models
         self.clf        = list()
-        self.indices    = list()
         super(Bagging, self).__init__()
     
     def fit(self, stories, labels):
         self.vec = self.get_vectorizer()
         x = self.vec.fit_transform(stories)
-        n_samples, n_features = x.get_shape()
+        n_samples = x.get_shape()[0]
         for i in xrange(0, self.n_models):
-            indices = random.sample(xrange(0, n_features), int(n_features / self.n_models))
-            indices.sort()
+            indices = random.sample(xrange(0, n_samples), random.randrange(n_samples / 2, n_samples))
             clf = self.get_classifier()
-            clf.fit(x[:, indices], labels)
-            self.indices.append(indices)
+            clf.fit(x[indices, :], labels[indices, :])
             self.clf.append(clf)
     
     def predict(self, stories):
@@ -35,10 +32,9 @@ class Bagging(Base):
         x = self.vec.transform(stories)
         predictions = None
         for i in xrange(0, self.n_models):
-            testing = x[:, self.indices[i]]
             if predictions is None:
-                predictions = self.clf[i].predict(testing)
+                predictions = self.clf[i].predict(x)
             else:
-                predictions = numpy.vstack((predictions, self.clf[i].predict(testing)))
+                predictions = numpy.vstack((predictions, self.clf[i].predict(x)))
         predictions = numpy.sign(predictions.transpose().sum(1))
         return predictions

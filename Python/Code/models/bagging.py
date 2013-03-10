@@ -8,33 +8,31 @@ from sklearn import cross_validation
 from lib import util, config
 
 class BaggingSVM(object):
-    """Bagging - using different Support Vector Machines (each fed with different features) as underlying models"""
-    def __init__(self, n_models, factor):
+    """
+    Bagging -
+        Uses Support Vector Machines as underlying models
+        Each model is trained with a different and random subset of samples
+    """
+    def __init__(self, n_models):
         self.n_models = n_models
         self.clf = list()
-        self.features = list()
-        self.factor = factor
     def get_classifier(self):
         return LinearSVC(C = 1, class_weight = 'auto')
     def fit(self, x, y):
         """fit the training data to all the classifiers"""
-        n_samples, n_features = x.get_shape()
+        n_samples = x.get_shape()[0]
         for i in xrange(0, self.n_models):
             self.clf.append(self.get_classifier())
-            # pick random features for each classifier
-            feature_indices = random.sample(xrange(0, n_features), int(n_features * self.factor))
-            feature_indices.sort()
-            self.features.append(feature_indices)
-            self.clf[i].fit(x[:, feature_indices], y)
+            indices = random.sample(xrange(0, n_samples), random.randrange(n_samples / 2, n_samples))
+            self.clf[i].fit(x[indices, :], y[indices, :])
     def score(self, x, y):
         """return the accuracy of prediction on testing data"""
         predictions = None
         for i in xrange(0, self.n_models):
-            testing = x[:, self.features[i]]
             if predictions is None:
-                predictions = self.clf[i].predict(testing)
+                predictions = self.clf[i].predict(x)
             else:
-                predictions = numpy.vstack((predictions, self.clf[i].predict(testing)))
+                predictions = numpy.vstack((predictions, self.clf[i].predict(x)))
         predictions = numpy.sign(predictions.transpose().sum(1))
         return numpy.mean(predictions == y)
 
@@ -64,7 +62,7 @@ def main(filename):
         y_testing = cv_data[3]
         
         # initialize the classifier
-        clf = BaggingSVM(n_models, 0.8)
+        clf = BaggingSVM(n_models)
         clf.fit(x_training, y_training)
         
         # measure prediction accuracy
@@ -78,4 +76,4 @@ if __name__ == "__main__":
         main(sys.argv[1])
     except Exception, e:
         print "Usage: python %s <filename>" % sys.argv[0]
-        sys.exit(1)
+        raise e
