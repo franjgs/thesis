@@ -8,32 +8,33 @@ from sklearn.svm import LinearSVC
 from lib import util, config
 
 class StackingSVM(object):
-    """Stacking - using different Support Vector Machines (trained on different features) as underlying models"""
+    """
+    Stacking -
+        Uses Support Vector Machines as underlying models
+        Each model at the first level is trained with a different and random subset of samples
+    """
     def __init__(self, n_models):
         self.n_models   = n_models
         self.models     = list()
-        self.features   = list()
         self.clf        = None
     def get_classifier(self):
         return LinearSVC(C = 1, class_weight = 'auto')
     def fit(self, x, y):
         """fit the training data to all the classifiers"""
-        # train all the first level classifiers on different features
-        n_samples, n_features = x.get_shape()
+        # train all the first level classifiers on different samples
+        n_samples = x.get_shape()[0]
         for i in xrange(0, self.n_models):
             model = self.get_classifier()
-            features = random.sample(xrange(0, n_features), n_features / self.n_models)
-            features.sort()
-            model.fit(x[:, features], y)
-            self.features.append(features)
+            indices = random.sample(xrange(0, n_samples), random.randrange(n_samples / 2, n_samples))
+            model.fit(x[indices, :], y[indices, :])
             self.models.append(model)
         # transform the training dataset to second level
         training = None
         for i in xrange(0, self.n_models):
             if training is None:
-                training = self.models[i].predict(x[:, self.features[i]])
+                training = self.models[i].predict(x)
             else:
-                training = numpy.vstack((training, self.models[i].predict(x[:, self.features[i]])))
+                training = numpy.vstack((training, self.models[i].predict(x)))
         training = training.transpose()
         # train the second level model
         self.clf = self.get_classifier()
@@ -45,9 +46,9 @@ class StackingSVM(object):
         testing = None
         for i in xrange(0, self.n_models):
             if testing is None:
-                testing = self.models[i].predict(x[:, self.features[i]])
+                testing = self.models[i].predict(x)
             else:
-                testing = numpy.vstack((testing, self.models[i].predict(x[:, self.features[i]])))
+                testing = numpy.vstack((testing, self.models[i].predict(x)))
         testing = testing.transpose()
         # measure the predictions and return accuracy
         return numpy.mean(self.clf.predict(testing) == y)
@@ -91,4 +92,4 @@ if __name__ == "__main__":
         main(sys.argv[1])
     except Exception, e:
         print "Usage: python %s <filename>" % sys.argv[0]
-        sys.exit(1)
+        raise e
