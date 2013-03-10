@@ -1,4 +1,18 @@
-\chapter{Appendix}
+\chapter{Implementation Details}
 \label{chapter:Appendix}
 
-All the code used is this thesis can be downloaded from its GitHub repository \footnote{\url{http://github.com/siddhantgoel/thesis}}. The root directory contains 4 directories - ``MATLAB'', ``Python'', ``Report'', and ``Presentation''. The ``MATLAB'' folder contains all the MATLAB code that was used to evaluate the machine learning models. The ``Python/Code/'' folder contains two subfolders - ``models'' and ``web''. The ``models'' folder contains the Python version of the MATLAB code used for the evaluations, and the ``web'' folder contains all the code for the web based system that was developed. The code is written using the Django \footnote{\url{http://www.djangoproject.com}} web framework, and contains all the scripts necessary to run the system. To run the project, visit the ``Python/Code/web/'' directory and run ``supervisord'', after making the appropriate changes to the ``supervisord'' configuration file, which should be located at ``/etc/supervisord.conf''. The configuration files under use can be found in the same folder. The ``Report'' folder contains the \LaTeX code for this thesis, and the ``Presentation'' folder contains the \LaTeX code for the presentation accompanying this thesis.
+All the code used in this work has been maintained on a GitHub repository \footnote{\url{http://github.com/siddhantgoel/thesis}}, from where it can also be downloaded in its entirety. The root directory contains 4 directories - ``MATLAB'', ``Python'', ``Report'', and ``Presentation''.
+
+\begin{itemize}
+    \item{\textbf{MATLAB} This folder contains all the MATLAB code that was used to evaluate the machine learning models.}
+    \item{\textbf{Python} The ``Python'' folder contains relevant Python code. The folder ``Python/Code/'' contains two subfolders - ``models'' and ``web''. The ``models'' folder contains the Python version of the MATLAB code used for the evaluations, and the ``web'' folder contains all the code for the web based system that was developed. This code uses the Django \footnote{\url{http://www.djangoproject.com}} framework, and contains all the scripts necessary to run the system. To run the project, the followings commands should be executed in the presented order.
+    \begin{verbatim}
+        cd $THESIS_ROOT
+        pip install -r Python/requirements.txt
+        cd $THESIS_ROOT/Python/Code/web/
+        supervisord -c supervisord_local.conf
+    \end{verbatim}
+    }
+    The system can then be visited at \url{http://localhost:10001/}. All configuration options can be seen in the file ``supervisord\_local.conf''.
+    \item{\textbf{Report} and \textbf{Presentation} These folders contain the \LaTeX code for this report and the slides from the main presentation.}
+\end{itemize}
