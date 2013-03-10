@@ -4,7 +4,7 @@
 \select@language {english}
 \contentsline {chapter}{Acknowledgements}{vii}{section*.1}
 \contentsline {chapter}{Abstract}{ix}{section*.2}
-\contentsline {chapter}{Outline of the Thesis}{xv}{section*.3}
+\contentsline {chapter}{Outline of the Thesis}{xvii}{section*.3}
 \contentsline {part}{\numberline {I}Introduction}{1}{part.1}
 \contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}
 \contentsline {section}{\numberline {1.1}Public emotion on the Internet}{3}{section.1.1}
