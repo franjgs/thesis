@@ -23,16 +23,16 @@ class BoostingSVM(object):
         self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
         for i in xrange(0, self.n_models):
             clf = self.get_classifier()
-            clf.fit(x, y, sample_weight = numpy.array(self.w[-1, :])[0])
+            clf.fit(x, y, sample_weight = numpy.array(self.w)[0])
             I = numpy.matrix(map(lambda f: int(f), clf.predict(x) != y))
-            self.eps[i] = (self.w[-1, :] * I.transpose()) / self.w[-1, :].sum(1)
+            self.eps[i] = (self.w * I.transpose()) / self.w.sum(1)
             if self.eps[i] == 0:
                 self.alpha[i] = 1
             elif self.eps[i] == 0.5:
                 self.alpha[i] = 0
             else:
                 self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
-            self.w = numpy.vstack((self.w, (numpy.multiply(self.w[-1, :], numpy.exp(self.alpha[i] * I)))))
+            self.w = numpy.multiply(self.w, numpy.exp(self.alpha[i] * I))
             self.clf.append(clf)
     def score(self, x, y):
         """return the accuracy of prediction on testing data"""
