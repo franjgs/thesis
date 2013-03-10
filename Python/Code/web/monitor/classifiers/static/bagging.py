@@ -16,12 +16,12 @@ class Bagging(Base):
     
     def fit(self, stories, labels):
         self.vec = self.get_vectorizer()
-        x = self.vec.fit_transform(stories)
+        x = self.vec.fit_transform(stories); y = numpy.array(labels);
         n_samples = x.get_shape()[0]
         for i in xrange(0, self.n_models):
             indices = random.sample(xrange(0, n_samples), random.randrange(n_samples / 2, n_samples))
             clf = self.get_classifier()
-            clf.fit(x[indices, :], labels[indices, :])
+            clf.fit(x[indices, :], y[indices, :])
             self.clf.append(clf)
     
     def predict(self, stories):
