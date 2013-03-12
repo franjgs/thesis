@@ -20,15 +20,14 @@ class BoostingSVM(object):
     def fit(self, x, y):
         """fit the training data to all the classifiers"""
         n_samples, n_features = x.get_shape()
-        self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
+        self.w = 0.1 * numpy.matrix(numpy.ones(n_samples))
         for i in xrange(0, self.n_models):
+            print "Training model #%d" % i
             clf = self.get_classifier()
             clf.fit(x, y, sample_weight = numpy.array(self.w)[0])
             I = numpy.matrix(map(lambda f: int(f), clf.predict(x) != y))
             self.eps[i] = (self.w * I.transpose()) / self.w.sum(1)
-            if self.eps[i] == 0:
-                self.alpha[i] = 1
-            elif self.eps[i] == 0.5:
+            if numpy.allclose(numpy.array(self.eps[i]), numpy.array([0.5])):
                 self.alpha[i] = 0
             else:
                 self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
@@ -38,6 +37,7 @@ class BoostingSVM(object):
         """return the accuracy of prediction on testing data"""
         predictions = None
         for i in xrange(0, self.n_models):
+            print "Getting predictions from model #%d" % i
             if predictions is None:
                 predictions = self.clf[i].predict(x)
             else:
@@ -58,12 +58,12 @@ def main(filename):
     labels, instances = numpy.array(labels), vec.fit_transform(comments)
     random.seed(0)
     
-    n_models = 9; cv = 5; cv_accuracy = list();
+    n_models = 9; cv = 10; cv_accuracy = list();
     for i in xrange(0, cv):
         print "Iteration #" + str(i) + "..."
         
         # initialize training/testing data
-        cv_data = cross_validation.train_test_split(instances, labels, test_size = 0.3, random_state = i)
+        cv_data = cross_validation.train_test_split(instances, labels, test_size = 0.1, random_state = i)
         x_training = cv_data[0]
         x_testing = cv_data[1]
         y_training = cv_data[2]
