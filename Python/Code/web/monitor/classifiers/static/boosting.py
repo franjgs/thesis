@@ -22,15 +22,13 @@ class Boosting(Base):
         self.vec = self.get_vectorizer()
         x = self.vec.fit_transform(stories); y = labels;
         n_samples, n_features = x.get_shape()
-        self.w = (1.0 / n_samples) * numpy.matrix(numpy.ones(n_samples))
+        self.w = 0.1 * numpy.matrix(numpy.ones(n_samples))
         for i in xrange(0, self.n_models):
             clf = self.get_classifier()
             clf.fit(x, y, sample_weight = numpy.array(self.w)[0])
             I = numpy.matrix(map(lambda f: int(f), clf.predict(x) != y))
             self.eps[i] = (self.w * I.transpose()) / self.w.sum(1)
-            if self.eps[i] == 0:
-                self.alpha[i] = 1
-            elif self.eps[i] == 0.5:
+            if numpy.allclose(numpy.array(self.eps[i]), numpy.array([0.5])):
                 self.alpha[i] = 0
             else:
                 self.alpha[i] = math.log((1 - self.eps[i]) / self.eps[i])
