@@ -1,5 +1,5 @@
-\documentclass[9pt]{beamer}
-\usetheme{Warsaw}
+\documentclass{beamer}
+\usetheme{Darmstadt}
 
 \usepackage{color}
 \usepackage{listings}
@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 
 \setbeamertemplate{frametitle}[default][center]
+\beamertemplatenavigationsymbolsempty
 
 \title{Utilizing Crowd Intelligence for Online Detection of Emotional Distress}
 \subtitle{Master's Thesis Presentation}
@@ -67,6 +68,8 @@ Technische Universit\"at M\"unchen
             \item{Rise of social media - Twitter, Facebook, Reddit, Wordpress}
             \item{Reddit - ``/r/happy'' \footnote{\url{http://www.reddit.com/r/happy}} and ``/r/suicidewatch'' \footnote{\url{http://www.reddit.com/r/suicidewatch}}}
             \item{People are not afraid of posting their inner feelings on the web}
+            \item{\textbf{Direct phrases} - \emph{``thoughts of suicide make me happy''}, \emph{``I have a rope around my neck''}}
+            \item{\textbf{Indirect phrases} - \emph{``I don't know anything anymore''}, \emph{``Need someone to talk to''}}
         \end{itemize}
     \end{frame}
     
@@ -520,15 +523,8 @@ Technische Universit\"at M\"unchen
             \end{column}
             \begin{column}{0.5\textwidth}
                 \begin{itemize}
-                    \item{displays the top 5 tweets that were classified as depressed by all the classifiers}
+                    \item{displays the top few tweets that were classified as depressed by all the classifiers}
                     \item{links for checking the status of individual classifiers}
-                    \item{
-                    two types of phrases -
-                    \begin{itemize}
-                        \item{\textbf{Direct} - \emph{``thoughts of suicide make me happy''}, \emph{``I have a rope around my neck''}}
-                        \item{\textbf{Indirect} - \emph{``I don't know anything anymore''}, \emph{``Need someone to talk to''}}
-                    \end{itemize}
-                    }
                 \end{itemize}
             \end{column}
         \end{columns}
