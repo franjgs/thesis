@@ -1,9 +1,10 @@
-\documentclass{beamer}
+\documentclass[9pt]{beamer}
 \usetheme{Darmstadt}
 
 \usepackage{color}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{wrapfig}
 
 \setbeamertemplate{frametitle}[default][center]
 
@@ -183,7 +184,7 @@ Technische Universit\"at M\"unchen
             \item{Performance not guaranteed to be better than constituent classifiers}
             \item{Ensemble methods still usually outperform individual classifiers}
             \item{Soft requirement - underlying models should be diverse}
-            \item{Various strategies to combine models - select best, voting, boosting, stacking}
+            \item{Various strategies to combine models - \emph{select best}, \emph{voting}, \emph{boosting}, \emph{stacking}}
         \end{itemize}
     \end{frame}
     
@@ -196,8 +197,8 @@ Technische Universit\"at M\"unchen
             \item{
             Two main approaches for training individual classifiers
             \begin{itemize}
-                \item{Sample split - each classifier is trained using a random subset of the samples}
-                \item{Feature split - each classifier is trained using a random subset of the features}
+                \item{Sample split - different samples for different classifiers}
+                \item{Feature split - different features for different classifiers}
             \end{itemize}
             }
         \end{itemize}
@@ -240,11 +241,150 @@ Technische Universit\"at M\"unchen
         \end{center}
         \begin{itemize}
             \item{Implement all the models in MATLAB}
-            \item{Extract n-grams (length 1 to 2) out of the Kaggle dataset}
+            \item{Extract n-grams (size upto 2) out of the Kaggle dataset}
+            \item{Use tf-idf information as feature values}
+            \item{Input matrix - 6182 rows and 23175 columns}
             \item{\textbf{SVM}, \textbf{Bagging}, \textbf{Boosting}, \textbf{Stacking} - obtain accuracy (10-fold cross validation) against number of samples}
             \item{\textbf{SVM} - Growth of number of support vectors with the number of samples}
             \item{\textbf{Bagging} - Accuracy against number of underlying models}
+            \item{Start with 100 samples, and continue adding 100 samples on each iteration until no more samples are left}
         \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Evaluation of algorithms}
+        \begin{center}
+            \textbf{Support Vector Machines}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/svm_accuracy.eps}
+                    \caption{Accuracy v/s Number of instances}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{Linear kernel accuracy - 79.02\%}
+                    \item{Polynomial/RBF/Sigmoid kernel accuracy - 34.39\%}
+                    \item{Having more features implies no need for a kernel function}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Evaluation of algorithms}
+        \begin{center}
+            \textbf{Support Vector Machines}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/svm_n_sv.eps}
+                    \caption{Number of support vectors v/s Number of instances}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{100 samples - 90\% support vectors}
+                    \item{6182 samples - 60\% support vectors}
+                    \item{Less support vectors implies that the classification is easy}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Evaluation of algorithms}
+        \begin{center}
+            \textbf{Bagging}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/bagging_accuracy.eps}
+                    \caption{Accuracy v/s Number of instances}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{9 linear kernel SVMs underneath}
+                    \item{Performance ultimately governed by how SVMs perform}
+                    \item{Average accuracy on all 6182 samples = 79.65\%}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Evaluation of algorithms}
+        \begin{center}
+            \textbf{Bagging}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/bagging_n_models.eps}
+                    \caption{Accuracy v/s Number of models}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{Accuracy ``stabilizes'' slowly with the number of models}
+                    \item{Each model is assigned a random subset of samples}
+                    \item{Increase in number of models \emph{implies} Subsets overlap \emph{implies} Performance stabilizes}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Evaluation of algorithms}
+        \begin{center}
+            \textbf{Boosting}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/boosting_accuracy.eps}
+                    \caption{Accuracy v/s Number of instances}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{9 linear kernel SVMs trained successively on each iteration}
+                    \item{Average accuracy = 72.84\%}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Evaluation of algorithms}
+        \begin{center}
+            \textbf{Stacking}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/stacking_accuracy.eps}
+                    \caption{Accuracy v/s Number of instances}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{9 linear kernel SVMs at first level}
+                    \item{Average accuracy = 79.48\%}
+                \end{itemize}
+            \end{column}
+        \end{columns}
     \end{frame}
     
     \begin{frame}
