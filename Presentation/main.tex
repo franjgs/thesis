@@ -226,4 +226,51 @@ Technische Universit\"at M\"unchen
             \item{Layer-1 classifiers can be trained using bootstrapping or selecting random features}
         \end{itemize}
     \end{frame}
+    
+    \begin{frame}
+        \begin{center}
+            \textbf{Experimental Results}
+        \end{center}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Evaluation of algorithms}
+        \begin{center}
+            \textbf{Approach}
+        \end{center}
+        \begin{itemize}
+            \item{Implement all the models in MATLAB}
+            \item{Extract n-grams (length 1 to 2) out of the Kaggle dataset}
+            \item{\textbf{SVM}, \textbf{Bagging}, \textbf{Boosting}, \textbf{Stacking} - obtain accuracy (10-fold cross validation) against number of samples}
+            \item{\textbf{SVM} - Growth of number of support vectors with the number of samples}
+            \item{\textbf{Bagging} - Accuracy against number of underlying models}
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Web based system}
+        \begin{center}
+            \textbf{Approach}
+        \end{center}
+        \begin{itemize}
+            \item{Implement all the models in Python, and web interface in Django}
+            \item{Use posts from Reddit to build training data (crowd sourced), and tweets from Twitter as test data}
+        \end{itemize}
+        \begin{table}
+            \begin{center}
+                \begin{tabular}{ | c | c | }
+                    \hline
+                    \textbf{Task} & \textbf{Frequency} \\
+                    \hline
+                    Fetch 1000 posts from Reddit & 24 hours \\
+                    \hline
+                    Fetch 100 tweets from Twitter & 3 hours \\
+                    \hline
+                    Re-assign labels to previous tweets and update statistics & 24 hours \\
+                    \hline
+                \end{tabular}
+            \end{center}
+            \caption{Scheduled tasks to download datasets}
+        \end{table}
+    \end{frame}
 \end{document}
