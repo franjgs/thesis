@@ -5,6 +5,7 @@
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{amsmath}
 
 \setbeamertemplate{frametitle}[default][center]
 
@@ -161,20 +162,27 @@ Technische Universit\"at M\"unchen
     
     \begin{frame}
         \frametitle{Kernel functions}
-        \begin{figure}
-            \centering
-            \includegraphics[width=0.5\textwidth]{figures/svm_non_linear_data.eps}
-            \caption{A dataset that cannot be classified using a linear kernel SVM}
-        \end{figure}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Kernel functions}
-        \begin{figure}
-            \centering
-            \includegraphics[width=0.5\textwidth]{figures/svm_non_linear_data_3d.eps}
-            \caption{Add the third dimension as $\sqrt{x_1^2 + x_2^2}$ to transform the dataset into 3D}
-        \end{figure}
+        \begin{columns}
+            \begin{column}{0.4\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/svm_non_linear_data.eps}
+                    \caption{Dataset in 2D (cannot be classified using a linear kernel SVM)}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.2\textwidth}
+                \begin{center}
+                    $\xrightarrow{x_3 = \sqrt{x_1^2 + x_2^2}}$
+                \end{center}
+            \end{column}
+            \begin{column}{0.4\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/svm_non_linear_data_3d.eps}
+                    \caption{Dataset transformed to 3D}
+                \end{figure}
+            \end{column}
+        \end{columns}
     \end{frame}
     
     \begin{frame}
