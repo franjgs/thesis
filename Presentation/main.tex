@@ -182,6 +182,8 @@ Technische Universit\"at M\"unchen
             \item{Class of machine learning methods that combine models to obtain better predictions}
             \item{Performance not guaranteed to be better than constituent classifiers}
             \item{Ensemble methods still usually outperform individual classifiers}
+            \item{Soft requirement - underlying models should be diverse}
+            \item{Various strategies to combine models - select best, voting, boosting, stacking}
         \end{itemize}
     \end{frame}
     
@@ -198,6 +200,30 @@ Technische Universit\"at M\"unchen
                 \item{Feature split - each classifier is trained using a random subset of the features}
             \end{itemize}
             }
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Boosting}
+        \begin{itemize}
+            \item{Assign each sample a weight value (same for all samples in the beginning)}
+            \item{Train $M$ classifiers successively}
+            \item{Each classifier focuses more on samples that the previous classifier classified incorrectly}
+            \item{For each classifier, calculate $\epsilon$ (measure of error) and $\alpha$ (decreases with $\epsilon$)}
+            \item{Final prediction = $\mathrm{sign}(\displaystyle \sum_{m = 1}^{M} \alpha_m y_m(\mathbf{x_n}))$}
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Stacking}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.7\textwidth]{figures/stacking_prediction_flow.png}
+            \caption{Prediction using a stacking ensemble}
+        \end{figure}
+        \begin{itemize}
+            \item{Outputs from first layer form the input for second layer}
+            \item{Layer-1 classifiers can be trained using bootstrapping or selecting random features}
         \end{itemize}
     \end{frame}
 \end{document}
