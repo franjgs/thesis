@@ -18,10 +18,10 @@ class Base(object):
             stop_words = None
         )
     
-    def get_classifier(self):
+    def get_classifier(self, kernel = 'linear'):
         return SVC(
             C = 1,
-            kernel = 'linear',
+            kernel = kernel,
             class_weight = 'auto'
         )
     
