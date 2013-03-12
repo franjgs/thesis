@@ -49,7 +49,7 @@ Technische Universit\"at M\"unchen
                 \item{Results}
             \end{itemize}
             }
-            \item{Conclusion}
+            \item{Conclusion and Future Work}
         \end{itemize}
     \end{frame}
     
@@ -243,6 +243,12 @@ Technische Universit\"at M\"unchen
     \end{frame}
     
     \begin{frame}
+        \begin{center}
+            \textbf{Experiments}
+        \end{center}
+    \end{frame}
+    
+    \begin{frame}
         \frametitle{Evaluation of algorithms}
         \begin{center}
             \textbf{Approach}
@@ -257,6 +263,12 @@ Technische Universit\"at M\"unchen
             \item{\textbf{Bagging} - Accuracy against number of underlying models}
             \item{Start with 100 samples, and continue adding 100 samples on each iteration until no more samples are left}
         \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \begin{center}
+            \textbf{Results}
+        \end{center}
     \end{frame}
     
     \begin{frame}
@@ -402,8 +414,32 @@ Technische Universit\"at M\"unchen
         \end{center}
         \begin{itemize}
             \item{Implement all the models in Python, and web interface in Django}
-            \item{Use posts from Reddit to build training data (crowd sourced), and tweets from Twitter as test data}
+            \item{No training data available $=>$ build our own}
+            \item{
+            Training data
+            \begin{itemize}
+                \item{comes from Reddit}
+                \item{``/r/happy'' - users posts their happy moments}
+                \item{``/r/suicidewatch'' - users post when they want to commit suicide}
+                \item{pull 500 stories from each, every day}
+            \end{itemize}
+            }
+            \item{
+            Prediction data
+            \begin{itemize}
+                \item{should be the general sentiment of the overall public}
+                \item{hence, Twitter}
+                \item{pull 100 tweets every 3 hours}
+            \end{itemize}
+            }
         \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Web based system}
+        \begin{center}
+            \textbf{Data consolidation frequencies}
+        \end{center}
         \begin{table}
             \begin{center}
                 \begin{tabular}{ | c | c | }
@@ -418,7 +454,149 @@ Technische Universit\"at M\"unchen
                     \hline
                 \end{tabular}
             \end{center}
-            \caption{Scheduled tasks to download datasets}
         \end{table}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Web based system}
+        \begin{center}
+            \textbf{Architecture}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/landing.png}
+                    \caption{Landing page}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{two sections - \emph{Ratings} and \emph{Monitoring}}
+                    \item{\emph{Ratings} - used to build the training data}
+                    \item{\emph{Monitoring} - used to monitor the status of the models and check distressed tweets}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Web based system}
+        \begin{center}
+            \textbf{Ratings module}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/ratings.png}
+                    \caption{Landing page of the Ratings module}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{taps into crowd intelligence}
+                    \item{automated scripts fetch 1000 posts from Reddit every day}
+                    \item{displays the first unlabelled post}
+                    \item{users can then assign labels to stories}
+                    \item{this builds the training data}
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Web based system}
+        \begin{center}
+            \textbf{Monitoring module}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/monitoring_landing_1.png}
+                    \caption{Landing page of the Monitoring module}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item{displays the top 5 tweets that were classified as depressed by all the classifiers}
+                    \item{links for checking the status of individual classifiers}
+                    \item{
+                    two types of phrases -
+                    \begin{itemize}
+                        \item{\textbf{Direct} - \emph{``thoughts of suicide make me happy''}, \emph{``I have a rope around my neck''}}
+                        \item{\textbf{Indirect} - \emph{``I don't know anything anymore''}, \emph{``Need someone to talk to''}}
+                    \end{itemize}
+                    }
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Web based system}
+        \begin{center}
+            \textbf{Monitoring module}
+        \end{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{figures/monitoring_bagging_tweet_info.png}
+                    \caption{Statistics of the bagging classifier}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                For each classifier -
+                \begin{itemize}
+                    \item{displays the overall level of distress (in \%) on Twitter}
+                    \item{
+                    each bubble displays
+                    \begin{itemize}
+                        \item{the number of stories that were found depressed on that particular day}
+                        \item{the first tweet from that day which was depressed (no confidence values, yet)}
+                    \end{itemize}
+                    }
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    
+    \begin{frame}
+        \begin{center}
+            \textbf{Conclusion and Future Work}
+        \end{center}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Conclusion}
+        \begin{itemize}
+            \item{An evaluation of Support Vector Machines and Ensemble Learning methods (Bagging/Boosting/Stacking) in the domain of text classification}
+            \item{Bagging outperformed Stacking outperformed SVM outperformed Boosting}
+            \item{A web based system that can detect emotional distress on Twitter}
+            \item{No labels implies qualitative evaluation is difficult except observation}
+            \item{Observed results seem to be reasonable}
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Future Work}
+        \begin{itemize}
+            \item{Fetch more tweets}
+            \item{Increase the crowd intelligence involved}
+            \item{Relabelling process (decreases wastage of resources)}
+            \item{Select best performing model}
+            \item{Store confidence values}
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \begin{center}
+            \textbf{Thank you!}
+        \end{center}
+        \begin{center}
+            \textbf{Questions?}
+        \end{center}
     \end{frame}
 \end{document}
