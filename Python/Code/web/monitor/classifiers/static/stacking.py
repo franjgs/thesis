@@ -33,7 +33,7 @@ class Stacking(Base):
             else:
                 training = numpy.vstack((training, self.models[i].predict(x)))
         training = training.transpose()
-        self.clf = self.get_classifier('rbf')
+        self.clf = self.get_classifier()
         self.clf.fit(training, y)
     
     def predict(self, stories):
