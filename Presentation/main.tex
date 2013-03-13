@@ -198,7 +198,7 @@ Technische Universit\"at M\"unchen
             \item{Performance not guaranteed to be better than constituent classifiers}
             \item{Ensemble methods still usually outperform individual classifiers}
             \item{Soft requirement - underlying models should be diverse}
-            \item{Various strategies to combine models - \emph{select best}, \emph{voting}, \emph{boosting}, \emph{stacking}}
+            \item{Various strategies to combine models - \emph{select best}, \emph{voting (bagging)}, \emph{boosting}, \emph{stacking}}
         \end{itemize}
     \end{frame}
     
@@ -215,6 +215,7 @@ Technische Universit\"at M\"unchen
                 \item{Feature split - different features for different classifiers}
             \end{itemize}
             }
+            \item{Final prediction = $\mathrm{sign}(\displaystyle \sum_{m = 1}^M y_m(\mathbf{x_n}))$}
         \end{itemize}
     \end{frame}
     
@@ -257,6 +258,54 @@ Technische Universit\"at M\"unchen
     \begin{frame}
         \frametitle{Evaluation of algorithms}
         \begin{center}
+            \textbf{Datasets}
+        \end{center}
+        \begin{itemize}
+            \item{
+            Evaluation
+            \begin{itemize}
+                \item{Comments dataset from a competition on Kaggle}
+                \item{6182 comments, each having a binary label}
+                \item{Label depends on whether or not a particular comment insults another user}
+            \end{itemize}
+            }
+            \item{
+            Web based system
+            \begin{itemize}
+                \item{Training data - Reddit}
+                \item{Fetch posts from ``/r/happy'' \footnote{\url{http://www.reddit.com/r/happy}} and ``/r/suicidewatch'' \footnote{\url{http://www.reddit.com/r/suicidewatch}}}
+                \item{Prediction data - Twitter}
+                \item{Gather tweets from the public streaming API \footnote{\url{https://dev.twitter.com/docs/streaming-apis/streams/public}}}
+            \end{itemize}
+            }
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Web based system}
+        \begin{center}
+            \textbf{Data consolidation frequencies}
+        \end{center}
+        \begin{table}
+            \begin{center}
+                \begin{tabular}{ | c | c | }
+                    \hline
+                    \textbf{Task} & \textbf{Frequency} \\
+                    \hline
+                    Fetch 1000 posts from Reddit & 24 hours \\
+                    \hline
+                    Fetch 100 tweets from Twitter & 3 hours \\
+                    \hline
+                    Re-assign labels to previous tweets and update statistics & 24 hours \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        \end{table}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Evaluation of algorithms}
+        \begin{center}
             \textbf{Approach}
         \end{center}
         \begin{itemize}
@@ -267,7 +316,7 @@ Technische Universit\"at M\"unchen
             \item{\textbf{SVM}, \textbf{Bagging}, \textbf{Boosting}, \textbf{Stacking} - obtain accuracy (10-fold cross validation) against number of samples}
             \item{\textbf{SVM} - Growth of number of support vectors with the number of samples}
             \item{\textbf{Bagging} - Accuracy against number of underlying models}
-            \item{Start with 100 samples, and continue adding 100 samples on each iteration until no more samples are left}
+            \item{Start with 100 samples, and continue adding 100 samples in each iteration until no more samples are left}
         \end{itemize}
     \end{frame}
     
@@ -294,7 +343,7 @@ Technische Universit\"at M\"unchen
                 \begin{itemize}
                     \item{Linear kernel accuracy - 79.02\%}
                     \item{Polynomial/RBF/Sigmoid kernel accuracy - 34.39\%}
-                    \item{Having more features implies no need for a kernel function}
+                    \item{Having a large number of features implies less need for a kernel function}
                 \end{itemize}
             \end{column}
         \end{columns}
@@ -439,28 +488,6 @@ Technische Universit\"at M\"unchen
             \end{itemize}
             }
         \end{itemize}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Web based system}
-        \begin{center}
-            \textbf{Data consolidation frequencies}
-        \end{center}
-        \begin{table}
-            \begin{center}
-                \begin{tabular}{ | c | c | }
-                    \hline
-                    \textbf{Task} & \textbf{Frequency} \\
-                    \hline
-                    Fetch 1000 posts from Reddit & 24 hours \\
-                    \hline
-                    Fetch 100 tweets from Twitter & 3 hours \\
-                    \hline
-                    Re-assign labels to previous tweets and update statistics & 24 hours \\
-                    \hline
-                \end{tabular}
-            \end{center}
-        \end{table}
     \end{frame}
     
     \begin{frame}
