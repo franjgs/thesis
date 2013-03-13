@@ -10,6 +10,7 @@
 \setbeamertemplate{frametitle}[default][center]
 \setbeamertemplate{footline}{}
 \setbeamertemplate{navigation symbols}{}
+% \setbeamercovered{dynamic}
 
 \title{Utilizing Crowd Intelligence for Online Detection of Emotional Distress}
 \subtitle{Master's Thesis Presentation}
@@ -36,6 +37,7 @@ Technische Universit\"at M\"unchen
                 \item{Problem Definition}
             \end{itemize}
             }
+            \pause
             \item{
             Theoretical Background
             \begin{itemize}
@@ -44,13 +46,9 @@ Technische Universit\"at M\"unchen
                 \item{Ensemble Learning methods}
             \end{itemize}
             }
-            \item{
-            Experimental Results
-            \begin{itemize}
-                \item{Experiments}
-                \item{Results}
-            \end{itemize}
-            }
+            \pause
+            \item{Experiments}
+            \item{System}
             \item{Conclusion and Future Work}
             \item{Q/A}
         \end{itemize}
@@ -67,10 +65,11 @@ Technische Universit\"at M\"unchen
         \begin{itemize}
             \item{Millions of people die every year because of suicide}
             \item{Most people are between 15 to 29 years old}
+            \pause
             \item{Rise of social media - Twitter, Facebook, Reddit, Wordpress}
             \item{Sections of interest on Reddit - ``/r/happy'' \footnote{\url{http://www.reddit.com/r/happy}} and ``/r/suicidewatch'' \footnote{\url{http://www.reddit.com/r/suicidewatch}}}
             \item{Sections of interest on Twitter - the entire website}
-            \item{People want to post their inner feelings on the web}
+            \pause
             \item{\textbf{Direct phrases} - \emph{``thoughts of suicide make me happy''}, \emph{``I have a rope around my neck''}}
             \item{\textbf{Indirect phrases} - \emph{``I don't know anything anymore''}, \emph{``Need someone to talk to''}}
         \end{itemize}
@@ -107,16 +106,16 @@ Technische Universit\"at M\"unchen
     
     \begin{frame}
         \frametitle{Problem Definition}
-        \begin{itemize}
-            \item{Evaluate machine learning algorithms that can be used for identifying depressed emotions in pieces of text}
-            \item{
+        \begin{block}{Evaluation}
+            Evaluate machine learning algorithms that can be used for identifying depressed emotions in pieces of text
+        \end{block}
+        \begin{block}{System}
             Build a web based system that can
             \begin{itemize}
-                \item{tap into crowd intelligence to incrementally improve the classifiers}
+                \item{tap into \textcolor{red}{crowd intelligence} to incrementally improve the classifiers}
                 \item{detect content on the web that indicates that its author may be depressed or suicidal}
             \end{itemize}
-            }
-        \end{itemize}
+        \end{block}
     \end{frame}
     
     \begin{frame}
@@ -130,6 +129,7 @@ Technische Universit\"at M\"unchen
         \begin{itemize}
             \item{Algorithms that can learn from data}
             \item{Construct a model from a given dataset, and then perform the required task on another dataset}
+            \pause
             \item{\textbf{Supervised learning} - Train the models on the training data, and predict on the test data}
             \item{\textbf{Unsupervised learning} - No distinction between training and test data}
         \end{itemize}
@@ -140,8 +140,10 @@ Technische Universit\"at M\"unchen
         \begin{itemize}
             \item{Subset of machine learning algorithms (we focus on supervised text classification)}
             \item{Given some pieces of text, put unseen pieces of text into two or more categories}
+            \pause
             \item{Dataset $\{(\mathbf{x_n}, y_n)\}_{n = 1}^{N}$ containing N instances}
             \item{Each instance $(\mathbf{x_n}, y_n)$ is of the form $[(x_{n, 1}, x_{n, 2}, ..., x_{n, D}), y_n]$}
+            \pause
             \item{Supervised learning - calculate $y_n$ of test data given information about $y_n$ from training data}
             \item{Unsupervised learning - calculate $y_n$ given only information about $\mathbf{x_n}$}
         \end{itemize}
@@ -208,8 +210,7 @@ Technische Universit\"at M\"unchen
     \begin{frame}
         \frametitle{Bagging}
         \begin{itemize}
-            \item{Combine $M$ classifiers to form a single classifier}
-            \item{To predict, obtain predictions from all constituent classifiers, and take majority vote}
+            \item{Obtain predictions from all constituent classifiers, and take a majority vote}
             \item{Requirement - classifiers should change for even small changes in underlying classifiers}
             \item{
             Two main approaches for training individual classifiers
@@ -248,12 +249,6 @@ Technische Universit\"at M\"unchen
     
     \begin{frame}
         \begin{center}
-            \textbf{Experimental Results}
-        \end{center}
-    \end{frame}
-    
-    \begin{frame}
-        \begin{center}
             \textbf{Experiments}
         \end{center}
     \end{frame}
@@ -272,6 +267,7 @@ Technische Universit\"at M\"unchen
                 \item{Label depends on whether or not a particular comment insults another user}
             \end{itemize}
             }
+            \pause
             \item{
             Web based system
             \begin{itemize}
