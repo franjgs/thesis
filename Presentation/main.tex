@@ -322,69 +322,81 @@ Technische Universit\"at M\"unchen
     
     \begin{frame}
         \frametitle{Boosting}
-        \begin{itemize}
-            \item{Assign each sample a weight value (same for all samples in the beginning), and train $M$ classifiers successively}
-            \item{For each classifier, calculate $\epsilon$ (measure of error) and $\alpha$ (decreases with $\epsilon$)}
-            \item{Final prediction = $\mathrm{sign}(\displaystyle \sum_{m = 1}^{M} \alpha_m y_m(\mathbf{x_n}))$}
-        \end{itemize}
+        \visible<1->{
+            \begin{itemize}
+                \item{Assign each sample a weight value (same for all samples in the beginning), and train $M$ classifiers successively}
+                \item{For each classifier, calculate $\epsilon$ (measure of error) and $\alpha$ (decreases with $\epsilon$)}
+                \item{Final prediction = $\mathrm{sign}(\displaystyle \sum_{m = 1}^{M} \alpha_m y_m(\mathbf{x_n}))$}
+            \end{itemize}
+        }
         \begin{columns}
-            \begin{column}{0.3\textwidth}
-                \begin{center}
-                    \begin{tabular}{| c |}
-                        \hline
-                        $\mathbf{x_1}$\\
-                        \hline
-                        $\mathbf{x_2}$\\
-                        \hline
-                        $\mathbf{x_3}$\\
-                        \hline
-                        $\mathbf{x_4}$\\
-                        \hline
-                        $\mathbf{x_5}$\\
-                        \hline
-                    \end{tabular}
-                \end{center}
-            \end{column}
-            \begin{column}{0.05\textwidth}
-                $\rightarrow$
-            \end{column}
-            \begin{column}{0.3\textwidth}
-                \begin{center}
-                    \begin{tabular}{| c |}
-                        \hline
-                        $\mathbf{x_1}$\\
-                        \hline
-                        $\mathbf{x_2}$\\
-                        \hline
-                        $\mathbf{x_3}$\\
-                        \hline
-                        $\mathbf{x_4}$\\
-                        \hline
-                        $\mathbf{x_5}$\\
-                        \hline
-                    \end{tabular}
-                \end{center}
-            \end{column}
-            \begin{column}{0.05\textwidth}
-                $\rightarrow$
-            \end{column}
-            \begin{column}{0.3\textwidth}
-                \begin{center}
-                    \begin{tabular}{| c |}
-                        \hline
-                        $\mathbf{x_1}$\\
-                        \hline
-                        $\mathbf{x_2}$\\
-                        \hline
-                        $\mathbf{x_3}$\\
-                        \hline
-                        $\mathbf{x_4}$\\
-                        \hline
-                        $\mathbf{x_5}$\\
-                        \hline
-                    \end{tabular}
-                \end{center}
-            \end{column}
+            \visible<2->{
+                \begin{column}{0.3\textwidth}
+                    \begin{center}
+                        \begin{tabular}{| c |}
+                            \hline
+                            \cellcolor{gray!10}$\mathbf{x_1}$\\
+                            \hline
+                            \cellcolor{gray!10}$\mathbf{x_2}$\\
+                            \hline
+                            \cellcolor{gray!10}$\mathbf{x_3}$\\
+                            \hline
+                            \cellcolor{gray!10}$\mathbf{x_4}$\\
+                            \hline
+                            \cellcolor{gray!10}$\mathbf{x_5}$\\
+                            \hline
+                        \end{tabular}
+                    \end{center}
+                \end{column}
+            }
+            \visible<3->{
+                \begin{column}{0.05\textwidth}
+                    $\xrightarrow{Classifier 1}$
+                \end{column}
+            }
+            \visible<4->{
+                \begin{column}{0.3\textwidth}
+                    \begin{center}
+                        \begin{tabular}{| c |}
+                            \hline
+                            \cellcolor{gray!50}$\mathbf{x_1}$\\
+                            \hline
+                            \cellcolor{gray!20}$\mathbf{x_2}$\\
+                            \hline
+                            \cellcolor{gray!20}$\mathbf{x_3}$\\
+                            \hline
+                            \cellcolor{gray!50}$\mathbf{x_4}$\\
+                            \hline
+                            \cellcolor{gray!20}$\mathbf{x_5}$\\
+                            \hline
+                        \end{tabular}
+                    \end{center}
+                \end{column}
+            }
+            \visible<5->{
+                \begin{column}{0.05\textwidth}
+                    $\xrightarrow{Classifier 2}$
+                \end{column}
+            }
+            \visible<6->{
+                \begin{column}{0.3\textwidth}
+                    \begin{center}
+                        \begin{tabular}{| c |}
+                            \hline
+                            \cellcolor{gray!50}$\mathbf{x_1}$\\
+                            \hline
+                            \cellcolor{gray!20}$\mathbf{x_2}$\\
+                            \hline
+                            \cellcolor{gray!80}$\mathbf{x_3}$\\
+                            \hline
+                            \cellcolor{gray!50}$\mathbf{x_4}$\\
+                            \hline
+                            \cellcolor{gray!80}$\mathbf{x_5}$\\
+                            \hline
+                        \end{tabular}
+                    \end{center}
+                \end{column}
+            }
         \end{columns}
     \end{frame}
     
