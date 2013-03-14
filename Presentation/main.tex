@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[xcolor=table]{beamer}
 \usetheme{Madrid}
 
 \usepackage{listings}
@@ -275,39 +275,48 @@ Technische Universit\"at M\"unchen
     
     \begin{frame}
         \frametitle{Bagging}
-        \begin{itemize}
-            \item{Obtain predictions from all constituent classifiers, and take a majority vote}
-            \item{Final prediction = $\mathrm{sign}(\displaystyle \sum_{m = 1}^M y_m(\mathbf{x_n}))$}
-        \end{itemize}
+        \visible<1->{
+            \begin{itemize}
+                \item{Obtain predictions from all constituent classifiers, and take a majority vote}
+                \item{Final prediction = $\mathrm{sign}(\displaystyle \sum_{m = 1}^M y_m(\mathbf{x_n}))$}
+            \end{itemize}
+        }
         \begin{columns}
-            \begin{column}{0.5\textwidth}
-                \[
-                \begin{pmatrix}
-                    x_{1,1} & x_{1,2} & x_{1, 3} & \cdots & x_{1,D} \\
-                    x_{2,1} & x_{2,2} & x_{2, 3} & \cdots & x_{2,D} \\
-                    x_{3,1} & x_{3,2} & x_{3, 3} & \cdots & x_{3,D} \\
-                    \vdots  & \vdots  & \ddots & \vdots  \\
-                    x_{N,1} & x_{N,2} & x_{N, 3} & \cdots & x_{N,D}
-                \end{pmatrix}
-                \]
-                \begin{center}
-                    \textbf{Sample split}
-                \end{center}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \[
-                \begin{pmatrix}
-                    x_{1,1} & x_{1,2} & x_{1, 3} & \cdots & x_{1,D} \\
-                    x_{2,1} & x_{2,2} & x_{2, 3} & \cdots & x_{2,D} \\
-                    x_{3,1} & x_{3,2} & x_{3, 3} & \cdots & x_{3,D} \\
-                    \vdots  & \vdots  & \ddots & \vdots  \\
-                    x_{N,1} & x_{N,2} & x_{N, 3} & \cdots & x_{N,D}
-                \end{pmatrix}
-                \]
-                \begin{center}
-                    \textbf{Feature split}
-                \end{center}
-            \end{column}
+            \visible<2->{
+                \begin{column}{0.5\textwidth}
+                    \begin{equation*}
+                        \left(\begin{array}{ccccc}
+                        \rowcolor{blue!20}
+                        x_{1,1} & x_{1,2} & x_{1,3} & x_{1,4} & x_{1,D} \\
+                        x_{2,1} & x_{2,2} & x_{2,3} & x_{2,4} & x_{2,D} \\
+                        \rowcolor{blue!20}
+                        x_{3,1} & x_{3,2} & x_{3,3} & x_{3,4} &  x_{3,D} \\
+                        \vdots & \vdots & \vdots & \vdots & \vdots\\
+                        \rowcolor{blue!20}
+                        x_{N,1} & x_{N,2} & x_{N, 3} & x_{N,4} &  x_{N,D}\\
+                        \end{array}\right)
+                    \end{equation*}
+                    \begin{center}
+                        \textbf{Sample split}
+                    \end{center}
+                \end{column}
+            }
+            \visible<3->{
+                \begin{column}{0.5\textwidth}
+                    \begin{equation*}
+                        \left(\begin{array}{>{\columncolor{blue!20}}ccc>{\columncolor{blue!20}}cc}
+                        x_{1,1} & x_{1,2} & x_{1,3} & x_{1,4} & x_{1,D} \\
+                        x_{2,1} & x_{2,2} & x_{2,3} & x_{2,4} &  x_{2,D} \\
+                        x_{3,1} & x_{3,2} & x_{3,3} & x_{3,4} &  x_{3,D} \\
+                        \vdots & \vdots & \vdots & \vdots & \vdots\\
+                        x_{N,1} & x_{N,2} & x_{N, 3} & x_{N,4} &  x_{N,D}\\
+                        \end{array}\right)
+                    \end{equation*}
+                    \begin{center}
+                        \textbf{Feature split}
+                    \end{center}
+                \end{column}
+            }
         \end{columns}
     \end{frame}
     
