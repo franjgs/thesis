@@ -7,7 +7,7 @@ def index(request):
     tweets = Tweet.objects.extra(
         select = { 'label_sum': 'label_svm + label_bagging + label_boosting + label_stacking' },
         order_by = ('-label_sum',)
-    )[0:10]
+    )[0:20]
     return render_to_response("monitor/index.html", { 'tweets': tweets })
 
 def stats(request, name):
