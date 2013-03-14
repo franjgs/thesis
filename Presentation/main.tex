@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{xcolor}
+\usepackage{pifont}
 
 \setbeamertemplate{frametitle}[default][center]
 \setbeamertemplate{footline}{}
@@ -89,6 +90,7 @@ Technische Universit\"at M\"unchen
             \includegraphics[width=\textwidth]{figures/twitter_happiness.png}
         \end{figure}
         \begin{itemize}
+            \item{Study conducted in 2011}
             \item{46 billion words collected over 33 months}
             \item{Negativity on Twitter has been on the rise}
             \item{Words include \emph{death}, \emph{hate}, and even \emph{suicide}}
@@ -104,6 +106,7 @@ Technische Universit\"at M\"unchen
         \begin{itemize}
             \item{\textbf{Direct} - \emph{``thoughts of \textcolor{red}{suicide} make me happy''}, \emph{``I have a \textcolor{red}{rope around my neck}''}}
             \item{\textbf{Indirect} - \emph{``I \textcolor{red}{don't know} anything anymore''}, \emph{``\textcolor{red}{Need someone} to talk to''}}
+            \pause
             \item{Some accounts have lots of followers, some don't}
             \item{Lives can be saved if there is a surveillance system of suicide}
             \item{Public sentiment information available on the web + No analysis possible = Disconnect}
@@ -112,7 +115,7 @@ Technische Universit\"at M\"unchen
     
     \begin{frame}
         \frametitle{Problem Definition}
-        \begin{block}{Evaluation}
+        \begin{block}{Experiments}
             Evaluate machine learning algorithms that can be used for identifying depressed emotions in pieces of text
         \end{block}
         \begin{block}{System}
@@ -146,6 +149,7 @@ Technische Universit\"at M\"unchen
         \begin{block}{Formal definition}
             Given a dataset $\{(\mathbf{x_n}, y_n)\}_{n = 1}^{N}$ containing N instances, where each instance $(\mathbf{x_n}, y_n)$ is of the form $[(x_{n, 1}, x_{n, 2}, ..., x_{n, D}), y_n]$, calculate the $y_n$ values.
         \end{block}
+        \pause
         \begin{itemize}
             \item{Given some pieces of text, put unseen pieces of text into two or more categories}
             \item{\textbf{Supervised} - calculate $y_n$ of test data given information about $y_n$ from training data}
@@ -279,11 +283,11 @@ Technische Universit\"at M\"unchen
             \begin{column}{0.5\textwidth}
                 \[
                 \begin{pmatrix}
-                    x_{1,1} & x_{1,2} & x_{1, 3} & \cdots & x_{1,N} \\
-                    x_{2,1} & x_{2,2} & x_{2, 3} & \cdots & x_{2,N} \\
-                    x_{3,1} & x_{3,2} & x_{3, 3} & \cdots & x_{3,N} \\
+                    x_{1,1} & x_{1,2} & x_{1, 3} & \cdots & x_{1,D} \\
+                    x_{2,1} & x_{2,2} & x_{2, 3} & \cdots & x_{2,D} \\
+                    x_{3,1} & x_{3,2} & x_{3, 3} & \cdots & x_{3,D} \\
                     \vdots  & \vdots  & \ddots & \vdots  \\
-                    x_{M,1} & x_{M,2} & x_{M, 3} & \cdots & x_{M,N}
+                    x_{N,1} & x_{N,2} & x_{N, 3} & \cdots & x_{N,D}
                 \end{pmatrix}
                 \]
                 \begin{center}
@@ -293,11 +297,11 @@ Technische Universit\"at M\"unchen
             \begin{column}{0.5\textwidth}
                 \[
                 \begin{pmatrix}
-                    x_{1,1} & x_{1,2} & x_{1, 3} & \cdots & x_{1,N} \\
-                    x_{2,1} & x_{2,2} & x_{2, 3} & \cdots & x_{2,N} \\
-                    x_{3,1} & x_{3,2} & x_{3, 3} & \cdots & x_{3,N} \\
+                    x_{1,1} & x_{1,2} & x_{1, 3} & \cdots & x_{1,D} \\
+                    x_{2,1} & x_{2,2} & x_{2, 3} & \cdots & x_{2,D} \\
+                    x_{3,1} & x_{3,2} & x_{3, 3} & \cdots & x_{3,D} \\
                     \vdots  & \vdots  & \ddots & \vdots  \\
-                    x_{M,1} & x_{M,2} & x_{M, 3} & \cdots & x_{M,N}
+                    x_{N,1} & x_{N,2} & x_{N, 3} & \cdots & x_{N,D}
                 \end{pmatrix}
                 \]
                 \begin{center}
@@ -394,79 +398,58 @@ Technische Universit\"at M\"unchen
     \end{frame}
     
     \begin{frame}
-        \frametitle{Evaluation of algorithms}
+        \frametitle{Experiments}
         \begin{center}
-            \textbf{Datasets}
+            \textbf{Dataset}
         \end{center}
         \begin{itemize}
+            \item{List of 6182 comments from the internet - Kaggle \footnote{\url{http://www.kaggle.com/c/detecting-insults-in-social-commentary}}}
+            \item{label $|$ timestamp $|$ comment}
             \item{
-            Evaluation
+            Examples
             \begin{itemize}
-                \item{Comments dataset from a competition on Kaggle}
-                \item{6182 comments, each having a binary label}
-                \item{Label depends on whether or not a particular comment insults another user}
-            \end{itemize}
-            }
-            \pause
-            \item{
-            Web based system
-            \begin{itemize}
-                \item{Training data - Reddit}
-                \item{Fetch posts from ``/r/happy'' \footnote{\url{http://www.reddit.com/r/happy}} and ``/r/suicidewatch'' \footnote{\url{http://www.reddit.com/r/suicidewatch}}}
-                \item{Prediction data - Twitter}
-                \item{Gather tweets from the public streaming API \footnote{\url{https://dev.twitter.com/docs/streaming-apis/streams/public}}}
+                \item{1 - \textcolor{red}{How arrogant you are}}
+                \item{1 - \textcolor{red}{you are human garbage}}
+                \item{0 - \textcolor{blue}{i really don't understand your point. It seems you are mixing apples and oranges.}}
+                \item{0 - \textcolor{blue}{you may be right}}
             \end{itemize}
             }
         \end{itemize}
     \end{frame}
     
     \begin{frame}
-        \frametitle{Web based system}
-        \begin{center}
-            \textbf{Data consolidation frequencies}
-        \end{center}
-        \begin{table}
-            \begin{center}
-                \begin{tabular}{ | c | c | }
-                    \hline
-                    \textbf{Task} & \textbf{Frequency} \\
-                    \hline
-                    Fetch 1000 posts from Reddit & 24 hours \\
-                    \hline
-                    Fetch 100 tweets from Twitter & 3 hours \\
-                    \hline
-                    Re-assign labels to previous tweets and update statistics & 24 hours \\
-                    \hline
-                \end{tabular}
-            \end{center}
-        \end{table}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Evaluation of algorithms}
+        \frametitle{Experiments}
         \begin{center}
             \textbf{Approach}
         \end{center}
-        \begin{itemize}
-            \item{Implement all the models in MATLAB}
-            \item{Extract n-grams (size upto 2) out of the Kaggle dataset}
-            \item{Use tf-idf information as feature values}
-            \item{Input matrix - 6182 rows and 23175 columns}
-            \item{\textbf{SVM}, \textbf{Bagging}, \textbf{Boosting}, \textbf{Stacking} - obtain accuracy (10-fold cross validation) against number of samples}
-            \item{\textbf{SVM} - Growth of number of support vectors with the number of samples}
-            \item{\textbf{Bagging} - Accuracy against number of underlying models}
-            \item{Start with 100 samples, and continue adding 100 samples in each iteration until no more samples are left}
-        \end{itemize}
+        \visible<1->{
+            \begin{itemize}
+                \item{Extract n-grams upto size 2 and use tf-idf information as feature values}
+                \item{Input matrix - 6182 rows and 23175 columns}
+                \pause
+                \item{Implement all models in MATLAB}
+                \item{Start with 100 samples, and continue adding 100 samples in each iteration until no more samples are left}
+                \pause
+            \end{itemize}
+        }
+        \visible<3->{
+            \begin{center}
+                \begin{tabular}{ | c | c | c | c | }
+                    \hline
+                    Name & Accuracy & Support Vector Count & Model Count\\
+                    \hline
+                    SVM & \ding{51} & \ding{51} & \ding{55}\\
+                    Bagging & \ding{51} & \ding{55} & \ding{51}\\
+                    Boosting & \ding{51} & \ding{55} & \ding{55}\\
+                    Stacking & \ding{51} & \ding{55} & \ding{55}\\
+                    \hline
+                \end{tabular}
+            \end{center}
+        }
     \end{frame}
     
     \begin{frame}
-        \begin{center}
-            \textbf{Results}
-        \end{center}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Evaluation of algorithms}
+        \frametitle{Experiments}
         \begin{center}
             \textbf{Support Vector Machines}
         \end{center}
@@ -475,44 +458,27 @@ Technische Universit\"at M\"unchen
                 \begin{figure}
                     \centering
                     \includegraphics[width=\textwidth]{figures/svm_accuracy.eps}
-                    \caption{Accuracy v/s Number of instances}
+                    \caption{Accuracy}
                 \end{figure}
+                \begin{center}
+                    \small 79.02\% for linear kernel, and 34.39\% for Polynomial/RBF/Sigmoid kernels
+                \end{center}
             \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item{Linear kernel accuracy - 79.02\%}
-                    \item{Polynomial/RBF/Sigmoid kernel accuracy - 34.39\%}
-                    \item{Having a large number of features implies less need for a kernel function}
-                \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Evaluation of algorithms}
-        \begin{center}
-            \textbf{Support Vector Machines}
-        \end{center}
-        \begin{columns}
             \begin{column}{0.5\textwidth}
                 \begin{figure}
                     \centering
                     \includegraphics[width=\textwidth]{figures/svm_n_sv.eps}
-                    \caption{Number of support vectors v/s Number of instances}
+                    \caption{Support Vector count}
                 \end{figure}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item{100 samples - 90\% support vectors}
-                    \item{6182 samples - 60\% support vectors}
-                    \item{Less support vectors implies that the classification is easy}
-                \end{itemize}
+                \begin{center}
+                    \small Number of support vectors decreases from 90\% to 60\%
+                \end{center}
             \end{column}
         \end{columns}
     \end{frame}
     
     \begin{frame}
-        \frametitle{Evaluation of algorithms}
+        \frametitle{Experiments}
         \begin{center}
             \textbf{Bagging}
         \end{center}
@@ -523,114 +489,122 @@ Technische Universit\"at M\"unchen
                     \includegraphics[width=\textwidth]{figures/bagging_accuracy.eps}
                     \caption{Accuracy v/s Number of instances}
                 \end{figure}
+                \begin{center}
+                    \small 79.65\% (9 linear kernel SVMs)
+                \end{center}
             \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item{9 linear kernel SVMs underneath}
-                    \item{Performance ultimately governed by how SVMs perform}
-                    \item{Average accuracy on all 6182 samples = 79.65\%}
-                \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Evaluation of algorithms}
-        \begin{center}
-            \textbf{Bagging}
-        \end{center}
-        \begin{columns}
             \begin{column}{0.5\textwidth}
                 \begin{figure}
                     \centering
                     \includegraphics[width=\textwidth]{figures/bagging_n_models.eps}
-                    \caption{Accuracy v/s Number of models}
+                    \caption{\small Accuracy v/s Number of models}
                 \end{figure}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item{Accuracy ``stabilizes'' slowly with the number of models}
-                    \item{Each model is trained on a random subset of samples}
-                    \item{Increase in number of models \emph{implies} Subsets overlap \emph{implies} Performance stabilizes}
-                \end{itemize}
+                \begin{center}
+                    \small Models increase $\rightarrow$ Subsets overlap $\rightarrow$ Accuracy Stabilizes
+                \end{center}
             \end{column}
         \end{columns}
     \end{frame}
     
     \begin{frame}
-        \frametitle{Evaluation of algorithms}
-        \begin{center}
-            \textbf{Boosting}
-        \end{center}
+        \frametitle{Experiments}
         \begin{columns}
             \begin{column}{0.5\textwidth}
+                \begin{center}
+                    \textbf{Boosting}
+                \end{center}
                 \begin{figure}
                     \centering
                     \includegraphics[width=\textwidth]{figures/boosting_accuracy.eps}
-                    \caption{Accuracy v/s Number of instances}
                 \end{figure}
+                \begin{center}
+                    Average accuracy of 72.84\%
+                \end{center}
             \end{column}
             \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item{9 linear kernel SVMs trained successively on each iteration}
-                    \item{Average accuracy = 72.84\%}
-                \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Evaluation of algorithms}
-        \begin{center}
-            \textbf{Stacking}
-        \end{center}
-        \begin{columns}
-            \begin{column}{0.5\textwidth}
+                \begin{center}
+                    \textbf{Stacking}
+                \end{center}
                 \begin{figure}
                     \centering
                     \includegraphics[width=\textwidth]{figures/stacking_accuracy.eps}
-                    \caption{Accuracy v/s Number of instances}
                 \end{figure}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item{9 linear kernel SVMs at first level}
-                    \item{Second level SVM trained using a linear kernel as well}
-                    \item{Average accuracy = 79.48\%}
-                \end{itemize}
+                \begin{center}
+                    Average accuracy of 79.48\%
+                \end{center}
             \end{column}
         \end{columns}
+        \begin{center}
+            All using linear kernel SVMs
+        \end{center}
     \end{frame}
     
     \begin{frame}
-        \frametitle{Web based system}
+        \begin{center}
+            \textbf{System}
+        \end{center}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{System}
+        \begin{center}
+            \textbf{Dataset}
+        \end{center}
+        \visible<1->{
+            \begin{itemize}
+                \item{\textbf{Training data} - Reddit}
+                \item{Fetch posts from ``/r/happy'' \footnote{\url{http://www.reddit.com/r/happy}} and ``/r/suicidewatch'' \footnote{\url{http://www.reddit.com/r/suicidewatch}}}
+                \pause
+                \item{\textbf{Prediction data} - Twitter}
+                \item{Gather tweets from the public streaming API \footnote{\url{https://dev.twitter.com/docs/streaming-apis/streams/public}}}
+                \pause
+            \end{itemize}
+        }
+        \visible<3->{
+            \begin{center}
+                \begin{tabular}{ | c | c | }
+                    \hline
+                    \textbf{Task} & \textbf{Frequency} \\
+                    \hline
+                    Fetch 1000 posts from Reddit & 24 hours \\
+                    Fetch 100 tweets from Twitter & 3 hours \\
+                    Re-assign labels to previous tweets and update statistics & 24 hours \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        }
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{System}
         \begin{center}
             \textbf{Approach}
         \end{center}
         \begin{itemize}
-            \item{Implement all the models in Python, and web interface in Django}
-            \item{No training data available $=>$ build our own}
+            \item{Implement all classifiers in Python, and web interface in Django}
+            \item{No training data available $\rightarrow$ build our own}
+            \pause
             \item{
-            Training data
+            Training data (Reddit)
             \begin{itemize}
-                \item{Consolidated from Reddit}
-                \item{``/r/happy'' - users posts their happy moments}
-                \item{``/r/suicidewatch'' - users post when they want to commit suicide}
-                \item{Pull 500 stories from each, every day}
+                \item{``/r/happy'' - people posts their happy moments}
+                \item{``/r/suicidewatch'' - people post when they want to commit suicide}
+                \item{labels assigned by users of our system}
             \end{itemize}
             }
+            \pause
             \item{
-            Prediction data
+            Prediction data (Twitter)
             \begin{itemize}
-                \item{Should be the general sentiment of the overall public}
-                \item{Hence, pull 100 tweets every 3 hours from Twitter}
+                \item{General sentiment of the overall public}
+                \item{Pull 100 tweets every 3 hours from Twitter}
             \end{itemize}
             }
         \end{itemize}
     \end{frame}
     
     \begin{frame}
-        \frametitle{Web based system}
+        \frametitle{System}
         \begin{center}
             \textbf{Architecture}
         \end{center}
@@ -638,94 +612,22 @@ Technische Universit\"at M\"unchen
             \begin{column}{0.5\textwidth}
                 \begin{figure}
                     \centering
-                    \includegraphics[width=\textwidth]{figures/landing.png}
-                    \caption{Landing page}
+                    \includegraphics[width=\textwidth]{figures/Architecture.png}
                 \end{figure}
             \end{column}
             \begin{column}{0.5\textwidth}
                 \begin{itemize}
-                    \item{Two sections - \emph{Ratings} and \emph{Monitoring}}
-                    \item{\emph{Ratings} - used to build the training data}
-                    \item{\emph{Monitoring} - used to monitor the status of the models and check distressed tweets}
+                    \item{\textbf{Ratings} - allows users to assign labels to stories (crowd intelligence), building the training data}
+                    \item{\textbf{Monitoring} - displays predictions of classifiers in the form of depressed tweets and individual statuses of classifiers}
                 \end{itemize}
             \end{column}
         \end{columns}
     \end{frame}
     
     \begin{frame}
-        \frametitle{Web based system}
         \begin{center}
-            \textbf{Ratings module}
+            \textbf{Demo}
         \end{center}
-        \begin{columns}
-            \begin{column}{0.5\textwidth}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=\textwidth]{figures/ratings.png}
-                    \caption{Landing page of the Ratings module}
-                \end{figure}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item{Taps into crowd intelligence}
-                    \item{Automated scripts fetch 1000 posts from Reddit every day}
-                    \item{Displays the first unlabelled post}
-                    \item{Users can then assign labels to stories}
-                    \item{This builds the training data}
-                \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Web based system}
-        \begin{center}
-            \textbf{Monitoring module}
-        \end{center}
-        \begin{columns}
-            \begin{column}{0.5\textwidth}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=\textwidth]{figures/monitoring_landing_1.png}
-                    \caption{Landing page of the Monitoring module}
-                \end{figure}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{itemize}
-                    \item{Displays the top few tweets that were classified as depressed by all the classifiers}
-                    \item{Links for checking the status of individual classifiers}
-                \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
-    
-    \begin{frame}
-        \frametitle{Web based system}
-        \begin{center}
-            \textbf{Monitoring module}
-        \end{center}
-        \begin{columns}
-            \begin{column}{0.5\textwidth}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=\textwidth]{figures/monitoring_bagging_tweet_info.png}
-                    \caption{Statistics of the bagging classifier}
-                \end{figure}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                For each classifier -
-                \begin{itemize}
-                    \item{displays the overall level of distress (in \%) on Twitter}
-                    \item{
-                    each bubble displays
-                    \begin{itemize}
-                        \item{the number of stories that were found depressed on that particular day}
-                        \item{the first tweet from that day which was depressed (no confidence values, yet)}
-                    \end{itemize}
-                    }
-                \end{itemize}
-            \end{column}
-        \end{columns}
     \end{frame}
     
     \begin{frame}
@@ -739,6 +641,7 @@ Technische Universit\"at M\"unchen
         \begin{itemize}
             \item{An evaluation of Support Vector Machines and Ensemble Learning methods (Bagging/Boosting/Stacking) in the domain of text classification}
             \item{Bagging outperformed Stacking outperformed SVM outperformed Boosting}
+            \pause
             \item{A web based system that can detect emotional distress on Twitter}
             \item{No labels implies qualitative evaluation is difficult except observation}
             \item{Observed results seem to be reasonable}
@@ -750,7 +653,9 @@ Technische Universit\"at M\"unchen
         \begin{itemize}
             \item{Fetch more tweets}
             \item{Increase the crowd intelligence involved}
+            \pause
             \item{Relabelling process (decreases wastage of resources)}
+            \pause
             \item{Select best performing model}
             \item{Store confidence values}
         \end{itemize}
