@@ -1,11 +1,10 @@
 \documentclass{beamer}
 \usetheme{Madrid}
 
-\usepackage{color}
 \usepackage{listings}
 \usepackage{graphicx}
-\usepackage{wrapfig}
 \usepackage{amsmath}
+\usepackage{xcolor}
 
 \setbeamertemplate{frametitle}[default][center]
 \setbeamertemplate{footline}{}
@@ -62,17 +61,25 @@ Technische Universit\"at M\"unchen
     
     \begin{frame}
         \frametitle{Backdrop}
-        \begin{itemize}
-            \item{Millions of people die every year because of suicide}
-            \item{Most people are between 15 to 29 years old}
-            \pause
-            \item{Rise of social media - Twitter, Facebook, Reddit, Wordpress}
-            \item{Sections of interest on Reddit - ``/r/happy'' \footnote{\url{http://www.reddit.com/r/happy}} and ``/r/suicidewatch'' \footnote{\url{http://www.reddit.com/r/suicidewatch}}}
-            \item{Sections of interest on Twitter - the entire website}
-            \pause
-            \item{\textbf{Direct phrases} - \emph{``thoughts of suicide make me happy''}, \emph{``I have a rope around my neck''}}
-            \item{\textbf{Indirect phrases} - \emph{``I don't know anything anymore''}, \emph{``Need someone to talk to''}}
-        \end{itemize}
+        \begin{block}{Depression and Suicide}
+            \begin{itemize}
+                \item{Nearly one million people die every year because of suicide}
+                \item{Most people are between 15 to 29 years old}
+            \end{itemize}
+        \end{block}
+        \pause
+        \begin{block}{Social Media}
+            \begin{itemize}
+                \item{Rise of Twitter, Facebook, Reddit, Wordpress}
+                \item{
+                Sections of interest
+                \begin{itemize}
+                    \item{Reddit - ``/r/happy'' \footnote{\url{http://www.reddit.com/r/happy}} and ``/r/suicidewatch'' \footnote{\url{http://www.reddit.com/r/suicidewatch}}}
+                    \item{Twitter - the entire website}
+                \end{itemize}
+                }
+            \end{itemize}
+        \end{block}
     \end{frame}
     
     \begin{frame}
@@ -80,10 +87,8 @@ Technische Universit\"at M\"unchen
         \begin{figure}
             \centering
             \includegraphics[width=\textwidth]{figures/twitter_happiness.png}
-            \caption{Happiness on Twitter as a function of time}
         \end{figure}
         \begin{itemize}
-            \item{Study conducted in 2011}
             \item{46 billion words collected over 33 months}
             \item{Negativity on Twitter has been on the rise}
             \item{Words include \emph{death}, \emph{hate}, and even \emph{suicide}}
@@ -95,9 +100,10 @@ Technische Universit\"at M\"unchen
         \begin{figure}
             \centering
             \includegraphics[width=0.5\textwidth]{figures/twitter_kcs.png}
-            \caption{Last tweet of Twitter user ``@CapitalSTEEZ\_''\footnote{\url{http://twitter.com/CapitalSteez\_}}}
         \end{figure}
         \begin{itemize}
+            \item{\textbf{Direct} - \emph{``thoughts of \textcolor{red}{suicide} make me happy''}, \emph{``I have a \textcolor{red}{rope around my neck}''}}
+            \item{\textbf{Indirect} - \emph{``I \textcolor{red}{don't know} anything anymore''}, \emph{``\textcolor{red}{Need someone} to talk to''}}
             \item{Some accounts have lots of followers, some don't}
             \item{Lives can be saved if there is a surveillance system of suicide}
             \item{Public sentiment information available on the web + No analysis possible = Disconnect}
@@ -112,8 +118,8 @@ Technische Universit\"at M\"unchen
         \begin{block}{System}
             Build a web based system that can
             \begin{itemize}
-                \item{tap into \textcolor{red}{crowd intelligence} to incrementally improve the classifiers}
-                \item{detect content on the web that indicates that its author may be depressed or suicidal}
+                \item{tap into \textcolor{blue}{crowd intelligence} to incrementally improve the classifiers}
+                \item{\textcolor{blue}{detect content} on the web that indicates that its author may be \textcolor{blue}{depressed or suicidal}}
             \end{itemize}
         \end{block}
     \end{frame}
@@ -137,16 +143,65 @@ Technische Universit\"at M\"unchen
     
     \begin{frame}
         \frametitle{Text Classification}
+        \begin{block}{Formal definition}
+            Given a dataset $\{(\mathbf{x_n}, y_n)\}_{n = 1}^{N}$ containing N instances, where each instance $(\mathbf{x_n}, y_n)$ is of the form $[(x_{n, 1}, x_{n, 2}, ..., x_{n, D}), y_n]$, calculate the $y_n$ values.
+        \end{block}
         \begin{itemize}
-            \item{Subset of machine learning algorithms (we focus on supervised text classification)}
             \item{Given some pieces of text, put unseen pieces of text into two or more categories}
-            \pause
-            \item{Dataset $\{(\mathbf{x_n}, y_n)\}_{n = 1}^{N}$ containing N instances}
-            \item{Each instance $(\mathbf{x_n}, y_n)$ is of the form $[(x_{n, 1}, x_{n, 2}, ..., x_{n, D}), y_n]$}
-            \pause
-            \item{Supervised learning - calculate $y_n$ of test data given information about $y_n$ from training data}
-            \item{Unsupervised learning - calculate $y_n$ given only information about $\mathbf{x_n}$}
+            \item{\textbf{Supervised} - calculate $y_n$ of test data given information about $y_n$ from training data}
+            \item{\textbf{Unsupervised} - calculate $y_n$ given only information about $\mathbf{x_n}$}
         \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Document Representation}
+        \begin{columns}
+            \visible<1->{
+                \begin{column}{0.3\textwidth}
+                    \begin{center}
+                        \textbf{Text Corpus} \\
+                        \textcolor{blue}{``I am happy today''} \\
+                        and\\
+                        \textcolor{red}{``I am not happy today, but I was happy yesterday''}
+                    \end{center}
+                \end{column}
+            }
+            \visible<2->{
+                \begin{column}{0.05\textwidth}
+                    $\rightarrow$
+                \end{column}
+            }
+            \visible<3->{
+                \begin{column}{0.3\textwidth}
+                    \begin{center}
+                        \textbf{Token dictionary}\\
+                        ``I'': 1,\\
+                        ``am'': 2,\\
+                        ``happy'': 3,\\
+                        ``today'': 4,\\
+                        ``not'': 5,\\
+                        ``but'': 6,\\
+                        ``was'': 7,\\
+                        ``yesterday'': 8\\
+                    \end{center}
+                \end{column}
+            }
+            \visible<4->{
+                \begin{column}{0.05\textwidth}
+                    $\rightarrow$
+                \end{column}
+            }
+            \visible<5->{
+                \begin{column}{0.3\textwidth}
+                    \begin{center}
+                        \textbf{Vector Space Representation}\\
+                        \textcolor{blue}{\[1, 1, 1, 1, 0, 0, 0, 0\]}\\
+                        and\\
+                        \textcolor{red}{\[2, 1, 2, 1, 1, 1, 1, 1\]}\\
+                    \end{center}
+                \end{column}
+            }
+        \end{columns}
     \end{frame}
     
     \begin{frame}
@@ -154,9 +209,11 @@ Technische Universit\"at M\"unchen
         \begin{itemize}
             \item{Fairly popular class of algorithms used for binary classification}
             \item{Given training data in some $D$ dimensional space, find a decision boundary (hyperplane) that separates the two classes}
-            \item{Maximize the distance of the boundary from any data point}
-            \item{Decision function depends on a (usually small) subset of points called support vectors}
-            \item{Kernel (linear/polynomial/RBF/Sigmoid) functions used to calculate distance between two points}
+            \pause
+            \item{Hyperplane ($\mathbf{w} \cdot \mathbf{x} - b = 0$) should have maximum distance from any data point}
+            \item{Solution for linear classifiers: $\mathbf{w} = \displaystyle \sum_{i = 1}^{S} \alpha_i\mathbf{x_i}$}
+            \pause
+            \item{Replace $\mathbf{x_i} \cdot \mathbf{x}$ with $k(\mathbf{x_i}, \mathbf{x})$ $\implies$ represents the dot product of two vectors in higher dimensions (kernel function)}
         \end{itemize}
     \end{frame}
     
@@ -204,10 +261,11 @@ Technische Universit\"at M\"unchen
         \frametitle{Ensemble Learning}
         \begin{itemize}
             \item{Class of machine learning methods that combine models to obtain better predictions}
+            \item{Various strategies to combine models - \emph{select best}, \emph{voting (bagging)}, \emph{boosting}, \emph{stacking}}
+            \pause
             \item{Performance not guaranteed to be better than constituent classifiers}
             \item{Ensemble methods still usually outperform individual classifiers}
             \item{Soft requirement - underlying models should be diverse}
-            \item{Various strategies to combine models - \emph{select best}, \emph{voting (bagging)}, \emph{boosting}, \emph{stacking}}
         \end{itemize}
     \end{frame}
     
@@ -215,27 +273,106 @@ Technische Universit\"at M\"unchen
         \frametitle{Bagging}
         \begin{itemize}
             \item{Obtain predictions from all constituent classifiers, and take a majority vote}
-            \item{Requirement - classifiers should change for even small changes in underlying classifiers}
-            \item{
-            Two main approaches for training individual classifiers
-            \begin{itemize}
-                \item{Sample split - different samples for different classifiers}
-                \item{Feature split - different features for different classifiers}
-            \end{itemize}
-            }
             \item{Final prediction = $\mathrm{sign}(\displaystyle \sum_{m = 1}^M y_m(\mathbf{x_n}))$}
         \end{itemize}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \[
+                \begin{pmatrix}
+                    x_{1,1} & x_{1,2} & x_{1, 3} & \cdots & x_{1,N} \\
+                    x_{2,1} & x_{2,2} & x_{2, 3} & \cdots & x_{2,N} \\
+                    x_{3,1} & x_{3,2} & x_{3, 3} & \cdots & x_{3,N} \\
+                    \vdots  & \vdots  & \ddots & \vdots  \\
+                    x_{M,1} & x_{M,2} & x_{M, 3} & \cdots & x_{M,N}
+                \end{pmatrix}
+                \]
+                \begin{center}
+                    \textbf{Sample split}
+                \end{center}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \[
+                \begin{pmatrix}
+                    x_{1,1} & x_{1,2} & x_{1, 3} & \cdots & x_{1,N} \\
+                    x_{2,1} & x_{2,2} & x_{2, 3} & \cdots & x_{2,N} \\
+                    x_{3,1} & x_{3,2} & x_{3, 3} & \cdots & x_{3,N} \\
+                    \vdots  & \vdots  & \ddots & \vdots  \\
+                    x_{M,1} & x_{M,2} & x_{M, 3} & \cdots & x_{M,N}
+                \end{pmatrix}
+                \]
+                \begin{center}
+                    \textbf{Feature split}
+                \end{center}
+            \end{column}
+        \end{columns}
     \end{frame}
     
     \begin{frame}
         \frametitle{Boosting}
         \begin{itemize}
-            \item{Assign each sample a weight value (same for all samples in the beginning)}
-            \item{Train $M$ classifiers successively}
-            \item{Each classifier focuses more on samples that the previous classifier classified incorrectly}
+            \item{Assign each sample a weight value (same for all samples in the beginning), and train $M$ classifiers successively}
             \item{For each classifier, calculate $\epsilon$ (measure of error) and $\alpha$ (decreases with $\epsilon$)}
             \item{Final prediction = $\mathrm{sign}(\displaystyle \sum_{m = 1}^{M} \alpha_m y_m(\mathbf{x_n}))$}
         \end{itemize}
+        \begin{columns}
+            \begin{column}{0.3\textwidth}
+                \begin{center}
+                    \begin{tabular}{| c |}
+                        \hline
+                        $\mathbf{x_1}$\\
+                        \hline
+                        $\mathbf{x_2}$\\
+                        \hline
+                        $\mathbf{x_3}$\\
+                        \hline
+                        $\mathbf{x_4}$\\
+                        \hline
+                        $\mathbf{x_5}$\\
+                        \hline
+                    \end{tabular}
+                \end{center}
+            \end{column}
+            \begin{column}{0.05\textwidth}
+                $\rightarrow$
+            \end{column}
+            \begin{column}{0.3\textwidth}
+                \begin{center}
+                    \begin{tabular}{| c |}
+                        \hline
+                        $\mathbf{x_1}$\\
+                        \hline
+                        $\mathbf{x_2}$\\
+                        \hline
+                        $\mathbf{x_3}$\\
+                        \hline
+                        $\mathbf{x_4}$\\
+                        \hline
+                        $\mathbf{x_5}$\\
+                        \hline
+                    \end{tabular}
+                \end{center}
+            \end{column}
+            \begin{column}{0.05\textwidth}
+                $\rightarrow$
+            \end{column}
+            \begin{column}{0.3\textwidth}
+                \begin{center}
+                    \begin{tabular}{| c |}
+                        \hline
+                        $\mathbf{x_1}$\\
+                        \hline
+                        $\mathbf{x_2}$\\
+                        \hline
+                        $\mathbf{x_3}$\\
+                        \hline
+                        $\mathbf{x_4}$\\
+                        \hline
+                        $\mathbf{x_5}$\\
+                        \hline
+                    \end{tabular}
+                \end{center}
+            \end{column}
+        \end{columns}
     \end{frame}
     
     \begin{frame}
@@ -243,7 +380,6 @@ Technische Universit\"at M\"unchen
         \begin{figure}
             \centering
             \includegraphics[width=0.7\textwidth]{figures/stacking_prediction_flow.png}
-            \caption{Prediction using a stacking ensemble}
         \end{figure}
         \begin{itemize}
             \item{Outputs from first layer form the input for second layer}
