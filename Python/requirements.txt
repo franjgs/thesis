@@ -10,7 +10,7 @@ django-celery==3.0.11
 gunicorn==0.17.2
 kombu==2.5.4
 meld3==0.6.10
-numpy==1.6.2
+numpy==1.22.0
 praw==1.0.16
 python-dateutil==1.5
 pytz==2012j
