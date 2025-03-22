@@ -7,7 +7,6 @@ billiard==2.7.3.19
 celery==3.0.13
 distribute==0.6.32
 django-celery==3.0.11
-gunicorn==0.17.2
 kombu==2.5.4
 meld3==0.6.10
 numpy==1.6.2
